@@ -1,0 +1,62 @@
+.button {
+    width: 140px;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    margin-left: 20px;
+    font-size: 18px;
+    box-shadow: 3px 3px 2px #0066CC;
+}
+
+.disabled {
+    opacity: 0.5;
+    background-color: #004D99;
+    color: gray;
+    box-shadow: none;
+}
+
+.secondary {
+    background-color: white;
+    color: #0066CC;
+    border: 1px solid #0066CC;
+}
+
+.default {
+    background-color: #0066CC;
+}
+
+.red {
+    background-color: #CC1439;
+    box-shadow: 3px 3px 2px #CC1439;
+}
+
+.default:hover {
+}
+
+.red:hover {
+}
+
+.secondary:hover {
+}
+
+
+.default:active {
+    position: relative;
+    top: 3px;
+    left: 3px;
+    box-shadow: none;
+}
+
+.secondary:active {
+    position: relative;
+    top: 3px;
+    left: 3px;
+    box-shadow: none;
+}
+
+.red:active {
+}
+
+.button:disabled {
+}
