@@ -21,7 +21,7 @@ function App() {
             <Route path={"/404"} element={<NotFound/>}/>
             <Route path={"/passRecovery"} element={<PasswordRecovery/>}/>
             <Route path={"/newPassword"} element={<NewPassword/>}/>
-            <Route path={'*'} element={<Navigate to={'/404'}/>}/>
+            {/*<Route path={'/*'} element={<Navigate to={'/404'}/>}/>*/}
         </Routes>
     </div>
   );
