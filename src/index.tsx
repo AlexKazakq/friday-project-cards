@@ -18,3 +18,9 @@ root.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// export const instance = axios.create({
+//     baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/' ,
+//     // baseURL: process.env.NODE_ENV === 'development' ? 'http://localhost:7542/2.0/' : 'https://neko-back.herokuapp.com/2.0/',
+//     withCredentials: true,
+// })

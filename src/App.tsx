@@ -14,14 +14,14 @@ function App() {
   return (
     <div className="App">
         <Routes>
-            <Route path={"friday-project-cards/"} element={<Test/>}/>
-            <Route path={"friday-project-cards/login"} element={<Login/>}/>
-            <Route path={"friday-project-cards/registration"} element={<Registration/>}/>
-            <Route path={"friday-project-cards/profile"} element={<Profile/>}/>
-            <Route path={"friday-project-cards/404"} element={<NotFound/>}/>
-            <Route path={"friday-project-cards/passRecovery"} element={<PasswordRecovery/>}/>
-            <Route path={"friday-project-cards/newPassword"} element={<NewPassword/>}/>
-            <Route path={'friday-project-cards/*'} element={<Navigate to={'/404'}/>}/>
+            <Route path={"/"} element={<Test/>}/>
+            <Route path={"/login"} element={<Login/>}/>
+            <Route path={"/registration"} element={<Registration/>}/>
+            <Route path={"/profile"} element={<Profile/>}/>
+            <Route path={"/404"} element={<NotFound/>}/>
+            <Route path={"/passRecovery"} element={<PasswordRecovery/>}/>
+            <Route path={"/newPassword"} element={<NewPassword/>}/>
+            <Route path={'/*'} element={<Navigate to={'/404'}/>}/>
         </Routes>
     </div>
   );
