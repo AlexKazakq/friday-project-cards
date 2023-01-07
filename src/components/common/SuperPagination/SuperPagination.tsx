@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Pagination } from '@mui/material'
 
-import SuperSelect from '../../../../../autocheck_homeworks_by_ignat/src/s2-homeworks/hw07/common/c5-SuperSelect/SuperSelect'
+import SuperSelect from '../SuperSelect/SuperSelect'
 
 import s from './SuperPagination.module.css'
 
