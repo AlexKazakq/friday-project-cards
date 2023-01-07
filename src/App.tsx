@@ -3,6 +3,7 @@ import React from 'react'
 import './App.css'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
+import SuperButton from './components/common/SuperButton/SuperButton'
 import { Login } from './components/Login/Login'
 import { NewPassword } from './components/NewPassword/NewPassword'
 import { NotFound } from './components/NotFound/NotFound'
@@ -14,6 +15,12 @@ import Test from './components/Test/Test'
 function App() {
   return (
     <div className="App">
+      <div className={'App__header'}>
+        <span style={{ fontSize: '30px', fontStyle: 'italic', opacity: '0.7' }}>
+          Friday Project
+        </span>
+        <SuperButton>Sign in</SuperButton>
+      </div>
       <Routes>
         <Route path={'friday-project-cards/'} element={<Test />} />
         <Route path={'friday-project-cards/login'} element={<Login />} />
