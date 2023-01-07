@@ -7,6 +7,7 @@ import SuperButton from './components/common/SuperButton/SuperButton'
 import { Login } from './components/Login/Login'
 import { NewPassword } from './components/NewPassword/NewPassword'
 import { NotFound } from './components/NotFound/NotFound'
+import { CheckEmail } from './components/PasswordRecovery/CheckEmail'
 import { PasswordRecovery } from './components/PasswordRecovery/PasswordRecovery'
 import { Profile } from './components/Profile/Profile'
 import { Registration } from './components/Registration/Registration'
@@ -28,6 +29,7 @@ function App() {
         <Route path={'friday-project-cards/profile'} element={<Profile />} />
         <Route path={'friday-project-cards/404'} element={<NotFound />} />
         <Route path={'friday-project-cards/passRecovery'} element={<PasswordRecovery />} />
+        <Route path={'friday-project-cards/checkEmail'} element={<CheckEmail />} />
         <Route path={'friday-project-cards/newPassword'} element={<NewPassword />} />
         <Route path={'friday-project-cards/*'} element={<Navigate to={'/404'} />} />
       </Routes>

@@ -6,6 +6,7 @@ import SuperSelect from '../SuperSelect/SuperSelect'
 
 import s from './SuperPagination.module.css'
 
+
 export type SuperPaginationPropsType = {
   id?: string
   page: number
