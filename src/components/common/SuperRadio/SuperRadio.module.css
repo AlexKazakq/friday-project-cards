@@ -1,27 +1,23 @@
 .radio {
-
-
 }
 
 .radio::before {
-
 }
 
-
 .radio:checked::before {
-
 }
 
 .label {
-    display: flex;
+  display: flex;
 }
 
 .options {
 }
 
 .span {
-    margin-left: 10px;
-    margin-bottom: 5px;
-    color: #0066cc;
-    font-weight: 700;
+  margin-bottom: 5px;
+  margin-left: 10px;
+
+  font-weight: 700;
+  color: #0066cc;
 }
