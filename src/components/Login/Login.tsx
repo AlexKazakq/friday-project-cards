@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -12,9 +12,16 @@ import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
+import { useDispatch, useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom'
+
+import { loginTC } from '../../bll/store/auth-reducer'
+import { AppRootStateType } from '../../bll/store/store'
 
 export const Login = () => {
-  const [showPassword, setShowPassword] = React.useState(false)
+  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+  const dispatch = useDispatch()
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
 
@@ -46,9 +53,15 @@ export const Login = () => {
       return errors
     },
     onSubmit: values => {
+      // @ts-ignore
+      dispatch(loginTC(values))
       formik.resetForm()
     },
   })
+
+  if (isLoggedIn) {
+    return <Navigate to={'/friday-project-cards/profile'} />
+  }
 
   return (
     <Grid container justifyContent={'center'}>

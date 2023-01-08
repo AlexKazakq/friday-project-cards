@@ -1,13 +1,11 @@
-import react from 'react'
+import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = {
+const initialState = {}
 
-}
+const slice = createSlice({
+  name: 'profile',
+  initialState,
+  reducers: {},
+})
 
-export const profileReducer = (state:InitialStateType, action: ActionsType) => {
-  return state
-}
-
-
-type InitialStateType = typeof initialState
-type ActionsType = {}
+export const profileReducer = slice.reducer
