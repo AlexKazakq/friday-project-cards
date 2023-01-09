@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 
 import './App.css'
+import { CircularProgress, LinearProgress } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 
 import { initializeAppTC, RequestStatusType } from './bll/store/app-reducer'
 import { logoutTC } from './bll/store/auth-reducer'
@@ -21,6 +22,7 @@ function App() {
   const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
   const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -29,8 +31,24 @@ function App() {
   }, [])
 
   const logOutHandler = () => {
+    navigate('friday-project-cards/login')
     // @ts-ignore
     dispatch(logoutTC())
+  }
+
+  if (!isInitialized) {
+    return (
+      <div
+        style={{
+          position: 'fixed',
+          top: '30%',
+          textAlign: 'center',
+          width: '100%',
+        }}
+      >
+        <CircularProgress />
+      </div>
+    )
   }
 
   return (
@@ -40,11 +58,12 @@ function App() {
           Friday Project
         </span>
         {!isLoggedIn ? (
-          <SuperButton>Sign in</SuperButton>
+          <SuperButton onClick={() => navigate('friday-project-cards/login')}>Sign in</SuperButton>
         ) : (
           <SuperButton onClick={logOutHandler}>Log Out</SuperButton>
         )}
       </div>
+      {status === 'loading' && <LinearProgress />}
       <Routes>
         <Route path={'friday-project-cards/'} element={<Test />} />
         <Route path={'friday-project-cards/login'} element={<Login />} />
