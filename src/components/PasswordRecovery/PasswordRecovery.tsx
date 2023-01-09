@@ -33,7 +33,7 @@ export const PasswordRecovery = () => {
               Send instructions
             </Button>
             <p>Did you remember your password?</p>
-            <a href={'/friday-project-cards/login'}>Try logging in </a>
+            <a href={'/friday-project-cards/login'}>Try loging in </a>
           </FormControl>
         </form>
       </Grid>
