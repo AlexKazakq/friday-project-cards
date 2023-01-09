@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import './App.css'
+import { useDispatch, useSelector } from 'react-redux'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
+import { initializeAppTC, RequestStatusType } from './bll/store/app-reducer'
+import { logoutTC } from './bll/store/auth-reducer'
+import { AppRootStateType } from './bll/store/store'
 import SuperButton from './components/common/SuperButton/SuperButton'
 import { Login } from './components/Login/Login'
 import { NewPassword } from './components/NewPassword/NewPassword'
@@ -14,13 +18,32 @@ import { Registration } from './components/Registration/Registration'
 import Test from './components/Test/Test'
 
 function App() {
+  const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
+  const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
+  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(initializeAppTC())
+  }, [])
+
+  const logOutHandler = () => {
+    // @ts-ignore
+    dispatch(logoutTC())
+  }
+
   return (
     <div className="App">
       <div className={'App__header'}>
         <span style={{ fontSize: '30px', fontStyle: 'italic', opacity: '0.7' }}>
           Friday Project
         </span>
-        <SuperButton>Sign in</SuperButton>
+        {!isLoggedIn ? (
+          <SuperButton>Sign in</SuperButton>
+        ) : (
+          <SuperButton onClick={logOutHandler}>Log Out</SuperButton>
+        )}
       </div>
       <Routes>
         <Route path={'friday-project-cards/'} element={<Test />} />

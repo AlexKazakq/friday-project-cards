@@ -13,20 +13,29 @@ const slice = createSlice({
     setIsLoggedIn(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
       state.isLoggedIn = action.payload.isLoggedIn
     },
+    setLoggedOut(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
+      state.isLoggedIn = action.payload.isLoggedIn
+    },
   },
 })
 
 export const authReducer = slice.reducer
 
-export const { setIsLoggedIn } = slice.actions
+export const { setIsLoggedIn, setLoggedOut } = slice.actions
 
 export const loginTC = (data: LoginDataType) => (dispatch: Dispatch) => {
   authAPI
-    .login(data)
+    .logIn(data)
     .then(res => {
       dispatch(setIsLoggedIn({ isLoggedIn: true }))
     })
     .catch(e => {})
+}
+
+export const logoutTC = () => (dispatch: Dispatch) => {
+  authAPI.logOut().then(res => {
+    dispatch(setLoggedOut({ isLoggedIn: false }))
+  })
 }
 
 export type LoginDataType = {

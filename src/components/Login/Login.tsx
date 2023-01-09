@@ -18,6 +18,8 @@ import { Navigate } from 'react-router-dom'
 import { loginTC } from '../../bll/store/auth-reducer'
 import { AppRootStateType } from '../../bll/store/store'
 
+import style from './Login.module.scss'
+
 export const Login = () => {
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
   const dispatch = useDispatch()
@@ -68,7 +70,7 @@ export const Login = () => {
       <Grid item justifyContent={'center'}>
         <FormControl>
           <FormLabel>
-            <h2 style={{ color: 'black', textAlign: 'center', marginTop: '50px' }}>Sign in</h2>
+            <h2 className={style.title}>Sign in</h2>
           </FormLabel>
           <form onSubmit={formik.handleSubmit}>
             <FormGroup sx={{ '& .MuiTextField-root': { width: '400px', height: '80px' } }}>
@@ -105,17 +107,7 @@ export const Login = () => {
                 />
               </FormControl>
               {formik.errors.password && formik.touched.password ? (
-                <span
-                  style={{
-                    color: 'red',
-                    fontSize: '13px',
-                    position: 'absolute',
-                    top: '257px',
-                    left: '15px',
-                  }}
-                >
-                  {formik.errors.password}
-                </span>
+                <span className={style.errorSpan}>{formik.errors.password}</span>
               ) : (
                 ''
               )}
@@ -128,44 +120,16 @@ export const Login = () => {
                   />
                 }
               />
-              <a
-                href={'#'}
-                style={{
-                  textAlign: 'end',
-                  marginBottom: '80px',
-                  color: 'black',
-                  textDecoration: 'none',
-                  opacity: '0.8',
-                  fontSize: '15px',
-                }}
-              >
+              <a href={'#'} className={style.forgot}>
                 Forgot Password?
               </a>
               <Button type={'submit'} variant={'contained'} color={'primary'}>
                 Login
               </Button>
-              <a
-                href={'#'}
-                style={{
-                  textAlign: 'center',
-                  marginTop: '20px',
-                  color: 'black',
-                  textDecoration: 'none',
-                  opacity: '0.7',
-                  fontSize: '13px',
-                }}
-              >
+              <a href={'#'} className={style.account}>
                 Already have an account?
               </a>
-              <a
-                href={'#'}
-                style={{
-                  textAlign: 'center',
-                  marginTop: '20px',
-                  color: '#0066cc',
-                  fontSize: '20px',
-                }}
-              >
+              <a href={'#'} className={style.signIn}>
                 Sign Up
               </a>
             </FormGroup>
