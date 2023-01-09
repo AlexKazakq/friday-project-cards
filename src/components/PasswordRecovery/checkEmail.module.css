@@ -1,0 +1,21 @@
+.letterIconWrapper{
+    position: relative;
+
+    width: 100px;
+    height: 100px;
+    margin: auto;
+
+    background-color: rgba(54, 110, 255, 0.05);
+    border: 2px solid #366EFF;
+    border-radius: 100%;
+}
+
+.letterIcon{
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 70px;
+    height: 70px;
+}
