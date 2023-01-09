@@ -1,8 +1,10 @@
 import React, { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react'
 
+import BorderColorIcon from '@mui/icons-material/BorderColor'
 import { Input, InputLabel } from '@mui/material'
 import Button from '@mui/material/Button'
-import { useFormik } from 'formik'
+
+import s from '../Profile/profileName.module.css'
 
 type ProfileNameType = {
   nickname: string
@@ -40,7 +42,10 @@ export const ProfileName = (props: ProfileNameType) => {
     <div>
       {!editMode && (
         <div>
-          <span onDoubleClick={activateEditMode}>{newNickname}</span>
+          <span onDoubleClick={activateEditMode} className={s.nickname}>
+            {newNickname}{' '}
+          </span>
+          <BorderColorIcon onClick={activateEditMode} fontSize="small" />
         </div>
       )}
       {editMode && (
