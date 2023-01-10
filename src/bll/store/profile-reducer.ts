@@ -57,7 +57,12 @@ export const updateProfileDataTC = (data: UpdateProfileDataType) => (dispatch: D
   profileAPI
     .updateProfile(data)
     .then(res => {
-      dispatch(setNewProfileData({ nickName: res.data.name, avatar: res.data.avatar }))
+      dispatch(
+        setNewProfileData({
+          nickName: res.data.updatedUser.name,
+          avatar: res.data.updatedUser.avatar,
+        })
+      )
     })
     .catch(e => {})
 }
