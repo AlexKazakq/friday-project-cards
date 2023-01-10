@@ -14,7 +14,6 @@ type ProfileNameType = {
 export const ProfileName = (props: ProfileNameType) => {
   const [editMode, setEditMode] = useState<boolean>(false)
   const [nickname, setNickname] = useState<string>(props.nickname)
-  const [newNickname, setNewNickname] = useState<string>(props.nickname)
 
   useEffect(() => {
     setNickname(props.nickname)
@@ -22,20 +21,15 @@ export const ProfileName = (props: ProfileNameType) => {
 
   const activateEditMode = () => {
     setEditMode(true)
-    setNickname(newNickname)
   }
 
   const deactivateEditMode = () => {
     setEditMode(false)
-    // props.updateName(name)
+    props.updateNickname(nickname)
   }
 
   const onNameChange = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setNickname(e.currentTarget.value)
-  }
-  const onNewNameSave = () => {
-    setNewNickname(nickname)
-    deactivateEditMode()
   }
 
   return (
@@ -43,7 +37,7 @@ export const ProfileName = (props: ProfileNameType) => {
       {!editMode && (
         <div>
           <span onDoubleClick={activateEditMode} className={s.nickname}>
-            {newNickname}{' '}
+            {nickname}{' '}
           </span>
           <BorderColorIcon onClick={activateEditMode} fontSize="small" />
         </div>
@@ -59,7 +53,7 @@ export const ProfileName = (props: ProfileNameType) => {
               <Button
                 variant={'contained'}
                 color={'primary'}
-                onClick={onNewNameSave}
+                onClick={deactivateEditMode}
                 style={{ height: '24px', fontSize: '12px' }}
               >
                 Save
