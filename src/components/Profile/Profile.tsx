@@ -10,6 +10,7 @@ import { AppRootStateType } from '../../bll/store/store'
 import styleForm from '../../styles/form.module.css'
 import s from '../Profile/profile.module.css'
 
+import BadgeAvatars from './Avatar'
 import { ProfileName } from './ProfileName'
 
 export const Profile = () => {
@@ -31,21 +32,15 @@ export const Profile = () => {
     return dispatch(updateProfileDataTC({ name: nickname }))
   }, [])
 
-  let firstLetterOfName = profileInfo.name.substr(0, 1).toUpperCase()
-
   return (
     <Grid container justifyContent={'center'}>
       <Grid item justifyContent={'center'}>
         <form className={styleForm.form}>
           <FormControl>
             <h3>Personal Information</h3>
-            {profileInfo.avatar ? (
-              <img src={profileInfo.avatar} className={s.avatar} />
-            ) : (
-              <Avatar className={s.avatar} sx={{ width: 100, height: 100, fontSize: 50 }}>
-                {firstLetterOfName}
-              </Avatar>
-            )}
+            <div className={s.avatar}>
+              <BadgeAvatars name={profileInfo.name} avatar={profileInfo.avatar} />
+            </div>
             <ProfileName nickname={profileInfo.name} updateNickname={updateNickname} />
             <p>{profileInfo.email}</p>
             <Button variant="outlined" startIcon={<LogoutIcon />}>
