@@ -13,7 +13,7 @@ import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 
 import { loginTC } from '../../bll/store/auth-reducer'
 import { AppRootStateType } from '../../bll/store/store'
@@ -120,18 +120,18 @@ export const Login = () => {
                   />
                 }
               />
-              <a href={'#'} className={style.forgot}>
+              <NavLink to={'/friday-project-cards/passRecovery'} className={style.forgot}>
                 Forgot Password?
-              </a>
+              </NavLink>
               <Button type={'submit'} variant={'contained'} color={'primary'}>
                 Login
               </Button>
               <a href={'#'} className={style.account}>
                 Already have an account?
               </a>
-              <a href={'#'} className={style.signIn}>
+              <NavLink to={'/friday-project-cards/registration'} className={style.signIn}>
                 Sign Up
-              </a>
+              </NavLink>
             </FormGroup>
           </form>
         </FormControl>
