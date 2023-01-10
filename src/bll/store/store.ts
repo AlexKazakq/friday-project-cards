@@ -4,10 +4,12 @@ import thunkMiddleware from 'redux-thunk'
 
 import { authReducer } from './auth-reducer'
 import { profileReducer } from './profile-reducer'
+import { regReducer } from './register-reducer'
 
 const rootReducer = combineReducers({
   profile: profileReducer,
   auth: authReducer,
+  register: regReducer,
 })
 
 export const store = configureStore({
