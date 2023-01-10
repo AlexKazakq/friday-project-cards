@@ -5,6 +5,7 @@ import { Avatar, Button, FormControl, Grid } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
+import { logoutTC } from '../../bll/store/auth-reducer'
 import { getUserProfileTC, updateProfileDataTC } from '../../bll/store/profile-reducer'
 import { AppRootStateType } from '../../bll/store/store'
 import styleForm from '../../styles/form.module.css'
@@ -27,6 +28,11 @@ export const Profile = () => {
     dispatch(getUserProfileTC())
   }, [])
 
+  let logoutOnClick = () => {
+    // @ts-ignore
+    return dispatch(logoutTC())
+  }
+
   let updateNickname = useCallback((nickname: string) => {
     // @ts-ignore
     return dispatch(updateProfileDataTC({ name: nickname }))
@@ -43,7 +49,7 @@ export const Profile = () => {
             </div>
             <ProfileName nickname={profileInfo.name} updateNickname={updateNickname} />
             <p>{profileInfo.email}</p>
-            <Button variant="outlined" startIcon={<LogoutIcon />}>
+            <Button variant="outlined" startIcon={<LogoutIcon />} onClick={logoutOnClick}>
               Log out
             </Button>
           </FormControl>

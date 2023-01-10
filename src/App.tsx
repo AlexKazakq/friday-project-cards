@@ -9,6 +9,7 @@ import { initializeAppTC, RequestStatusType } from './bll/store/app-reducer'
 import { logoutTC } from './bll/store/auth-reducer'
 import { AppRootStateType } from './bll/store/store'
 import SuperButton from './components/common/SuperButton/SuperButton'
+import { Header } from './components/Header/Header'
 import { Login } from './components/Login/Login'
 import { NewPassword } from './components/NewPassword/NewPassword'
 import { NotFound } from './components/NotFound/NotFound'
@@ -21,20 +22,12 @@ import Test from './components/Test/Test'
 function App() {
   const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
   const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
-  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
-  const navigate = useNavigate()
   const dispatch = useDispatch()
 
   useEffect(() => {
     // @ts-ignore
     dispatch(initializeAppTC())
   }, [])
-
-  const logOutHandler = () => {
-    navigate('friday-project-cards/login')
-    // @ts-ignore
-    dispatch(logoutTC())
-  }
 
   if (!isInitialized) {
     return (
@@ -53,16 +46,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className={'App__header'}>
-        <span style={{ fontSize: '30px', fontStyle: 'italic', opacity: '0.7' }}>
-          Friday Project
-        </span>
-        {!isLoggedIn ? (
-          <SuperButton onClick={() => navigate('friday-project-cards/login')}>Sign in</SuperButton>
-        ) : (
-          <SuperButton onClick={logOutHandler}>Log Out</SuperButton>
-        )}
-      </div>
+      <Header />
       {status === 'loading' && <LinearProgress />}
       <Routes>
         <Route path={'friday-project-cards/'} element={<Test />} />

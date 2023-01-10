@@ -1,0 +1,13 @@
+.headerName{
+    display: inline-block;
+
+    border-bottom: 1px dashed #000080;
+}
+
+.headerAvatar{
+    display: inline-block;
+
+    width: 35px;
+    height: 35px;
+    padding-left: 10px
+}
