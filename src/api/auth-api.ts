@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 import { LoginDataType } from '../bll/store/auth-reducer'
-import { UpdateProfileDataType } from '../bll/store/profile-reducer'
 
 export const instance = axios.create({
   baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
@@ -10,8 +9,11 @@ export const instance = axios.create({
 })
 
 export const authAPI = {
-  logIn(payload: LoginDataType) {
+  login(payload: LoginDataType) {
     return instance.post('auth/login', payload)
+  },
+  register(payload: RegisterDataType) {
+    return instance.post('/auth/register', payload)
   },
   logOut() {
     return instance.delete('/auth/me')
