@@ -12,17 +12,16 @@ import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
-import { useDispatch, useSelector } from 'react-redux'
 import { Navigate, NavLink } from 'react-router-dom'
 
 import { loginTC } from '../../bll/store/auth-reducer'
-import { AppRootStateType } from '../../bll/store/store'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 
 import style from './Login.module.scss'
 
 export const Login = () => {
-  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
-  const dispatch = useDispatch()
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const dispatch = useAppDispatch()
   const [showPassword, setShowPassword] = useState(false)
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
@@ -55,7 +54,6 @@ export const Login = () => {
       return errors
     },
     onSubmit: values => {
-      // @ts-ignore
       dispatch(loginTC(values))
       formik.resetForm()
     },
