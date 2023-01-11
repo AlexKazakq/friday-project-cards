@@ -2,7 +2,7 @@ import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 
 import { authAPI } from '../../api/auth-api'
 
-import { setAppStatus } from './app-reducer'
+import { setAppError, setAppStatus } from './app-reducer'
 
 const initialState = {
   isLoggedIn: false,
@@ -36,6 +36,7 @@ export const loginTC = (data: LoginDataType) => (dispatch: Dispatch) => {
     })
     .catch(e => {
       dispatch(setAppStatus({ status: 'failed' }))
+      dispatch(setAppError({ error: e.response.data.error }))
     })
 }
 
@@ -50,6 +51,7 @@ export const logoutTC = () => (dispatch: Dispatch) => {
     })
     .catch(e => {
       dispatch(setAppStatus({ status: 'failed' }))
+      dispatch(setAppError({ error: e.response.data.error }))
     })
 }
 

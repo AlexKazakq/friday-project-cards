@@ -196,7 +196,6 @@ export const Registration = () => {
                 Sign In
               </a>
             </FormGroup>
-            {/*<ErrorSnackbar />*/}
           </form>
         </FormControl>
       </Grid>

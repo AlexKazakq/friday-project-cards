@@ -39,6 +39,7 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
     })
     .catch(e => {
       dispatch(setAppInitialized({ isInitialized: true }))
+      dispatch(setAppError({ error: e.response.data.error }))
     })
 }
 
