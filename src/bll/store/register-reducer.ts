@@ -4,7 +4,6 @@ import { authAPI } from '../../api/auth-api'
 
 const initialState = {
   registered: false,
-
 }
 
 const slice = createSlice({
