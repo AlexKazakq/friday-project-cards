@@ -15,9 +15,11 @@ import { Navigate } from 'react-router-dom'
 
 import { RegisterTC } from '../../bll/store/register-reducer'
 import { AppRootStateType } from '../../bll/store/store'
+import { ErrorSnackbar } from '../ErrorSnackbar/ErrorSnackbar'
 
 export const Registration = () => {
   const registered = useSelector<AppRootStateType, boolean>(state => state.register.registered)
+  const responseError = useSelector<AppRootStateType, string | null>(state => state.app.error)
   const dispatch = useDispatch()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfPassword, setShowConfPassword] = useState(false)
@@ -194,6 +196,7 @@ export const Registration = () => {
                 Sign In
               </a>
             </FormGroup>
+            {/*<ErrorSnackbar />*/}
           </form>
         </FormControl>
       </Grid>

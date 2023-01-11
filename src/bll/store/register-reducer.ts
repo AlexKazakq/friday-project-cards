@@ -1,6 +1,11 @@
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
+import { Simulate } from 'react-dom/test-utils'
 
 import { authAPI } from '../../api/auth-api'
+
+import { setAppError } from './app-reducer'
+
+import error = Simulate.error
 
 const initialState = {
   registered: false,
@@ -24,10 +29,11 @@ export const RegisterTC = (data: RegisterDataType) => (dispatch: Dispatch) => {
   authAPI
     .register(data)
     .then(res => {
-      console.log(res)
       dispatch(isRegistered({ registered: true }))
     })
-    .catch(e => {})
+    .catch(e => {
+      dispatch(setAppError({ error: e.response.data.error }))
+    })
 }
 
 export type RegisterDataType = {
