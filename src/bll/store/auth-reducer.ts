@@ -16,6 +16,7 @@ const slice = createSlice({
       state.isLoggedIn = action.payload.isLoggedIn
     },
     setLoggedOut(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
+      debugger
       state.isLoggedIn = action.payload.isLoggedIn
     },
   },
@@ -43,6 +44,7 @@ export const logoutTC = () => (dispatch: Dispatch) => {
   authAPI
     .logOut()
     .then(res => {
+      debugger
       dispatch(setLoggedOut({ isLoggedIn: false }))
       dispatch(setAppStatus({ status: 'succeeded' }))
     })

@@ -30,8 +30,8 @@ export const { setAppInitialized, setAppStatus } = slice.actions
 export const initializeAppTC = () => (dispatch: Dispatch) => {
   authAPI.me().then(res => {
     dispatch(setIsLoggedIn({ isLoggedIn: true }))
+    dispatch(setAppInitialized({ isInitialized: true }))
   })
-  dispatch(setAppInitialized({ isInitialized: true }))
 }
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'

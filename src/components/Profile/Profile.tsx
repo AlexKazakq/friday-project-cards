@@ -7,7 +7,7 @@ import { Navigate } from 'react-router-dom'
 
 import { logoutTC } from '../../bll/store/auth-reducer'
 import { getUserProfileTC, updateProfileDataTC } from '../../bll/store/profile-reducer'
-import { AppRootStateType } from '../../bll/store/store'
+import { AppRootStateType, store } from '../../bll/store/store'
 import styleForm from '../../styles/form.module.css'
 import s from '../Profile/profile.module.css'
 
@@ -15,28 +15,33 @@ import BadgeAvatars from './Avatar'
 import { ProfileName } from './ProfileName'
 
 export const Profile = () => {
-  const dispatch = useDispatch()
   const profileInfo = useSelector<AppRootStateType, any>(state => state.profile.profile)
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+  const dispatch = useDispatch()
 
-  if (!isLoggedIn) {
-    return <Navigate to={'/friday-project-cards/login'} />
-  }
+  console.log(store.getState())
 
   useEffect(() => {
+    if (!isLoggedIn) {
+      return
+    }
     // @ts-ignore
     dispatch(getUserProfileTC())
   }, [])
 
   let logoutOnClick = () => {
     // @ts-ignore
-    return dispatch(logoutTC())
+    dispatch(logoutTC())
   }
 
   let updateNickname = useCallback((nickname: string) => {
     // @ts-ignore
-    return dispatch(updateProfileDataTC({ name: nickname }))
+    dispatch(updateProfileDataTC({ name: nickname }))
   }, [])
+
+  if (!isLoggedIn) {
+    return <Navigate to={'/friday-project-cards/login'} />
+  }
 
   return (
     <Grid container justifyContent={'center'}>

@@ -2,13 +2,9 @@ import React, { useEffect } from 'react'
 
 import './App.css'
 import { CircularProgress, LinearProgress } from '@mui/material'
-import { useDispatch, useSelector } from 'react-redux'
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
-import { initializeAppTC, RequestStatusType } from './bll/store/app-reducer'
-import { logoutTC } from './bll/store/auth-reducer'
-import { AppRootStateType } from './bll/store/store'
-import SuperButton from './components/common/SuperButton/SuperButton'
+import { initializeAppTC } from './bll/store/app-reducer'
 import { Header } from './components/Header/Header'
 import { Login } from './components/Login/Login'
 import { NewPassword } from './components/NewPassword/NewPassword'
@@ -18,14 +14,14 @@ import { PasswordRecovery } from './components/PasswordRecovery/PasswordRecovery
 import { Profile } from './components/Profile/Profile'
 import { Registration } from './components/Registration/Registration'
 import Test from './components/Test/Test'
+import { useAppDispatch, useAppSelector } from './hooks/hooks'
 
 function App() {
-  const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
-  const isInitialized = useSelector<AppRootStateType, boolean>(state => state.app.isInitialized)
-  const dispatch = useDispatch()
+  const status = useAppSelector(state => state.app.status)
+  const isInitialized = useAppSelector(state => state.app.isInitialized)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(initializeAppTC())
   }, [])
 
