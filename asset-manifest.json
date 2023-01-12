@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/friday-project-cards/static/css/main.cc0852df.css",
-    "main.js": "/friday-project-cards/static/js/main.37eb1045.js",
+    "main.js": "/friday-project-cards/static/js/main.7b17eeb0.js",
     "static/js/787.7136d4b4.chunk.js": "/friday-project-cards/static/js/787.7136d4b4.chunk.js",
     "static/media/404.svg": "/friday-project-cards/static/media/404.8baa1b795048b6fa13ff8d30800aa1b1.svg",
     "static/media/letter.png": "/friday-project-cards/static/media/letter.cfa2f0e0a982a9c9aee5.png",
     "index.html": "/friday-project-cards/index.html",
     "main.cc0852df.css.map": "/friday-project-cards/static/css/main.cc0852df.css.map",
-    "main.37eb1045.js.map": "/friday-project-cards/static/js/main.37eb1045.js.map",
+    "main.7b17eeb0.js.map": "/friday-project-cards/static/js/main.7b17eeb0.js.map",
     "787.7136d4b4.chunk.js.map": "/friday-project-cards/static/js/787.7136d4b4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cc0852df.css",
-    "static/js/main.37eb1045.js"
+    "static/js/main.7b17eeb0.js"
   ]
 }
