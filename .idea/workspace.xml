@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bab01990-399d-4011-9428-66f929278da4" name="Changes" comment="Test">
+    <list default="true" id="bab01990-399d-4011-9428-66f929278da4" name="Changes" comment="Refactoring #3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/auth-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/auth-api.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Test/Test.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PasswordRecovery/PasswordRecovery.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PasswordRecovery/PasswordRecovery.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Profile/ProfileName.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/ProfileName.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Registration/Registration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Registration/Registration.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +84,7 @@
       <updated>1673087638610</updated>
       <workItem from="1673087641353" duration="4626000" />
       <workItem from="1673463604204" duration="1515000" />
-      <workItem from="1673537909434" duration="3801000" />
+      <workItem from="1673537909434" duration="2291000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1673087933275</created>
@@ -120,14 +121,7 @@
       <option name="project" value="LOCAL" />
       <updated>1673468059133</updated>
     </task>
-    <task id="LOCAL-00006" summary="Test">
-      <created>1673540273417</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1673540273417</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,8 +156,7 @@
     <MESSAGE value="Refactoring v1" />
     <MESSAGE value="use customs hooks" />
     <MESSAGE value="Refactoring #3" />
-    <MESSAGE value="Test" />
-    <option name="LAST_COMMIT_MESSAGE" value="Test" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring #3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
