@@ -2,16 +2,17 @@ import React from 'react'
 
 import { Button, FormControl, Grid, TextField } from '@mui/material'
 import { useFormik } from 'formik'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 
 import { sendInstructionForRecoveryTC } from '../../bll/store/passwordRecovery-reducer'
-import { useAppDispatch } from '../../hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 
 import styleForm from './../../styles/form.module.css'
 import s from './PasswordRecovery.module.css'
 
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()
+  const isEmailSend = useAppSelector(state => state.passwordRecovery.isEmailSend)
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -32,6 +33,10 @@ export const PasswordRecovery = () => {
       // window.location.href = '/friday-project-cards/checkEmail'
     },
   })
+
+  if (isEmailSend) {
+    return <Navigate to={'/friday-project-cards/checkEmail'} />
+  }
 
   return (
     <Grid container justifyContent={'center'}>

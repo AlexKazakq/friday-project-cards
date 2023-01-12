@@ -1,11 +1,12 @@
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 
-import { passwordRecoveryAPI, profileAPI } from '../../api/auth-api'
+import { passwordRecoveryAPI } from '../../api/auth-api'
 
-import { setAppStatus } from './app-reducer'
+import { setAppError, setAppStatus } from './app-reducer'
 
 const initialState = {
   email: ' ',
+  isEmailSend: false,
 }
 
 const slice = createSlice({
@@ -15,24 +16,28 @@ const slice = createSlice({
     setInstructionForRecovery(state, action: PayloadAction<{ email: string }>) {
       state.email = action.payload.email
     },
+    setIsEmailSend(state, action: PayloadAction<{ isEmailSend: boolean }>) {
+      state.isEmailSend = action.payload.isEmailSend
+    },
   },
 })
 
 export const passwordRecoveryReducer = slice.reducer
 
-export const { setInstructionForRecovery } = slice.actions
+export const { setInstructionForRecovery, setIsEmailSend } = slice.actions
 
 export const sendInstructionForRecoveryTC = (email: string) => (dispatch: Dispatch) => {
   setAppStatus({ status: 'loading' })
   passwordRecoveryAPI
     .sendInstructionForRecovery(email)
     .then(res => {
-      console.log(res.data)
       dispatch(setInstructionForRecovery({ email: res.data }))
       dispatch(setAppStatus({ status: 'succeeded' }))
+      dispatch(setIsEmailSend({ isEmailSend: true }))
     })
     .catch(e => {
-      debugger
       dispatch(setAppStatus({ status: 'failed' }))
+      dispatch(setIsEmailSend({ isEmailSend: false }))
+      dispatch(setAppError({ error: e.response.data.error }))
     })
 }
