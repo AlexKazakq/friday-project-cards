@@ -135,7 +135,6 @@ export const Registration = () => {
                 <OutlinedInput
                   type={showConfPassword ? 'text' : 'password'}
                   {...formik.getFieldProps('confirm')}
-                  // error={!!formik.errors.confirm && !!formik.touched.confirm}
                   error={!!formik.errors.confirm && !!formik.touched.confirm}
                   label="Confirm"
                   endAdornment={

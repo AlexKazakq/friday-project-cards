@@ -3,7 +3,7 @@ import React from 'react'
 import '../../App.css'
 import Avatar from '@mui/material/Avatar'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 import { logoutTC } from '../../bll/store/auth-reducer'
 import { AppRootStateType } from '../../bll/store/store'
@@ -42,7 +42,36 @@ export function Header() {
   return (
     <div className={'App__header'}>
       <span style={{ fontSize: '30px', fontStyle: 'italic', opacity: '0.7' }}>Friday Project</span>
+      <NavBar />
       <HeaderRight />
+    </div>
+  )
+}
+
+const NavBar = () => {
+  return (
+    <div>
+      <NavLink to={'friday-project-cards/login'} className={s.link}>
+        Login
+      </NavLink>
+      <NavLink to={'friday-project-cards/profile'} className={s.link}>
+        Profile
+      </NavLink>
+      <NavLink to={'friday-project-cards/registration'} className={s.link}>
+        Registration
+      </NavLink>
+      <NavLink to={'friday-project-cards/passRecovery'} className={s.link}>
+        Pass recovery
+      </NavLink>
+      <NavLink to={'friday-project-cards/checkEmail'} className={s.link}>
+        Check email
+      </NavLink>
+      <NavLink to={'friday-project-cards/newPassword'} className={s.link}>
+        New password
+      </NavLink>
+      <NavLink to={'friday-project-cards/404'} className={s.link}>
+        404
+      </NavLink>
     </div>
   )
 }
