@@ -14,6 +14,7 @@ type ProfileNameType = {
 export const ProfileName = (props: ProfileNameType) => {
   const [editMode, setEditMode] = useState<boolean>(false)
   const [nickname, setNickname] = useState<string>(props.nickname)
+  const [error, setError] = useState<string>(props.nickname)
 
   useEffect(() => {
     setNickname(props.nickname)
@@ -55,6 +56,7 @@ export const ProfileName = (props: ProfileNameType) => {
                 color={'primary'}
                 onClick={deactivateEditMode}
                 style={{ height: '24px', fontSize: '12px' }}
+                disabled={nickname.length === 0}
               >
                 Save
               </Button>
