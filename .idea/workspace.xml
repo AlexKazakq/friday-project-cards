@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bab01990-399d-4011-9428-66f929278da4" name="Changes" comment="Refactoring #3">
+    <list default="true" id="bab01990-399d-4011-9428-66f929278da4" name="Changes" comment="add error handling">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bll/store/passwordRecovery-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/bll/store/passwordRecovery-reducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bll/store/profile-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/bll/store/profile-reducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bll/store/auth-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/bll/store/auth-reducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/Login.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/PasswordRecovery/PasswordRecovery.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PasswordRecovery/PasswordRecovery.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile/profile.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/profile.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Profile/profileName.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/profileName.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Profile/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Profile/ProfileName.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/ProfileName.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,13 +21,14 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="refactoringApp" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -78,6 +79,7 @@
         <item itemvalue="npm.start" />
         <item itemvalue="npm.start" />
         <item itemvalue="npm.start" />
+        <item itemvalue="npm.start" />
       </list>
     </recent_temporary>
   </component>
@@ -92,6 +94,8 @@
       <workItem from="1673087641353" duration="4626000" />
       <workItem from="1673463604204" duration="1515000" />
       <workItem from="1673544624198" duration="449000" />
+      <workItem from="1673546350644" duration="3135000" />
+      <workItem from="1673549657340" duration="244000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1673087933275</created>

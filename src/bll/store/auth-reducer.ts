@@ -16,7 +16,6 @@ const slice = createSlice({
       state.isLoggedIn = action.payload.isLoggedIn
     },
     setLoggedOut(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
-      debugger
       state.isLoggedIn = action.payload.isLoggedIn
     },
   },

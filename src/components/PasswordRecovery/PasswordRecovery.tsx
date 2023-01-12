@@ -30,7 +30,6 @@ export const PasswordRecovery = () => {
     },
     onSubmit: values => {
       dispatch(sendInstructionForRecoveryTC(values.email))
-      // window.location.href = '/friday-project-cards/checkEmail'
     },
   })
 
