@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bab01990-399d-4011-9428-66f929278da4" name="Changes" comment="handle all error">
+    <list default="true" id="bab01990-399d-4011-9428-66f929278da4" name="Changes" comment="handle all error except &quot;you are not authorized&quot;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/ErrorSnackbar/ErrorSnackbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ErrorSnackbar/ErrorSnackbar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Registration/Registration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Registration/Registration.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +136,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673475156343</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="handle all error except &quot;you are not authorized&quot;">
+      <created>1673524318534</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1673524318534</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,6 +180,7 @@
     <MESSAGE value="first register commit" />
     <MESSAGE value="register error handle" />
     <MESSAGE value="handle all error" />
-    <option name="LAST_COMMIT_MESSAGE" value="handle all error" />
+    <MESSAGE value="handle all error except &quot;you are not authorized&quot;" />
+    <option name="LAST_COMMIT_MESSAGE" value="handle all error except &quot;you are not authorized&quot;" />
   </component>
 </project>
