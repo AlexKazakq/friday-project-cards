@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bab01990-399d-4011-9428-66f929278da4" name="Changes" comment="use customs hooks">
+    <list default="true" id="bab01990-399d-4011-9428-66f929278da4" name="Changes" comment="Refactoring #3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bll/store/app-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/bll/store/app-reducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PasswordRecovery/PasswordRecovery.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PasswordRecovery/PasswordRecovery.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Profile/ProfileName.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/ProfileName.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Registration/Registration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Registration/Registration.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -82,6 +84,7 @@
       <updated>1673087638610</updated>
       <workItem from="1673087641353" duration="4626000" />
       <workItem from="1673463604204" duration="1515000" />
+      <workItem from="1673537909434" duration="2291000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1673087933275</created>
@@ -111,7 +114,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673465088486</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Refactoring #3">
+      <created>1673468059133</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1673468059133</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,14 +155,15 @@
     <MESSAGE value="first main commit" />
     <MESSAGE value="Refactoring v1" />
     <MESSAGE value="use customs hooks" />
-    <option name="LAST_COMMIT_MESSAGE" value="use customs hooks" />
+    <MESSAGE value="Refactoring #3" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactoring #3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/components/Registration/Registration.tsx</url>
-          <line>130</line>
+          <line>132</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

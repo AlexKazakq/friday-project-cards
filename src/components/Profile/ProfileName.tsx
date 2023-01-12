@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react'
+import React, { ChangeEvent, ChangeEventHandler, useEffect, useState, KeyboardEvent } from 'react'
 
 import BorderColorIcon from '@mui/icons-material/BorderColor'
 import { Input, InputLabel } from '@mui/material'
@@ -33,6 +33,14 @@ export const ProfileName = (props: ProfileNameType) => {
     setNickname(e.currentTarget.value)
   }
 
+  const onKeyEscHandler = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      setEditMode(false)
+    } else if (e.key == 'Enter') {
+      setEditMode(false)
+    }
+  }
+
   return (
     <div>
       {!editMode && (
@@ -46,6 +54,7 @@ export const ProfileName = (props: ProfileNameType) => {
       {editMode && (
         <div>
           <Input
+            onKeyUp={onKeyEscHandler}
             autoFocus={true}
             value={nickname}
             onChange={onNameChange}
