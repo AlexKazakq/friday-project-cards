@@ -2,22 +2,40 @@ import React from 'react'
 
 import { Button, FormControl, Grid, TextField } from '@mui/material'
 import { useFormik } from 'formik'
+import { Navigate, NavLink } from 'react-router-dom'
 
 import { sendInstructionForRecoveryTC } from '../../bll/store/passwordRecovery-reducer'
-import { useAppDispatch } from '../../hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 
 import styleForm from './../../styles/form.module.css'
+import s from './PasswordRecovery.module.css'
+
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()
+  const isEmailSend = useAppSelector(state => state.passwordRecovery.isEmailSend)
   const formik = useFormik({
     initialValues: {
       email: '',
     },
+    validate: values => {
+      const errors: { email?: string } = {}
+
+      if (!values.email) {
+        errors.email = 'Required'
+      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address'
+      }
+
+      return errors
+    },
     onSubmit: values => {
       dispatch(sendInstructionForRecoveryTC(values.email))
-      window.location.href = '/friday-project-cards/checkEmail'
     },
   })
+
+  if (isEmailSend) {
+    return <Navigate to={'/friday-project-cards/checkEmail'} />
+  }
 
   return (
     <Grid container justifyContent={'center'}>
@@ -25,18 +43,32 @@ export const PasswordRecovery = () => {
         <form onSubmit={formik.handleSubmit} className={styleForm.form}>
           <FormControl>
             <h3>Forgot your password?</h3>
-            <TextField
-              id="standard-basic"
-              label="Email"
-              variant="standard"
-              {...formik.getFieldProps('email')}
-            />
-            <p>Enter your email address and we will send you further instructions</p>
+            {formik.errors.email && formik.touched.email ? (
+              <TextField
+                {...formik.getFieldProps('email')}
+                error
+                label="Email"
+                variant="standard"
+                helperText={formik.errors.email}
+              />
+            ) : (
+              <TextField
+                label="Email"
+                margin="normal"
+                variant="standard"
+                {...formik.getFieldProps('email')}
+              />
+            )}
+            <p className={s.description}>
+              Enter your email address and we will send you further instructions
+            </p>
             <Button type={'submit'} variant={'contained'} color={'primary'}>
               Send instructions
             </Button>
             <p>Did you remember your password?</p>
-            <a href={'/friday-project-cards/login'}>Try loging in </a>
+            <NavLink to={'/friday-project-cards/login'} className={s.linkLogin}>
+              Try login
+            </NavLink>
           </FormControl>
         </form>
       </Grid>
