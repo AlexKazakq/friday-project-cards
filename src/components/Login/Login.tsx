@@ -62,7 +62,7 @@ export const Login = () => {
   })
 
   if (isLoggedIn) {
-    return <Navigate to={'/friday-project-cards/profile/'} />
+    return <Navigate to={'/friday-project-cards/profile'} />
   }
 
   return (
