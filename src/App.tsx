@@ -14,7 +14,6 @@ import { CheckEmail } from './components/PasswordRecovery/CheckEmail'
 import { PasswordRecovery } from './components/PasswordRecovery/PasswordRecovery'
 import { Profile } from './components/Profile/Profile'
 import { Registration } from './components/Registration/Registration'
-import Test from './components/Test/Test'
 import { useAppDispatch, useAppSelector } from './hooks/hooks'
 
 function App() {
@@ -46,7 +45,7 @@ function App() {
       <Header />
       {status === 'loading' && <LinearProgress />}
       <Routes>
-        <Route path={'friday-project-cards/'} element={<Test />} />
+        <Route path={'friday-project-cards/'} element={<Login />} />
         <Route path={'friday-project-cards/login'} element={<Login />} />
         <Route path={'friday-project-cards/registration'} element={<Registration />} />
         <Route path={'friday-project-cards/profile'} element={<Profile />} />
