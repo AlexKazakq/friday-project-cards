@@ -10,7 +10,7 @@ const initialState: InitialStateType = {
   isInitialized: false,
 }
 
-const slice = createSlice({
+export const slice = createSlice({
   name: 'app',
   initialState,
   reducers: {
@@ -20,12 +20,15 @@ const slice = createSlice({
     setAppStatus(state, action: PayloadAction<{ status: RequestStatusType }>) {
       state.status = action.payload.status
     },
+    setAppError(state, action: PayloadAction<{ error: null | string }>) {
+      state.error = action.payload.error
+    },
   },
 })
 
 export const appReducer = slice.reducer
 
-export const { setAppInitialized, setAppStatus } = slice.actions
+export const { setAppInitialized, setAppStatus, setAppError } = slice.actions
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
   authAPI
@@ -36,6 +39,7 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
     })
     .catch(e => {
       dispatch(setAppInitialized({ isInitialized: true }))
+      dispatch(setAppError({ error: e.response.data.error }))
     })
 }
 
