@@ -2,6 +2,8 @@ import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 
 import { profileAPI } from '../../api/auth-api'
 
+import { setAppStatus } from './app-reducer'
+
 export type ProfileType = {
   _id: string
   email: string
@@ -45,15 +47,20 @@ export const profileReducer = slice.reducer
 export const { setUserProfile, setNewProfileData } = slice.actions
 
 export const getUserProfileTC = () => (dispatch: Dispatch) => {
+  setAppStatus({ status: 'loading' })
   profileAPI
     .getProfileInfo()
     .then(res => {
       dispatch(setUserProfile({ profile: res.data }))
+      dispatch(setAppStatus({ status: 'succeeded' }))
     })
-    .catch(e => {})
+    .catch(e => {
+      dispatch(setAppStatus({ status: 'failed' }))
+    })
 }
 
 export const updateProfileDataTC = (data: UpdateProfileDataType) => (dispatch: Dispatch) => {
+  setAppStatus({ status: 'loading' })
   profileAPI
     .updateProfile(data)
     .then(res => {
@@ -63,8 +70,11 @@ export const updateProfileDataTC = (data: UpdateProfileDataType) => (dispatch: D
           avatar: res.data.updatedUser.avatar,
         })
       )
+      dispatch(setAppStatus({ status: 'succeeded' }))
     })
-    .catch(e => {})
+    .catch(e => {
+      dispatch(setAppStatus({ status: 'failed' }))
+    })
 }
 
 export type UpdateProfileDataType = {

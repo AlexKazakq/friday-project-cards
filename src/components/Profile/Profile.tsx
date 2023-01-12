@@ -8,6 +8,7 @@ import { Navigate } from 'react-router-dom'
 import { logoutTC } from '../../bll/store/auth-reducer'
 import { getUserProfileTC, updateProfileDataTC } from '../../bll/store/profile-reducer'
 import { AppRootStateType, store } from '../../bll/store/store'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import styleForm from '../../styles/form.module.css'
 import s from '../Profile/profile.module.css'
 
@@ -15,11 +16,9 @@ import BadgeAvatars from './Avatar'
 import { ProfileName } from './ProfileName'
 
 export const Profile = () => {
-  const profileInfo = useSelector<AppRootStateType, any>(state => state.profile.profile)
-  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
-  const dispatch = useDispatch()
-
-  console.log(store.getState())
+  const profileInfo = useAppSelector(state => state.profile.profile)
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -35,7 +34,6 @@ export const Profile = () => {
   }
 
   let updateNickname = useCallback((nickname: string) => {
-    // @ts-ignore
     dispatch(updateProfileDataTC({ name: nickname }))
   }, [])
 
