@@ -3,15 +3,18 @@ import React from 'react'
 import { Button, FormControl, Grid, TextField } from '@mui/material'
 import { useFormik } from 'formik'
 
-// eslint-disable-next-line import/no-unresolved
+import { sendInstructionForRecoveryTC } from '../../bll/store/passwordRecovery-reducer'
+import { useAppDispatch } from '../../hooks/hooks'
+
 import styleForm from './../../styles/form.module.css'
 export const PasswordRecovery = () => {
+  const dispatch = useAppDispatch()
   const formik = useFormik({
     initialValues: {
       email: '',
     },
     onSubmit: values => {
-      alert(JSON.stringify(values))
+      dispatch(sendInstructionForRecoveryTC(values.email))
       window.location.href = '/friday-project-cards/checkEmail'
     },
   })

@@ -33,3 +33,24 @@ export const profileAPI = {
     return instance.put('auth/me', payload)
   },
 }
+
+export const passwordRecoveryAPI = {
+  sendInstructionForRecovery(email: string) {
+    console.log('passwordRecoveryAPI')
+
+    return axios.post('https://neko-back.herokuapp.com/2.0/auth/forgot', {
+      email: email,
+      message: `<div style="padding: 15px;
+                            color: black;
+                            background-color: aliceblue">
+                <p>You have requested to recover your password on the FridayProject website</p>
+                <br/>
+                <p>If you hane not done so, please ignore this letter</p>
+                <br/>
+                <h2>Password recovery link: </h2>
+                <a href="http://localhost:3000/#/set-new-password/$token$" style="font-size: 25px;">
+                link</a>
+                </div>`,
+    })
+  },
+}
