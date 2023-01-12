@@ -24,8 +24,6 @@ export const Login = () => {
   const dispatch = useAppDispatch()
   const [showPassword, setShowPassword] = useState(false)
 
-  console.log('Render login')
-
   const handleClickShowPassword = () => setShowPassword(show => !show)
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
