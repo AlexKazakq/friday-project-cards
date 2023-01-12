@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bab01990-399d-4011-9428-66f929278da4" name="Changes" comment="register error handle">
+    <list default="true" id="bab01990-399d-4011-9428-66f929278da4" name="Changes" comment="handle all error">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bll/store/app-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/bll/store/app-reducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bll/store/auth-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/bll/store/auth-reducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bll/store/profile-reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/bll/store/profile-reducer.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/ErrorSnackbar/ErrorSnackbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ErrorSnackbar/ErrorSnackbar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Registration/Registration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Registration/Registration.tsx" afterDir="false" />
     </list>
@@ -134,7 +131,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673473401821</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="handle all error">
+      <created>1673475156343</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1673475156343</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,6 +174,7 @@
     <MESSAGE value="use customs hooks" />
     <MESSAGE value="first register commit" />
     <MESSAGE value="register error handle" />
-    <option name="LAST_COMMIT_MESSAGE" value="register error handle" />
+    <MESSAGE value="handle all error" />
+    <option name="LAST_COMMIT_MESSAGE" value="handle all error" />
   </component>
 </project>

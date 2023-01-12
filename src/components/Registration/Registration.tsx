@@ -172,7 +172,7 @@ export const Registration = () => {
                 Sign Up
               </Button>
               <a
-                href={'#'}
+                href={'/friday-project-cards/login'}
                 style={{
                   textAlign: 'center',
                   marginTop: '20px',
@@ -185,7 +185,7 @@ export const Registration = () => {
                 Already have an account?
               </a>
               <a
-                href={'#'}
+                href={'/friday-project-cards/login'}
                 style={{
                   textAlign: 'center',
                   marginTop: '20px',
