@@ -1,16 +1,18 @@
 import axios from 'axios'
 
 import { LoginDataType } from '../bll/store/auth-reducer'
-import { NewPasswordResponseType } from '../bll/store/passwordRecovery-reducer'
+import { NewPasswordResponseType } from '../bll/store/passwordChanger-reducer'
 import { UpdateProfileDataType } from '../bll/store/profile-reducer'
 import { RegisterDataType } from '../bll/store/register-reducer'
 
 export const instance = axios.create({
   // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
   baseURL:
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:7542/2.0/'
-      : 'https://neko-back.herokuapp.com/2.0/',
+    // process.env.NODE_ENV === 'development'
+    //   ? 'http://localhost:7542/2.0/'
+    //   : 'https://neko-back.herokuapp.com/2.0/',
+    // 'https://neko-back.herokuapp.com/2.0/',
+    'http://localhost:7542/2.0/',
   withCredentials: true,
 })
 
@@ -58,7 +60,7 @@ export const passwordRecoveryAPI = {
                 <p>If you hane not done so, please ignore this letter</p>
                 <br/> 
                 <h2>Password recovery link: </h2>
-                <a href="http://localhost:3000/#/set-new-password/$token$" style="font-size: 25px;">
+                <a href="http://localhost:3000/friday-project-cards/newPassword/$token$" style="font-size: 25px;">
                 link</a>
                 </div>`,
     })

@@ -4,6 +4,7 @@ import thunkMiddleware from 'redux-thunk'
 
 import { appReducer } from './app-reducer'
 import { authReducer } from './auth-reducer'
+import { passwordChangerReducer } from './passwordChanger-reducer'
 import { passwordRecoveryReducer } from './passwordRecovery-reducer'
 import { profileReducer } from './profile-reducer'
 import { regReducer } from './register-reducer'
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   app: appReducer,
   register: regReducer,
   passwordRecovery: passwordRecoveryReducer,
+  sendNewPassword: passwordChangerReducer,
 })
 
 export const store = configureStore({

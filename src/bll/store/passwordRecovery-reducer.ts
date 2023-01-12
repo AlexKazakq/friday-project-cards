@@ -34,19 +34,5 @@ export const sendInstructionForRecoveryTC = (email: string) => (dispatch: Dispat
     })
 }
 
-export const sendNewPasswordTC = (data: NewPasswordResponseType) => (dispatch: Dispatch) => {
-  newPasswordAPI
-    .sendNewPassword(data)
-    .then(res => {
-      dispatch(setAppStatus({ status: 'succeeded' }))
-    })
-    .catch(e => {
-      dispatch(setAppError({ error: e.response.data.error }))
-      dispatch(setAppStatus({ status: 'failed' }))
-    })
-}
 
-export type NewPasswordResponseType = {
-  password: string
-  resetPasswordToken: string
-}
+
