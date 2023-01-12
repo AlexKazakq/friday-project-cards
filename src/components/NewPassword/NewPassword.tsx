@@ -1,10 +1,13 @@
 import React from 'react'
 
 import { Button, FormControl, Grid, TextField } from '@mui/material'
+// eslint-disable-next-line import/order
 import { useFormik } from 'formik'
 
 // eslint-disable-next-line import/no-unresolved
+
 import styleForm from './../../styles/form.module.css'
+
 export const NewPassword = () => {
   const formik = useFormik({
     initialValues: {
@@ -12,7 +15,10 @@ export const NewPassword = () => {
     },
     onSubmit: values => {
       alert(JSON.stringify(values))
-      window.location.href = '/friday-project-cards/profile'
+      console.log({ password: values.password, resetPasswordToken: window.location.href })
+      debugger
+
+      // window.location.href = '/friday-project-cards/profile'
     },
   })
 

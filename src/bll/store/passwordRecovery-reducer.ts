@@ -1,8 +1,8 @@
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 
-import { passwordRecoveryAPI, profileAPI } from '../../api/auth-api'
+import { newPasswordAPI, passwordRecoveryAPI, profileAPI } from '../../api/auth-api'
 
-import { setAppStatus } from './app-reducer'
+import { setAppError, setAppStatus } from './app-reducer'
 
 const initialState = {
   email: ' ',
@@ -27,12 +27,26 @@ export const sendInstructionForRecoveryTC = (email: string) => (dispatch: Dispat
   passwordRecoveryAPI
     .sendInstructionForRecovery(email)
     .then(res => {
-      console.log(res.data)
-      dispatch(setInstructionForRecovery({ email: res.data }))
       dispatch(setAppStatus({ status: 'succeeded' }))
     })
     .catch(e => {
-      debugger
       dispatch(setAppStatus({ status: 'failed' }))
     })
+}
+
+export const sendNewPasswordTC = (data: NewPasswordResponseType) => (dispatch: Dispatch) => {
+  newPasswordAPI
+    .sendNewPassword(data)
+    .then(res => {
+      dispatch(setAppStatus({ status: 'succeeded' }))
+    })
+    .catch(e => {
+      dispatch(setAppError({ error: e.response.data.error }))
+      dispatch(setAppStatus({ status: 'failed' }))
+    })
+}
+
+export type NewPasswordResponseType = {
+  password: string
+  resetPasswordToken: string
 }
