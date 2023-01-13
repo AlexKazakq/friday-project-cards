@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bab01990-399d-4011-9428-66f929278da4" name="Changes" comment="link for email">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/auth-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/auth-api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NewPassword/NewPassword.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NewPassword/NewPassword.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +155,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673594157538</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="link for email">
+      <created>1673594530016</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1673594530016</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

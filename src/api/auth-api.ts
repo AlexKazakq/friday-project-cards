@@ -60,9 +60,9 @@ export const passwordRecoveryAPI = {
                 <p>If you hane not done so, please ignore this letter</p>
                 <br/>
                 <h2>Password recovery link: </h2>
-<!--                <a href="http://localhost:3000/friday-project-cards/newPassword/$token$" style="font-size: 25px;">-->
-<!--                link</a>-->
-                 <a href="https://alexkazakq.github.io/friday-project-cards/newPassword/" style="font-size: 25px;">
+                локально: <a href="http://localhost:3000/friday-project-cards/newPassword/$token$" style="font-size: 25px;">
+                link</a>
+                 удаленно: <a href="https://alexkazakq.github.io/friday-project-cards/newPassword/$token$" style="font-size: 25px;">
                 link</a>
                 </div>`,
     })
