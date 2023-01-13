@@ -10,10 +10,12 @@ import { useSelector } from 'react-redux'
 
 import { sendNewPasswordTC } from '../../bll/store/passwordChanger-reducer'
 import { AppRootStateType } from '../../bll/store/store'
+import { useAppDispatch } from '../../hooks/hooks'
 
 import styleForm from './../../styles/form.module.css'
 
 export const NewPassword = () => {
+  const dispatch = useAppDispatch()
   const status = useSelector<AppRootStateType, boolean>(state => state.sendNewPassword.changed)
   const token = window.location.href.split('/')[5]
   const formik = useFormik({
@@ -24,7 +26,7 @@ export const NewPassword = () => {
     onSubmit: values => {
       alert(JSON.stringify(values))
       console.log({ password: values.password, resetPasswordToken: token })
-      sendNewPasswordTC({ password: values.password, resetPasswordToken: token })
+      dispatch(sendNewPasswordTC({ password: values.password, resetPasswordToken: token }))
       console.log(status)
       // window.location.href = '/friday-project-cards/profile'
     },

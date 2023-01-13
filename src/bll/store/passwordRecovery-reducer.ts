@@ -1,8 +1,8 @@
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 
-import { newPasswordAPI, passwordRecoveryAPI, profileAPI } from '../../api/auth-api'
+import { passwordRecoveryAPI } from '../../api/auth-api'
 
-import { setAppError, setAppStatus } from './app-reducer'
+import { setAppStatus } from './app-reducer'
 
 const initialState = {
   email: ' ',
@@ -33,6 +33,3 @@ export const sendInstructionForRecoveryTC = (email: string) => (dispatch: Dispat
       dispatch(setAppStatus({ status: 'failed' }))
     })
 }
-
-
-
