@@ -15,7 +15,7 @@ import { Navigate } from 'react-router-dom'
 
 import { RegisterTC } from '../../bll/store/register-reducer'
 import { AppRootStateType } from '../../bll/store/store'
-import { ErrorSnackbar } from '../ErrorSnackbar/ErrorSnackbar'
+import { ErrorSnackbar } from '../Snackbar/ErrorSnackbar'
 
 export const Registration = () => {
   const registered = useSelector<AppRootStateType, boolean>(state => state.register.registered)

@@ -1,8 +1,8 @@
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 
-import { newPasswordAPI, passwordRecoveryAPI, profileAPI } from '../../api/auth-api'
+import { newPasswordAPI } from '../../api/auth-api'
 
-import { setAppError, setAppStatus } from './app-reducer'
+import { setAppError, setAppInfo, setAppStatus } from './app-reducer'
 
 const initialState = {
   changed: false,
@@ -23,13 +23,12 @@ export const passwordChangerReducer = slice.reducer
 export const { setPasswordChanger } = slice.actions
 
 export const sendNewPasswordTC = (data: NewPasswordResponseType) => (dispatch: Dispatch) => {
-  debugger
-
   newPasswordAPI
     .sendNewPassword(data)
     .then(res => {
       dispatch(setPasswordChanger({ changed: true }))
       dispatch(setAppStatus({ status: 'succeeded' }))
+      dispatch(setAppInfo({ info: res.data.info }))
     })
     .catch(e => {
       dispatch(setAppError({ error: e.response.data.error }))

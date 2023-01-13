@@ -1,12 +1,9 @@
 import React from 'react'
 
 import { Button, FormControl, Grid, TextField } from '@mui/material'
-// eslint-disable-next-line import/order
 import { useFormik } from 'formik'
-
-// eslint-disable-next-line import/no-unresolved
-
 import { useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 
 import { sendNewPasswordTC } from '../../bll/store/passwordChanger-reducer'
 import { AppRootStateType } from '../../bll/store/store'
@@ -16,7 +13,9 @@ import styleForm from './../../styles/form.module.css'
 
 export const NewPassword = () => {
   const dispatch = useAppDispatch()
-  const status = useSelector<AppRootStateType, boolean>(state => state.sendNewPassword.changed)
+  const isPasswordChanged = useSelector<AppRootStateType, boolean>(
+    state => state.sendNewPassword.changed
+  )
   const token = window.location.href.split('/')[5]
   const formik = useFormik({
     initialValues: {
@@ -24,13 +23,14 @@ export const NewPassword = () => {
     },
 
     onSubmit: values => {
-      alert(JSON.stringify(values))
-      console.log({ password: values.password, resetPasswordToken: token })
       dispatch(sendNewPasswordTC({ password: values.password, resetPasswordToken: token }))
-      console.log(status)
       // window.location.href = '/friday-project-cards/profile'
     },
   })
+
+  if (isPasswordChanged) {
+    return <Navigate to={'/friday-project-cards/login'} />
+  }
 
   return (
     <Grid container justifyContent={'center'}>

@@ -7,6 +7,7 @@ import { setIsLoggedIn } from './auth-reducer'
 const initialState: InitialStateType = {
   status: 'idle',
   error: null,
+  info: null,
   isInitialized: false,
 }
 
@@ -23,12 +24,15 @@ export const slice = createSlice({
     setAppError(state, action: PayloadAction<{ error: null | string }>) {
       state.error = action.payload.error
     },
+    setAppInfo(state, action: PayloadAction<{ info: null | string }>) {
+      state.info = action.payload.info
+    },
   },
 })
 
 export const appReducer = slice.reducer
 
-export const { setAppInitialized, setAppStatus, setAppError } = slice.actions
+export const { setAppInitialized, setAppStatus, setAppError, setAppInfo } = slice.actions
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
   authAPI
@@ -47,5 +51,6 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 type InitialStateType = {
   status: RequestStatusType
   error: null | string
+  info: null | string
   isInitialized: boolean
 }

@@ -5,7 +5,6 @@ import { CircularProgress, LinearProgress } from '@mui/material'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { initializeAppTC } from './bll/store/app-reducer'
-import { ErrorSnackbar } from './components/ErrorSnackbar/ErrorSnackbar'
 import { Header } from './components/Header/Header'
 import { Login } from './components/Login/Login'
 import { NewPassword } from './components/NewPassword/NewPassword'
@@ -14,6 +13,8 @@ import { CheckEmail } from './components/PasswordRecovery/CheckEmail'
 import { PasswordRecovery } from './components/PasswordRecovery/PasswordRecovery'
 import { Profile } from './components/Profile/Profile'
 import { Registration } from './components/Registration/Registration'
+import { ErrorSnackbar } from './components/Snackbar/ErrorSnackbar'
+import { InfoSnackbar } from './components/Snackbar/InfoSnackbar'
 import { useAppDispatch, useAppSelector } from './hooks/hooks'
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
         <Route path={'friday-project-cards/*'} element={<Navigate to={'/404'} />} />
       </Routes>
       <ErrorSnackbar />
+      <InfoSnackbar />
     </div>
   )
 }
