@@ -62,7 +62,7 @@ export const passwordRecoveryAPI = {
                 <h2>Password recovery link: </h2>
 <!--                <a href="http://localhost:3000/friday-project-cards/newPassword/$token$" style="font-size: 25px;">-->
 <!--                link</a>-->
-                 <a href="https://alexkazakq.github.io/friday-project-cards/newPassword/$token$" style="font-size: 25px;">
+                 <a href="https://alexkazakq.github.io/friday-project-cards/newPassword/" style="font-size: 25px;">
                 link</a>
                 </div>`,
     })

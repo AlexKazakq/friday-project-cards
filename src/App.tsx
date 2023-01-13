@@ -54,6 +54,7 @@ function App() {
         <Route path={'friday-project-cards/passRecovery'} element={<PasswordRecovery />} />
         <Route path={'friday-project-cards/checkEmail'} element={<CheckEmail />} />
         <Route path={'friday-project-cards/newPassword/:token'} element={<NewPassword />} />
+        <Route path={'friday-project-cards/newPassword/'} element={<NewPassword />} />
         <Route path={'friday-project-cards/*'} element={<Navigate to={'/404'} />} />
       </Routes>
       <ErrorSnackbar />
