@@ -14,6 +14,7 @@ import { CheckEmail } from './components/PasswordRecovery/CheckEmail'
 import { PasswordRecovery } from './components/PasswordRecovery/PasswordRecovery'
 import { Profile } from './components/Profile/Profile'
 import { Registration } from './components/Registration/Registration'
+import Test from './components/Test/Test'
 import { useAppDispatch, useAppSelector } from './hooks/hooks'
 
 function App() {

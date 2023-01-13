@@ -5,8 +5,6 @@ import { authAPI } from '../../api/auth-api'
 
 import { setAppError } from './app-reducer'
 
-import error = Simulate.error
-
 const initialState = {
   registered: false,
 }

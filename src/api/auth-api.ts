@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { LoginDataType } from '../bll/store/auth-reducer'
+import { NewPasswordResponseType } from '../bll/store/passwordChanger-reducer'
 import { UpdateProfileDataType } from '../bll/store/profile-reducer'
 import { RegisterDataType } from '../bll/store/register-reducer'
 
@@ -10,6 +11,8 @@ export const instance = axios.create({
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:7542/2.0/'
       : 'https://neko-back.herokuapp.com/2.0/',
+  // 'https://neko-back.herokuapp.com/2.0/',
+  // 'http://localhost:7542/2.0/',
   withCredentials: true,
 })
 
@@ -34,6 +37,12 @@ export const profileAPI = {
   },
   updateProfile(payload: UpdateProfileDataType) {
     return instance.put('auth/me', payload)
+  },
+}
+
+export const newPasswordAPI = {
+  sendNewPassword(payload: NewPasswordResponseType) {
+    return axios.post('https://neko-back.herokuapp.com/2.0/auth/set-new-password', payload)
   },
 }
 
