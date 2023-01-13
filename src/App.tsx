@@ -49,7 +49,7 @@ function App() {
         <Route path={'friday-project-cards/'} element={<Login />} />
         <Route path={'friday-project-cards/login'} element={<Login />} />
         <Route path={'friday-project-cards/registration'} element={<Registration />} />
-        <Route path={'friday-project-cards/profile'} element={<Profile />} />
+        <Route path={'friday-project-cards/profile/*'} element={<Profile />} />
         <Route path={'friday-project-cards/404'} element={<NotFound />} />
         <Route path={'friday-project-cards/passRecovery'} element={<PasswordRecovery />} />
         <Route path={'friday-project-cards/checkEmail'} element={<CheckEmail />} />
