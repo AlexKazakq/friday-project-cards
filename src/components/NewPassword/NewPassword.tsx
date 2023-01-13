@@ -12,6 +12,7 @@ import { useAppDispatch } from '../../hooks/hooks'
 import styleForm from './../../styles/form.module.css'
 
 export const NewPassword = () => {
+  console.log('NewPassword')
   const dispatch = useAppDispatch()
   const isPasswordChanged = useSelector<AppRootStateType, boolean>(
     state => state.sendNewPassword.changed
