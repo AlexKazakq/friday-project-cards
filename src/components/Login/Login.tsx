@@ -20,7 +20,7 @@ import * as Yup from 'yup'
 
 import { PATH } from '../../assets/Routes/path'
 import { loginTC } from '../../bll/store/auth-reducer'
-import { useAppDispatch } from '../../hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 
 import style from './Login.module.scss'
 
