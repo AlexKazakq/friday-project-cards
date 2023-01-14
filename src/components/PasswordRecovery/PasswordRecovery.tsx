@@ -1,6 +1,9 @@
 import React from 'react'
 
-import { Button, FormControl, Grid, TextField } from '@mui/material'
+import Button from '@mui/material/Button'
+import FormControl from '@mui/material/FormControl'
+import Grid from '@mui/material/Grid'
+import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
 import { Navigate, NavLink } from 'react-router-dom'
 
@@ -13,6 +16,7 @@ import s from './PasswordRecovery.module.css'
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()
   const isEmailSend = useAppSelector(state => state.passwordRecovery.isEmailSend)
+  const status = useAppSelector(state => state.app.status)
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -62,7 +66,12 @@ export const PasswordRecovery = () => {
             <p className={s.description}>
               Enter your email address and we will send you further instructions
             </p>
-            <Button type={'submit'} variant={'contained'} color={'primary'}>
+            <Button
+              type={'submit'}
+              variant={'contained'}
+              color={'primary'}
+              disabled={status === 'loading'}
+            >
               Send instructions
             </Button>
             <p>Did you remember your password?</p>

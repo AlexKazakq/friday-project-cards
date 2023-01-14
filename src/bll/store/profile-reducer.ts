@@ -1,4 +1,5 @@
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
+import axios, { AxiosError } from 'axios'
 
 import { profileAPI } from '../../api/auth-api'
 
@@ -46,37 +47,61 @@ export const profileReducer = slice.reducer
 
 export const { setUserProfile, setNewProfileData } = slice.actions
 
-export const getUserProfileTC = () => (dispatch: Dispatch) => {
-  setAppStatus({ status: 'loading' })
-  profileAPI
-    .getProfileInfo()
-    .then(res => {
-      dispatch(setUserProfile({ profile: res.data }))
-      dispatch(setAppStatus({ status: 'succeeded' }))
-    })
-    .catch(e => {
+// export const getUserProfileTC = () => (dispatch: Dispatch) => {
+//   dispatch(setAppStatus({ status: 'loading' }))
+//   profileAPI
+//     .getProfileInfo()
+//     .then(res => {
+//       dispatch(setUserProfile({ profile: res.data }))
+//       dispatch(setAppStatus({ status: 'succeeded' }))
+//     })
+//     .catch(e => {
+//       dispatch(setAppStatus({ status: 'failed' }))
+//       dispatch(setAppError({ error: e.response.data.error }))
+//     })
+// }
+
+export const getUserProfileTC = () => async (dispatch: Dispatch) => {
+  dispatch(setAppStatus({ status: 'loading' }))
+  try {
+    const res = await profileAPI.getProfileInfo()
+
+    dispatch(setUserProfile({ profile: res.data }))
+    dispatch(setAppStatus({ status: 'succeeded' }))
+  } catch (e) {
+    const err = e as Error | AxiosError<{ error: string }>
+
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message
+
       dispatch(setAppStatus({ status: 'failed' }))
-      dispatch(setAppError({ error: e.response.data.error }))
-    })
+      dispatch(setAppError({ error: error }))
+    }
+  }
 }
 
-export const updateProfileDataTC = (data: UpdateProfileDataType) => (dispatch: Dispatch) => {
-  setAppStatus({ status: 'loading' })
-  profileAPI
-    .updateProfile(data)
-    .then(res => {
-      dispatch(
-        setNewProfileData({
-          nickName: res.data.updatedUser.name,
-          avatar: res.data.updatedUser.avatar,
-        })
-      )
-      dispatch(setAppStatus({ status: 'succeeded' }))
-    })
-    .catch(e => {
-      dispatch(setAppError({ error: e.response.data.error }))
+export const updateProfileDataTC = (data: UpdateProfileDataType) => async (dispatch: Dispatch) => {
+  dispatch(setAppStatus({ status: 'loading' }))
+  try {
+    const res = await profileAPI.updateProfile(data)
+
+    dispatch(
+      setNewProfileData({
+        nickName: res.data.updatedUser.name,
+        avatar: res.data.updatedUser.avatar,
+      })
+    )
+    dispatch(setAppStatus({ status: 'succeeded' }))
+  } catch (e) {
+    const err = e as Error | AxiosError<{ error: string }>
+
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message
+
+      dispatch(setAppError({ error: error }))
       dispatch(setAppStatus({ status: 'failed' }))
-    })
+    }
+  }
 }
 
 export type UpdateProfileDataType = {

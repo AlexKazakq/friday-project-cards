@@ -1,7 +1,6 @@
 import React from 'react'
 
 import '../../App.css'
-import Avatar from '@mui/material/Avatar'
 import { useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 

@@ -1,4 +1,5 @@
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
+import axios, { AxiosError } from 'axios'
 
 import { authAPI } from '../../api/auth-api'
 
@@ -15,43 +16,49 @@ const slice = createSlice({
     setIsLoggedIn(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
       state.isLoggedIn = action.payload.isLoggedIn
     },
-    setLoggedOut(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
-      state.isLoggedIn = action.payload.isLoggedIn
-    },
   },
 })
 
 export const authReducer = slice.reducer
 
-export const { setIsLoggedIn, setLoggedOut } = slice.actions
+export const { setIsLoggedIn } = slice.actions
 
-export const loginTC = (data: LoginDataType) => (dispatch: Dispatch) => {
-  setAppStatus({ status: 'loading' })
-  authAPI
-    .logIn(data)
-    .then(res => {
-      dispatch(setIsLoggedIn({ isLoggedIn: true }))
-      dispatch(setAppStatus({ status: 'succeeded' }))
-    })
-    .catch(e => {
+export const loginTC = (data: LoginDataType) => async (dispatch: Dispatch) => {
+  dispatch(setAppStatus({ status: 'loading' }))
+  try {
+    await authAPI.logIn(data)
+
+    dispatch(setIsLoggedIn({ isLoggedIn: true }))
+    dispatch(setAppStatus({ status: 'succeeded' }))
+  } catch (e) {
+    const err = e as Error | AxiosError<{ error: string }>
+
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message
+
       dispatch(setAppStatus({ status: 'failed' }))
-      dispatch(setAppError({ error: e.response.data.error }))
-    })
+      dispatch(setAppError({ error: error }))
+    }
+  }
 }
 
-export const logoutTC = () => (dispatch: Dispatch) => {
-  setAppStatus({ status: 'loading' })
-  authAPI
-    .logOut()
-    .then(res => {
-      debugger
-      dispatch(setLoggedOut({ isLoggedIn: false }))
-      dispatch(setAppStatus({ status: 'succeeded' }))
-    })
-    .catch(e => {
+export const logoutTC = () => async (dispatch: Dispatch) => {
+  dispatch(setAppStatus({ status: 'loading' }))
+  try {
+    await authAPI.logOut()
+
+    dispatch(setIsLoggedIn({ isLoggedIn: false }))
+    dispatch(setAppStatus({ status: 'succeeded' }))
+  } catch (e) {
+    const err = e as Error | AxiosError<{ error: string }>
+
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message
+
       dispatch(setAppStatus({ status: 'failed' }))
-      dispatch(setAppError({ error: e.response.data.error }))
-    })
+      dispatch(setAppError({ error: error }))
+    }
+  }
 }
 
 export type LoginDataType = {

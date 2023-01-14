@@ -1,4 +1,5 @@
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
+import axios, { AxiosError } from 'axios'
 
 import { newPasswordAPI } from '../../api/auth-api'
 
@@ -22,18 +23,24 @@ export const passwordChangerReducer = slice.reducer
 
 export const { setPasswordChanger } = slice.actions
 
-export const sendNewPasswordTC = (data: NewPasswordResponseType) => (dispatch: Dispatch) => {
-  newPasswordAPI
-    .sendNewPassword(data)
-    .then(res => {
-      dispatch(setPasswordChanger({ changed: true }))
-      dispatch(setAppStatus({ status: 'succeeded' }))
-      dispatch(setAppInfo({ info: res.data.info }))
-    })
-    .catch(e => {
-      dispatch(setAppError({ error: e.response.data.error }))
+export const sendNewPasswordTC = (data: NewPasswordResponseType) => async (dispatch: Dispatch) => {
+  dispatch(setAppStatus({ status: 'loading' }))
+  try {
+    const res = await newPasswordAPI.sendNewPassword(data)
+
+    dispatch(setPasswordChanger({ changed: true }))
+    dispatch(setAppStatus({ status: 'succeeded' }))
+    dispatch(setAppInfo({ info: res.data.info }))
+  } catch (e) {
+    const err = e as Error | AxiosError<{ error: string }>
+
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message
+
+      dispatch(setAppError({ error: error }))
       dispatch(setAppStatus({ status: 'failed' }))
-    })
+    }
+  }
 }
 
 export type NewPasswordResponseType = {

@@ -1,12 +1,18 @@
 import React from 'react'
 
-import { Button, FormControl, Grid } from '@mui/material'
+import Button from '@mui/material/Button'
+import FormControl from '@mui/material/FormControl'
+import Grid from '@mui/material/Grid'
+
+import { useAppSelector } from '../../hooks/hooks'
 
 import letterIcon from './../../assets/images/letter.png'
 import styleForm from './../../styles/form.module.css'
 import s from './checkEmail.module.css'
 
 export const CheckEmail = () => {
+  const status = useAppSelector(state => state.app.status)
+
   return (
     <Grid container justifyContent={'center'}>
       <Grid item justifyContent={'center'}>
@@ -23,6 +29,7 @@ export const CheckEmail = () => {
               onClick={() => {
                 window.location.href = '/friday-project-cards/login'
               }}
+              disabled={status === 'loading'}
             >
               Back to login
             </Button>

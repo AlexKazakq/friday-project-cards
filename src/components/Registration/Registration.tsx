@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import { IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material'
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import InputLabel from '@mui/material/InputLabel'
+import OutlinedInput from '@mui/material/OutlinedInput'
 import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
@@ -15,7 +18,6 @@ import { Navigate } from 'react-router-dom'
 
 import { RegisterTC } from '../../bll/store/register-reducer'
 import { AppRootStateType } from '../../bll/store/store'
-import { ErrorSnackbar } from '../Snackbar/ErrorSnackbar'
 
 export const Registration = () => {
   const registered = useSelector<AppRootStateType, boolean>(state => state.register.registered)

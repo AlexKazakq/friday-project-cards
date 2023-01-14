@@ -1,13 +1,16 @@
 import React from 'react'
 
-import { Button, FormControl, Grid, TextField } from '@mui/material'
+import Button from '@mui/material/Button'
+import FormControl from '@mui/material/FormControl'
+import Grid from '@mui/material/Grid'
+import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
 import { sendNewPasswordTC } from '../../bll/store/passwordChanger-reducer'
 import { AppRootStateType } from '../../bll/store/store'
-import { useAppDispatch } from '../../hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 
 import styleForm from './../../styles/form.module.css'
 
@@ -16,6 +19,7 @@ export const NewPassword = () => {
   const isPasswordChanged = useSelector<AppRootStateType, boolean>(
     state => state.sendNewPassword.changed
   )
+  const status = useAppSelector(state => state.app.status)
   const token = window.location.href.split('/')[5]
   const formik = useFormik({
     initialValues: {
@@ -46,7 +50,12 @@ export const NewPassword = () => {
               {...formik.getFieldProps('password')}
             />
             <p>Create new password and we will send you further instructions to email</p>
-            <Button type={'submit'} variant={'contained'} color={'primary'}>
+            <Button
+              type={'submit'}
+              variant={'contained'}
+              color={'primary'}
+              disabled={status === 'loading'}
+            >
               Create new password
             </Button>
           </FormControl>

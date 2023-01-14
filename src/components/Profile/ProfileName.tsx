@@ -4,6 +4,7 @@ import BorderColorIcon from '@mui/icons-material/BorderColor'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 
+import { useAppSelector } from '../../hooks/hooks'
 import s from '../Profile/profileName.module.css'
 
 type ProfileNameType = {
@@ -15,6 +16,7 @@ export const ProfileName = (props: ProfileNameType) => {
   const [editMode, setEditMode] = useState<boolean>(false)
   const [nickname, setNickname] = useState<string>(props.nickname)
   const [newNickname, setNewNickname] = useState<string>(nickname)
+  const status = useAppSelector(state => state.app.status)
 
   useEffect(() => {
     setNickname(props.nickname)
@@ -78,7 +80,7 @@ export const ProfileName = (props: ProfileNameType) => {
                   color={'primary'}
                   onClick={editName}
                   style={{ height: '24px', fontSize: '12px' }}
-                  disabled={nickname.length === 0}
+                  disabled={nickname.length === 0 || status === 'loading'}
                 >
                   Save
                 </Button>

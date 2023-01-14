@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import { IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import FormControl from '@mui/material/FormControl'
@@ -10,6 +9,10 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import InputLabel from '@mui/material/InputLabel'
+import OutlinedInput from '@mui/material/OutlinedInput'
 import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
 import { Navigate, NavLink } from 'react-router-dom'
@@ -21,6 +24,7 @@ import style from './Login.module.scss'
 
 export const Login = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const status = useAppSelector(state => state.app.status)
   const dispatch = useAppDispatch()
   const [showPassword, setShowPassword] = useState(false)
 
@@ -121,7 +125,12 @@ export const Login = () => {
               <NavLink to={'/friday-project-cards/passRecovery'} className={style.forgot}>
                 Forgot Password?
               </NavLink>
-              <Button type={'submit'} variant={'contained'} color={'primary'}>
+              <Button
+                type={'submit'}
+                variant={'contained'}
+                color={'primary'}
+                disabled={status === 'loading'}
+              >
                 Login
               </Button>
               <a href={'#'} className={style.account}>
