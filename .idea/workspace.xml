@@ -37,7 +37,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="CreateNewPassword" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -77,7 +77,17 @@
       <recent name="D:\it-incubator\friday\friday-project\src\assets\Routes" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.start">
+    <configuration name="deploy" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="deploy" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
@@ -90,7 +100,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="npm.start" />
+        <item itemvalue="npm.deploy" />
         <item itemvalue="npm.start" />
         <item itemvalue="npm.start" />
         <item itemvalue="npm.start" />
@@ -138,42 +148,35 @@
       <option name="project" value="LOCAL" />
       <updated>1673465088486</updated>
     </task>
-    <task id="LOCAL-00005" summary="first register commit">
-      <created>1673468810985</created>
+    <task id="LOCAL-00005" summary="add navlink">
+      <created>1673553068905</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1673468810985</updated>
+      <updated>1673553068905</updated>
     </task>
-    <task id="LOCAL-00006" summary="register error handle">
-      <created>1673473401821</created>
+    <task id="LOCAL-00006" summary="add navlink">
+      <created>1673553487878</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1673473401821</updated>
+      <updated>1673553487878</updated>
     </task>
-    <task id="LOCAL-00007" summary="handle all error">
-      <created>1673475156343</created>
+    <task id="LOCAL-00007" summary="link for email">
+      <created>1673594157538</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1673475156343</updated>
+      <updated>1673594157538</updated>
     </task>
-    <task id="LOCAL-00008" summary="handle all error except &quot;you are not authorized&quot;">
-      <created>1673524318534</created>
+    <task id="LOCAL-00008" summary="link for email">
+      <created>1673594530016</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1673524318534</updated>
+      <updated>1673594530016</updated>
     </task>
-    <task id="LOCAL-00009" summary="workspace">
-      <created>1673528349560</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1673528349560</updated>
-    </task>
-    <option name="localTasksCounter" value="10" />
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,7 +193,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/main" />
+                        <option value="main" />
                       </list>
                     </value>
                   </entry>
@@ -207,19 +210,17 @@
     <MESSAGE value="first main commit" />
     <MESSAGE value="Refactoring v1" />
     <MESSAGE value="use customs hooks" />
-    <MESSAGE value="first register commit" />
-    <MESSAGE value="register error handle" />
-    <MESSAGE value="handle all error" />
-    <MESSAGE value="handle all error except &quot;you are not authorized&quot;" />
-    <MESSAGE value="workspace" />
-    <option name="LAST_COMMIT_MESSAGE" value="workspace" />
+    <MESSAGE value="add navlink" />
+    <MESSAGE value="fixed new password" />
+    <MESSAGE value="link for email" />
+    <option name="LAST_COMMIT_MESSAGE" value="link for email" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/bll/store/app-reducer.ts</url>
-          <line>34</line>
+          <line>38</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
