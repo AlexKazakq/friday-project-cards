@@ -3,6 +3,7 @@ import React from 'react'
 import { Button, FormControl, Grid, TextField } from '@mui/material'
 import { useFormik } from 'formik'
 import { Navigate, NavLink } from 'react-router-dom'
+import * as Yup from 'yup'
 
 import { PATH } from '../../assets/Routes/path'
 import { sendInstructionForRecoveryTC } from '../../bll/store/passwordRecovery-reducer'
@@ -14,21 +15,14 @@ import s from './PasswordRecovery.module.css'
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()
   const isEmailSend = useAppSelector(state => state.passwordRecovery.isEmailSend)
+  const RecoveryValidationSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email address').required('Required'),
+  })
   const formik = useFormik({
     initialValues: {
       email: '',
     },
-    validate: values => {
-      const errors: { email?: string } = {}
-
-      if (!values.email) {
-        errors.email = 'Required'
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-      }
-
-      return errors
-    },
+    validationSchema: RecoveryValidationSchema,
     onSubmit: values => {
       dispatch(sendInstructionForRecoveryTC(values.email))
     },

@@ -12,6 +12,7 @@ import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import * as Yup from 'yup'
 
 import { PATH } from '../../assets/Routes/path'
 import { RegisterTC } from '../../bll/store/register-reducer'
@@ -22,7 +23,13 @@ export const Registration = () => {
   const dispatch = useDispatch()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfPassword, setShowConfPassword] = useState(false)
-
+  const RegistrationSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email address').required('Required'),
+    password: Yup.string().min(2, 'Password should be more then 2 characters').required('Required'),
+    confirm: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Password and confirmation password do not match')
+      .required('Required'),
+  })
   const handleClickShowPassword = () => setShowPassword(show => !show)
   const handleClickConfShowPassword = () => setShowConfPassword(show => !show)
 
@@ -36,29 +43,7 @@ export const Registration = () => {
       password: '',
       confirm: '',
     },
-    validate: values => {
-      const errors: FormikErrorType = {}
-
-      if (!values.email) {
-        errors.email = 'Required'
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-      }
-
-      if (!values.password) {
-        errors.password = 'Required'
-      } else if (values.password.length < 3) {
-        errors.password = 'Password should be more then 2 symbols'
-      }
-
-      if (!values.confirm) {
-        errors.confirm = 'Required'
-      } else if (values.confirm !== values.password) {
-        errors.confirm = 'Password and confirmation password do not match'
-      }
-
-      return errors
-    },
+    validationSchema: RegistrationSchema,
     onSubmit: values => {
       // @ts-ignore
       delete values.confirm
@@ -195,11 +180,4 @@ export const Registration = () => {
       </Grid>
     </Grid>
   )
-}
-
-type FormikErrorType = {
-  email?: string
-  password?: string
-  confirm?: string
-  rememberMe?: boolean
 }
