@@ -3,6 +3,8 @@ import React from 'react'
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
+import { useNavigate } from 'react-router-dom'
+import { PATH } from '../../assets/Routes/path'
 
 import { useAppSelector } from '../../hooks/hooks'
 
@@ -12,6 +14,8 @@ import s from './checkEmail.module.css'
 
 export const CheckEmail = () => {
   const status = useAppSelector(state => state.app.status)
+
+  const navigate = useNavigate()
 
   return (
     <Grid container justifyContent={'center'}>
@@ -27,7 +31,7 @@ export const CheckEmail = () => {
               variant={'contained'}
               color={'primary'}
               onClick={() => {
-                window.location.href = '/friday-project-cards/login'
+                navigate(PATH.LOGIN)
               }}
               disabled={status === 'loading'}
             >

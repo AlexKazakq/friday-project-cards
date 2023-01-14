@@ -6,7 +6,9 @@ import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
 import { Navigate, NavLink } from 'react-router-dom'
+import * as Yup from 'yup'
 
+import { PATH } from '../../assets/Routes/path'
 import { sendInstructionForRecoveryTC } from '../../bll/store/passwordRecovery-reducer'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 
@@ -16,29 +18,22 @@ import s from './PasswordRecovery.module.css'
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()
   const isEmailSend = useAppSelector(state => state.passwordRecovery.isEmailSend)
+  const RecoveryValidationSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email address').required('Required'),
+  })
   const status = useAppSelector(state => state.app.status)
   const formik = useFormik({
     initialValues: {
       email: '',
     },
-    validate: values => {
-      const errors: { email?: string } = {}
-
-      if (!values.email) {
-        errors.email = 'Required'
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-      }
-
-      return errors
-    },
+    validationSchema: RecoveryValidationSchema,
     onSubmit: values => {
       dispatch(sendInstructionForRecoveryTC(values.email))
     },
   })
 
   if (isEmailSend) {
-    return <Navigate to={'/friday-project-cards/checkEmail'} />
+    return <Navigate to={PATH.CHECK_EMAIL} />
   }
 
   return (
@@ -75,7 +70,7 @@ export const PasswordRecovery = () => {
               Send instructions
             </Button>
             <p>Did you remember your password?</p>
-            <NavLink to={'/friday-project-cards/login'} className={s.linkLogin}>
+            <NavLink to={PATH.LOGIN} className={s.linkLogin}>
               Try login
             </NavLink>
           </FormControl>

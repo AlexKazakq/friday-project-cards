@@ -7,7 +7,9 @@ import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
+import * as Yup from 'yup'
 
+import { PATH } from '../../assets/Routes/path'
 import { sendNewPasswordTC } from '../../bll/store/passwordChanger-reducer'
 import { AppRootStateType } from '../../bll/store/store'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
@@ -19,13 +21,18 @@ export const NewPassword = () => {
   const isPasswordChanged = useSelector<AppRootStateType, boolean>(
     state => state.sendNewPassword.changed
   )
+
+  const NewPasswordValidationSchema = Yup.object().shape({
+    password: Yup.string().min(2, 'Password should be more then 2 characters').required('Required'),
+  })
+
   const status = useAppSelector(state => state.app.status)
   const token = window.location.href.split('/')[5]
   const formik = useFormik({
     initialValues: {
       password: '',
     },
-
+    validationSchema: NewPasswordValidationSchema,
     onSubmit: values => {
       dispatch(sendNewPasswordTC({ password: values.password, resetPasswordToken: token }))
       // window.location.href = '/friday-project-cards/profile'
@@ -33,7 +40,7 @@ export const NewPassword = () => {
   })
 
   if (isPasswordChanged) {
-    return <Navigate to={'/friday-project-cards/login'} />
+    return <Navigate to={PATH.LOGIN} />
   }
 
   return (

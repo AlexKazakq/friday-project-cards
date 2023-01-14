@@ -15,10 +15,12 @@ import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
-import { Navigate, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import * as Yup from 'yup'
 
+import { PATH } from '../../assets/Routes/path'
 import { loginTC } from '../../bll/store/auth-reducer'
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { useAppDispatch } from '../../hooks/hooks'
 
 import style from './Login.module.scss'
 
@@ -27,6 +29,11 @@ export const Login = () => {
   const status = useAppSelector(state => state.app.status)
   const dispatch = useAppDispatch()
   const [showPassword, setShowPassword] = useState(false)
+
+  const LoginSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email address').required('Required'),
+    password: Yup.string().min(2, 'Password should be more then 2 characters').required('Required'),
+  })
 
   const handleClickShowPassword = () => setShowPassword(show => !show)
 
@@ -40,32 +47,11 @@ export const Login = () => {
       password: '',
       rememberMe: false,
     },
-    validate: values => {
-      const errors: FormikErrorType = {}
-
-      if (!values.email) {
-        errors.email = 'Required'
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-      }
-
-      if (!values.password) {
-        errors.password = 'Required'
-      } else if (values.password.length < 3) {
-        errors.password = 'Password should be more then 2 symbols'
-      }
-
-      return errors
-    },
+    validationSchema: LoginSchema,
     onSubmit: values => {
       dispatch(loginTC(values))
-      formik.resetForm()
     },
   })
-
-  if (isLoggedIn) {
-    return <Navigate to={'/friday-project-cards/profile'} />
-  }
 
   return (
     <Grid container justifyContent={'center'}>
@@ -122,7 +108,7 @@ export const Login = () => {
                   />
                 }
               />
-              <NavLink to={'/friday-project-cards/passRecovery'} className={style.forgot}>
+              <NavLink to={PATH.RECOVERY} className={style.forgot}>
                 Forgot Password?
               </NavLink>
               <Button
@@ -136,7 +122,7 @@ export const Login = () => {
               <a href={'#'} className={style.account}>
                 Already have an account?
               </a>
-              <NavLink to={'/friday-project-cards/registration'} className={style.signIn}>
+              <NavLink to={PATH.REGISTER} className={style.signIn}>
                 Sign Up
               </NavLink>
             </FormGroup>
@@ -145,10 +131,4 @@ export const Login = () => {
       </Grid>
     </Grid>
   )
-}
-
-type FormikErrorType = {
-  email?: string
-  password?: string
-  rememberMe?: boolean
 }

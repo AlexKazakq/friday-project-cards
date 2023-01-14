@@ -39,10 +39,6 @@ export const Profile = () => {
     dispatch(updateProfileDataTC({ name: nickname }))
   }, [])
 
-  if (!isLoggedIn) {
-    return <Navigate to={'/friday-project-cards/login'} />
-  }
-
   return (
     <Grid container justifyContent={'center'}>
       <Grid item justifyContent={'center'} className={styleForm.form}>

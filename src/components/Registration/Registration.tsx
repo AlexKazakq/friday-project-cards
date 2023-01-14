@@ -14,18 +14,25 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import * as Yup from 'yup'
 
+import { PATH } from '../../assets/Routes/path'
 import { RegisterTC } from '../../bll/store/register-reducer'
 import { AppRootStateType } from '../../bll/store/store'
 
 export const Registration = () => {
-  const registered = useSelector<AppRootStateType, boolean>(state => state.register.registered)
   const responseError = useSelector<AppRootStateType, string | null>(state => state.app.error)
   const dispatch = useDispatch()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfPassword, setShowConfPassword] = useState(false)
-
+  const RegistrationSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email address').required('Required'),
+    password: Yup.string().min(2, 'Password should be more then 2 characters').required('Required'),
+    confirm: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Password and confirmation password do not match')
+      .required('Required'),
+  })
   const handleClickShowPassword = () => setShowPassword(show => !show)
   const handleClickConfShowPassword = () => setShowConfPassword(show => !show)
 
@@ -39,29 +46,7 @@ export const Registration = () => {
       password: '',
       confirm: '',
     },
-    validate: values => {
-      const errors: FormikErrorType = {}
-
-      if (!values.email) {
-        errors.email = 'Required'
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-      }
-
-      if (!values.password) {
-        errors.password = 'Required'
-      } else if (values.password.length < 3) {
-        errors.password = 'Password should be more then 2 symbols'
-      }
-
-      if (!values.confirm) {
-        errors.confirm = 'Required'
-      } else if (values.confirm !== values.password) {
-        errors.confirm = 'Password and confirmation password do not match'
-      }
-
-      return errors
-    },
+    validationSchema: RegistrationSchema,
     onSubmit: values => {
       // @ts-ignore
       delete values.confirm
@@ -71,10 +56,6 @@ export const Registration = () => {
       formik.resetForm()
     },
   })
-
-  if (registered) {
-    return <Navigate to={'/friday-project-cards/profile'} />
-  }
 
   return (
     <Grid container justifyContent={'center'}>
@@ -172,8 +153,8 @@ export const Registration = () => {
               <Button type={'submit'} variant={'contained'} color={'primary'}>
                 Sign Up
               </Button>
-              <a
-                href={'/friday-project-cards/login'}
+              <NavLink
+                to={PATH.LOGIN}
                 style={{
                   textAlign: 'center',
                   marginTop: '20px',
@@ -184,9 +165,9 @@ export const Registration = () => {
                 }}
               >
                 Already have an account?
-              </a>
-              <a
-                href={'/friday-project-cards/login'}
+              </NavLink>
+              <NavLink
+                to={PATH.LOGIN}
                 style={{
                   textAlign: 'center',
                   marginTop: '20px',
@@ -195,18 +176,11 @@ export const Registration = () => {
                 }}
               >
                 Sign In
-              </a>
+              </NavLink>
             </FormGroup>
           </form>
         </FormControl>
       </Grid>
     </Grid>
   )
-}
-
-type FormikErrorType = {
-  email?: string
-  password?: string
-  confirm?: string
-  rememberMe?: boolean
 }
