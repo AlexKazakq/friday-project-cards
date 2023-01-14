@@ -1,12 +1,17 @@
 import React from 'react'
 
 import { Button, FormControl, Grid } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+
+import { PATH } from '../../assets/Routes/path'
 
 import letterIcon from './../../assets/images/letter.png'
 import styleForm from './../../styles/form.module.css'
 import s from './checkEmail.module.css'
 
 export const CheckEmail = () => {
+  const navigate = useNavigate()
+
   return (
     <Grid container justifyContent={'center'}>
       <Grid item justifyContent={'center'}>
@@ -21,7 +26,7 @@ export const CheckEmail = () => {
               variant={'contained'}
               color={'primary'}
               onClick={() => {
-                window.location.href = '/friday-project-cards/login'
+                navigate(PATH.LOGIN)
               }}
             >
               Back to login

@@ -11,14 +11,13 @@ import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
 import { useDispatch, useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
+import { PATH } from '../../assets/Routes/path'
 import { RegisterTC } from '../../bll/store/register-reducer'
 import { AppRootStateType } from '../../bll/store/store'
-import { ErrorSnackbar } from '../Snackbar/ErrorSnackbar'
 
 export const Registration = () => {
-  const registered = useSelector<AppRootStateType, boolean>(state => state.register.registered)
   const responseError = useSelector<AppRootStateType, string | null>(state => state.app.error)
   const dispatch = useDispatch()
   const [showPassword, setShowPassword] = useState(false)
@@ -69,10 +68,6 @@ export const Registration = () => {
       formik.resetForm()
     },
   })
-
-  if (registered) {
-    return <Navigate to={'/friday-project-cards/profile'} />
-  }
 
   return (
     <Grid container justifyContent={'center'}>
@@ -170,8 +165,8 @@ export const Registration = () => {
               <Button type={'submit'} variant={'contained'} color={'primary'}>
                 Sign Up
               </Button>
-              <a
-                href={'/friday-project-cards/login'}
+              <NavLink
+                to={PATH.LOGIN}
                 style={{
                   textAlign: 'center',
                   marginTop: '20px',
@@ -182,9 +177,9 @@ export const Registration = () => {
                 }}
               >
                 Already have an account?
-              </a>
-              <a
-                href={'/friday-project-cards/login'}
+              </NavLink>
+              <NavLink
+                to={PATH.LOGIN}
                 style={{
                   textAlign: 'center',
                   marginTop: '20px',
@@ -193,7 +188,7 @@ export const Registration = () => {
                 }}
               >
                 Sign In
-              </a>
+              </NavLink>
             </FormGroup>
           </form>
         </FormControl>

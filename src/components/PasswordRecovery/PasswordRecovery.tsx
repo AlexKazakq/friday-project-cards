@@ -4,6 +4,7 @@ import { Button, FormControl, Grid, TextField } from '@mui/material'
 import { useFormik } from 'formik'
 import { Navigate, NavLink } from 'react-router-dom'
 
+import { PATH } from '../../assets/Routes/path'
 import { sendInstructionForRecoveryTC } from '../../bll/store/passwordRecovery-reducer'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 
@@ -34,7 +35,7 @@ export const PasswordRecovery = () => {
   })
 
   if (isEmailSend) {
-    return <Navigate to={'/friday-project-cards/checkEmail'} />
+    return <Navigate to={PATH.CHECK_EMAIL} />
   }
 
   return (
@@ -66,7 +67,7 @@ export const PasswordRecovery = () => {
               Send instructions
             </Button>
             <p>Did you remember your password?</p>
-            <NavLink to={'/friday-project-cards/login'} className={s.linkLogin}>
+            <NavLink to={PATH.LOGIN} className={s.linkLogin}>
               Try login
             </NavLink>
           </FormControl>

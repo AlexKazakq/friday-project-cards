@@ -5,7 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bab01990-399d-4011-9428-66f929278da4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/assets/Routes/PrivateRoutesLogin.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/Routes/PrivateRoutesLogout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/Routes/path.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/auth-api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/auth-api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Login/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NewPassword/NewPassword.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NewPassword/NewPassword.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PasswordRecovery/CheckEmail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PasswordRecovery/CheckEmail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PasswordRecovery/PasswordRecovery.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PasswordRecovery/PasswordRecovery.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Profile/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Profile/Profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Registration/Registration.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Registration/Registration.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +30,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -36,26 +51,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/samurai/friday-project-cards/src/bll/store&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\samurai\\friday-project-cards\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/it-incubator/friday/friday-project/src/assets/Routes",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "ts.external.directory.path": "D:\\it-incubator\\friday\\friday-project\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\it-incubator\friday\friday-project\src\assets\Routes" />
       <recent name="D:\samurai\friday-project-cards\src\bll\store" />
       <recent name="D:\samurai\friday-project-cards\src\components" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\it-incubator\friday\friday-project\src\assets\Routes" />
     </key>
   </component>
   <component name="RunManager">
@@ -89,6 +108,7 @@
       <updated>1673087638610</updated>
       <workItem from="1673087641353" duration="4626000" />
       <workItem from="1673463604204" duration="1515000" />
+      <workItem from="1673708643418" duration="4108000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1673087933275</created>
@@ -197,11 +217,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/components/Registration/Registration.tsx</url>
-          <line>130</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/bll/store/app-reducer.ts</url>
           <line>34</line>

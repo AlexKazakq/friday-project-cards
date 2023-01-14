@@ -12,15 +12,15 @@ import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
-import { Navigate, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
+import { PATH } from '../../assets/Routes/path'
 import { loginTC } from '../../bll/store/auth-reducer'
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { useAppDispatch } from '../../hooks/hooks'
 
 import style from './Login.module.scss'
 
 export const Login = () => {
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const dispatch = useAppDispatch()
   const [showPassword, setShowPassword] = useState(false)
 
@@ -55,13 +55,8 @@ export const Login = () => {
     },
     onSubmit: values => {
       dispatch(loginTC(values))
-      formik.resetForm()
     },
   })
-
-  if (isLoggedIn) {
-    return <Navigate to={'/friday-project-cards/profile'} />
-  }
 
   return (
     <Grid container justifyContent={'center'}>
@@ -118,7 +113,7 @@ export const Login = () => {
                   />
                 }
               />
-              <NavLink to={'/friday-project-cards/passRecovery'} className={style.forgot}>
+              <NavLink to={PATH.RECOVERY} className={style.forgot}>
                 Forgot Password?
               </NavLink>
               <Button type={'submit'} variant={'contained'} color={'primary'}>
@@ -127,7 +122,7 @@ export const Login = () => {
               <a href={'#'} className={style.account}>
                 Already have an account?
               </a>
-              <NavLink to={'/friday-project-cards/registration'} className={style.signIn}>
+              <NavLink to={PATH.REGISTER} className={style.signIn}>
                 Sign Up
               </NavLink>
             </FormGroup>

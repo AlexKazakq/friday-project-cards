@@ -2,7 +2,6 @@ import React, { useCallback, useEffect } from 'react'
 
 import LogoutIcon from '@mui/icons-material/Logout'
 import { Button, FormControl, Grid } from '@mui/material'
-import { Navigate } from 'react-router-dom'
 
 import { logoutTC } from '../../bll/store/auth-reducer'
 import { getUserProfileTC, updateProfileDataTC } from '../../bll/store/profile-reducer'
@@ -32,10 +31,6 @@ export const Profile = () => {
   let updateNickname = useCallback((nickname: string) => {
     dispatch(updateProfileDataTC({ name: nickname }))
   }, [])
-
-  if (!isLoggedIn) {
-    return <Navigate to={'/friday-project-cards/login'} />
-  }
 
   return (
     <Grid container justifyContent={'center'}>

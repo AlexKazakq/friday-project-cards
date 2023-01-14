@@ -5,6 +5,7 @@ import { useFormik } from 'formik'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
+import { PATH } from '../../assets/Routes/path'
 import { sendNewPasswordTC } from '../../bll/store/passwordChanger-reducer'
 import { AppRootStateType } from '../../bll/store/store'
 import { useAppDispatch } from '../../hooks/hooks'
@@ -29,7 +30,7 @@ export const NewPassword = () => {
   })
 
   if (isPasswordChanged) {
-    return <Navigate to={'/friday-project-cards/login'} />
+    return <Navigate to={PATH.LOGIN} />
   }
 
   return (
