@@ -11,6 +11,7 @@ import * as Yup from 'yup'
 import { PATH } from '../../assets/Routes/path'
 import { sendInstructionForRecoveryTC } from '../../bll/store/passwordRecovery-reducer'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { EmailTextField } from '../common/EmailTextField/EmailTextField'
 
 import styleForm from './../../styles/form.module.css'
 import s from './PasswordRecovery.module.css'
@@ -36,28 +37,23 @@ export const PasswordRecovery = () => {
     return <Navigate to={PATH.CHECK_EMAIL} />
   }
 
+  const emailOnSubmit = (value: string) => {
+    debugger
+    dispatch(sendInstructionForRecoveryTC(value))
+  }
+
   return (
     <Grid container justifyContent={'center'}>
-      <Grid item justifyContent={'center'}>
-        <form onSubmit={formik.handleSubmit} className={styleForm.form}>
+      <Grid item justifyContent={'center'} className={styleForm.form}>
+        <form onSubmit={formik.handleSubmit}>
+          <h3>Forgot your password?</h3>
+          <EmailTextField
+            emailErrors={formik.errors.email}
+            emailTouched={formik.touched.email}
+            getFieldProps={formik.getFieldProps('email')}
+          />
+
           <FormControl>
-            <h3>Forgot your password?</h3>
-            {formik.errors.email && formik.touched.email ? (
-              <TextField
-                {...formik.getFieldProps('email')}
-                error
-                label="Email"
-                variant="standard"
-                helperText={formik.errors.email}
-              />
-            ) : (
-              <TextField
-                label="Email"
-                margin="normal"
-                variant="standard"
-                {...formik.getFieldProps('email')}
-              />
-            )}
             <p className={s.description}>
               Enter your email address and we will send you further instructions
             </p>

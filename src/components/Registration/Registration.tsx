@@ -20,6 +20,7 @@ import * as Yup from 'yup'
 import { PATH } from '../../assets/Routes/path'
 import { RegisterTC } from '../../bll/store/register-reducer'
 import { AppRootStateType } from '../../bll/store/store'
+import { EmailTextField } from '../common/EmailTextField/EmailTextField'
 
 export const Registration = () => {
   const responseError = useSelector<AppRootStateType, string | null>(state => state.app.error)
@@ -66,17 +67,11 @@ export const Registration = () => {
           </FormLabel>
           <form onSubmit={formik.handleSubmit}>
             <FormGroup sx={{ '& .MuiTextField-root': { width: '400px', height: '80px' } }}>
-              {formik.errors.email && formik.touched.email ? (
-                <TextField
-                  {...formik.getFieldProps('email')}
-                  error
-                  margin="normal"
-                  label="Email"
-                  helperText={formik.errors.email}
-                />
-              ) : (
-                <TextField label="Email" margin="normal" {...formik.getFieldProps('email')} />
-              )}
+              <EmailTextField
+                emailErrors={formik.errors.email}
+                emailTouched={formik.touched.email}
+                getFieldProps={formik.getFieldProps('email')}
+              />
               <FormControl sx={{ width: '400px', height: '80px' }} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                 <OutlinedInput
