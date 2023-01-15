@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/friday-project-cards/static/css/main.46ed4e43.css",
-    "main.js": "/friday-project-cards/static/js/main.af6286f9.js",
+    "main.js": "/friday-project-cards/static/js/main.79ca9d20.js",
     "static/js/27.4a9228e1.chunk.js": "/friday-project-cards/static/js/27.4a9228e1.chunk.js",
     "static/media/404.svg": "/friday-project-cards/static/media/404.8baa1b795048b6fa13ff8d30800aa1b1.svg",
     "static/media/letter.png": "/friday-project-cards/static/media/letter.cfa2f0e0a982a9c9aee5.png",
@@ -9,6 +9,6 @@
   },
   "entrypoints": [
     "static/css/main.46ed4e43.css",
-    "static/js/main.af6286f9.js"
+    "static/js/main.79ca9d20.js"
   ]
 }
