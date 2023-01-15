@@ -7,4 +7,5 @@ export const PATH = {
   ERROR404: '/error404',
   RECOVERY: '/recovery',
   CHECK_EMAIL: '/check-email',
+  PACKS: '/packs',
 }

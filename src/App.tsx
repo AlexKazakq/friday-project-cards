@@ -8,17 +8,18 @@ import { PATH } from './assets/Routes/path'
 import { PrivateRoutesLogin } from './assets/Routes/PrivateRoutesLogin'
 import { PrivateRoutesLogout } from './assets/Routes/PrivateRoutesLogout'
 import { initializeAppTC } from './bll/store/app-reducer'
-import { Header } from './components/Header/Header'
-import { Login } from './components/Login/Login'
-import { NewPassword } from './components/NewPassword/NewPassword'
-import { NotFound } from './components/NotFound/NotFound'
-import { CheckEmail } from './components/PasswordRecovery/CheckEmail'
-import { PasswordRecovery } from './components/PasswordRecovery/PasswordRecovery'
-import { Profile } from './components/Profile/Profile'
-import { Registration } from './components/Registration/Registration'
-import { ErrorSnackbar } from './components/Snackbar/ErrorSnackbar'
-import { InfoSnackbar } from './components/Snackbar/InfoSnackbar'
 import { useAppDispatch, useAppSelector } from './hooks/hooks'
+import { Error404 } from './UI/components/Error404/Error404'
+import { Header } from './UI/components/Header/Header'
+import { Login } from './UI/components/Login/Login'
+import { NewPassword } from './UI/components/NewPassword/NewPassword'
+import { Packs } from './UI/components/Packs/Packs'
+import { CheckEmail } from './UI/components/PasswordRecovery/CheckEmail'
+import { PasswordRecovery } from './UI/components/PasswordRecovery/PasswordRecovery'
+import { Profile } from './UI/components/Profile/Profile'
+import { Registration } from './UI/components/Registration/Registration'
+import { ErrorSnackbar } from './UI/components/Snackbar/ErrorSnackbar'
+import { InfoSnackbar } from './UI/components/Snackbar/InfoSnackbar'
 
 function App() {
   const status = useAppSelector(state => state.app.status)
@@ -50,11 +51,12 @@ function App() {
       {status === 'loading' && <LinearProgress />}
       <Routes>
         <Route path={'/'} element={<Navigate to={PATH.LOGIN} />} />
-        <Route path={PATH.ERROR404} element={<NotFound />} />
+        <Route path={PATH.ERROR404} element={<Error404 />} />
         <Route path={'/*'} element={<Navigate to={PATH.ERROR404} />} />
 
         <Route element={<PrivateRoutesLogout />}>
           <Route path={PATH.PROFILE} element={<Profile />} />
+          <Route path={PATH.PACKS} element={<Packs />} />
         </Route>
 
         <Route element={<PrivateRoutesLogin />}>
