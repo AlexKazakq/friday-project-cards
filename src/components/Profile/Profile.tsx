@@ -6,6 +6,7 @@ import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
 import { Navigate } from 'react-router-dom'
 
+import { isLoggedInSelector, profileInfoSelector } from '../../bll/selectors/selectors'
 import { logoutTC } from '../../bll/store/auth-reducer'
 import { getUserProfileTC, updateProfileDataTC } from '../../bll/store/profile-reducer'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
@@ -16,13 +17,9 @@ import BadgeAvatars from './Avatar'
 import { ProfileName } from './ProfileName'
 
 export const Profile = () => {
-  const profileInfo = useAppSelector(state => state.profile.profile)
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-  const status = useAppSelector(state => state.app.status)
+  const profileInfo = useAppSelector(profileInfoSelector)
+  const isLoggedIn = useAppSelector(isLoggedInSelector)
   const dispatch = useAppDispatch()
-
-  console.log(status)
-  console.log(profileInfo.name)
 
   useEffect(() => {
     if (!isLoggedIn) {

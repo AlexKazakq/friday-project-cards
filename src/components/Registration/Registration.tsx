@@ -13,17 +13,15 @@ import InputLabel from '@mui/material/InputLabel'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
-import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import * as Yup from 'yup'
 
 import { PATH } from '../../assets/Routes/path'
 import { RegisterTC } from '../../bll/store/register-reducer'
-import { AppRootStateType } from '../../bll/store/store'
+import { useAppDispatch } from '../../hooks/hooks'
 
 export const Registration = () => {
-  const responseError = useSelector<AppRootStateType, string | null>(state => state.app.error)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfPassword, setShowConfPassword] = useState(false)
   const RegistrationSchema = Yup.object().shape({
@@ -51,7 +49,6 @@ export const Registration = () => {
       // @ts-ignore
       delete values.confirm
       console.log(values)
-      // @ts-ignore
       dispatch(RegisterTC(values))
       formik.resetForm()
     },
@@ -101,7 +98,7 @@ export const Registration = () => {
               {formik.errors.password && formik.touched.password ? (
                 <span
                   style={{
-                    color: 'red',
+                    color: '#ec8686',
                     fontSize: '13px',
                     position: 'absolute',
                     top: '257px',
@@ -137,7 +134,7 @@ export const Registration = () => {
               {formik.errors.confirm && formik.touched.confirm ? (
                 <span
                   style={{
-                    color: 'red',
+                    color: '#ec8686',
                     fontSize: '13px',
                     position: 'absolute',
                     top: '332px',

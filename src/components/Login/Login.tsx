@@ -19,14 +19,14 @@ import { NavLink } from 'react-router-dom'
 import * as Yup from 'yup'
 
 import { PATH } from '../../assets/Routes/path'
+import { statusSelector } from '../../bll/selectors/selectors'
 import { loginTC } from '../../bll/store/auth-reducer'
-import { useAppDispatch } from '../../hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 
 import style from './Login.module.scss'
 
 export const Login = () => {
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-  const status = useAppSelector(state => state.app.status)
+  const status = useAppSelector(statusSelector)
   const dispatch = useAppDispatch()
   const [showPassword, setShowPassword] = useState(false)
 

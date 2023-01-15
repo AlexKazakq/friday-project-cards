@@ -5,6 +5,8 @@ import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
 import { useNavigate } from 'react-router-dom'
 import { PATH } from '../../assets/Routes/path'
+import { statusSelector } from '../../bll/selectors/selectors'
+import { useAppSelector } from '../../hooks/hooks'
 
 import { useAppSelector } from '../../hooks/hooks'
 
@@ -13,7 +15,7 @@ import styleForm from './../../styles/form.module.css'
 import s from './checkEmail.module.css'
 
 export const CheckEmail = () => {
-  const status = useAppSelector(state => state.app.status)
+  const status = useAppSelector(statusSelector)
 
   const navigate = useNavigate()
 

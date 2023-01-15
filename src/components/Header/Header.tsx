@@ -1,19 +1,21 @@
 import React from 'react'
 
 import '../../App.css'
+import Avatar from '@mui/material/Avatar'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { PATH } from '../../assets/Routes/path'
-import { AppRootStateType } from '../../bll/store/store'
+import { isLoggedInSelector, profileInfoSelector } from '../../bll/selectors/selectors'
+import { useAppSelector } from '../../hooks/hooks'
 import SuperButton from '../common/SuperButton/SuperButton'
 import { AvatarImg } from '../Profile/Avatar'
 
 import s from './header.module.css'
 
 export function Header() {
-  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
-  const profileInfo = useSelector<AppRootStateType, any>(state => state.profile.profile)
+  const isLoggedIn = useAppSelector(isLoggedInSelector)
+  const profileInfo = useAppSelector(profileInfoSelector)
   const navigate = useNavigate()
 
   let HeaderRight = () => {

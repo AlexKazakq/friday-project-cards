@@ -9,6 +9,7 @@ import { Navigate, NavLink } from 'react-router-dom'
 import * as Yup from 'yup'
 
 import { PATH } from '../../assets/Routes/path'
+import { isEmailSendSelector } from '../../bll/selectors/selectors'
 import { sendInstructionForRecoveryTC } from '../../bll/store/passwordRecovery-reducer'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 
@@ -17,7 +18,7 @@ import s from './PasswordRecovery.module.css'
 
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()
-  const isEmailSend = useAppSelector(state => state.passwordRecovery.isEmailSend)
+  const isEmailSend = useAppSelector(isEmailSendSelector)
   const RecoveryValidationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email address').required('Required'),
   })
