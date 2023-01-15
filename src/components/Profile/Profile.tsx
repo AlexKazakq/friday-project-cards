@@ -4,9 +4,12 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
-import { Navigate } from 'react-router-dom'
 
-import { isLoggedInSelector, profileInfoSelector } from '../../bll/selectors/selectors'
+import {
+  isLoggedInSelector,
+  profileInfoSelector,
+  statusSelector,
+} from '../../bll/selectors/selectors'
 import { logoutTC } from '../../bll/store/auth-reducer'
 import { getUserProfileTC, updateProfileDataTC } from '../../bll/store/profile-reducer'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
@@ -19,6 +22,7 @@ import { ProfileName } from './ProfileName'
 export const Profile = () => {
   const profileInfo = useAppSelector(profileInfoSelector)
   const isLoggedIn = useAppSelector(isLoggedInSelector)
+  const status = useAppSelector(statusSelector)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
