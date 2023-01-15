@@ -8,6 +8,14 @@ import { useFormik } from 'formik'
 import { Navigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
+import { PATH } from '../../assets/Routes/path'
+import { sendNewPasswordTC } from '../../bll/store/passwordChanger-reducer'
+import { AppRootStateType } from '../../bll/store/store'
+import { useAppDispatch } from '../../hooks/hooks'
+import { ButtonForm } from '../common/ButtonForm/ButtonForm'
+import { PasswordTextField } from '../common/PasswordTextField/PasswordTextField'
+
+import styleForm from './../../styles/form.module.css'
 import { PATH } from '../../../assets/Routes/path'
 import { isPasswordChangedSelector } from '../../../bll/selectors/selectors'
 import { sendNewPasswordTC } from '../../../bll/store/passwordChanger-reducer'
@@ -30,7 +38,6 @@ export const NewPassword = () => {
     validationSchema: NewPasswordValidationSchema,
     onSubmit: values => {
       dispatch(sendNewPasswordTC({ password: values.password, resetPasswordToken: token }))
-      // window.location.href = '/friday-project-cards/profile'
     },
   })
 
@@ -40,26 +47,20 @@ export const NewPassword = () => {
 
   return (
     <Grid container justifyContent={'center'}>
-      <Grid item justifyContent={'center'}>
-        <form onSubmit={formik.handleSubmit} className={styleForm.form}>
+      <Grid item justifyContent={'center'} className={styleForm.form}>
+        <form onSubmit={formik.handleSubmit}>
           <FormControl>
             <h3>Create new password</h3>
-            <TextField
-              type="password"
-              id="standard-basic"
-              label="Password"
-              variant="standard"
-              {...formik.getFieldProps('password')}
+
+            <PasswordTextField
+              passwordErrors={formik.errors.password}
+              passwordTouched={formik.touched.password}
+              getFieldProps={formik.getFieldProps('password')}
+              label={'Password'}
             />
+
             <p>Create new password and we will send you further instructions to email</p>
-            <Button
-              type={'submit'}
-              variant={'contained'}
-              color={'primary'}
-              disabled={status === 'loading'}
-            >
-              Create new password
-            </Button>
+            <ButtonForm buttonName={'Create new password'} />
           </FormControl>
         </form>
       </Grid>
