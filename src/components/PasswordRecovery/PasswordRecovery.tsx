@@ -1,9 +1,7 @@
 import React from 'react'
 
-import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
-import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
 import { Navigate, NavLink } from 'react-router-dom'
 import * as Yup from 'yup'
@@ -11,6 +9,7 @@ import * as Yup from 'yup'
 import { PATH } from '../../assets/Routes/path'
 import { sendInstructionForRecoveryTC } from '../../bll/store/passwordRecovery-reducer'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { ButtonForm } from '../common/ButtonForm/ButtonForm'
 import { EmailTextField } from '../common/EmailTextField/EmailTextField'
 
 import styleForm from './../../styles/form.module.css'
@@ -22,7 +21,7 @@ export const PasswordRecovery = () => {
   const RecoveryValidationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email address').required('Required'),
   })
-  const status = useAppSelector(state => state.app.status)
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -35,11 +34,6 @@ export const PasswordRecovery = () => {
 
   if (isEmailSend) {
     return <Navigate to={PATH.CHECK_EMAIL} />
-  }
-
-  const emailOnSubmit = (value: string) => {
-    debugger
-    dispatch(sendInstructionForRecoveryTC(value))
   }
 
   return (
@@ -57,16 +51,10 @@ export const PasswordRecovery = () => {
             <p className={s.description}>
               Enter your email address and we will send you further instructions
             </p>
-            <Button
-              type={'submit'}
-              variant={'contained'}
-              color={'primary'}
-              disabled={status === 'loading'}
-            >
-              Send instructions
-            </Button>
+            <ButtonForm buttonName={'Send instructions'} />
+
             <p>Did you remember your password?</p>
-            <NavLink to={PATH.LOGIN} className={s.linkLogin}>
+            <NavLink to={PATH.LOGIN} className={styleForm.linkForm}>
               Try login
             </NavLink>
           </FormControl>
