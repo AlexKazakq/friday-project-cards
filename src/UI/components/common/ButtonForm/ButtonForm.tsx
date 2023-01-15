@@ -2,7 +2,8 @@ import React from 'react'
 
 import Button from '@mui/material/Button'
 
-import { useAppSelector } from '../../../hooks/hooks'
+import { statusSelector } from '../../../../bll/selectors/selectors'
+import { useAppSelector } from '../../../../hooks/hooks'
 import styleForm from '../../../styles/form.module.css'
 
 type ButtonFormType = {
@@ -10,7 +11,7 @@ type ButtonFormType = {
 }
 
 export const ButtonForm = (props: ButtonFormType) => {
-  const status = useAppSelector(state => state.app.status)
+  const status = useAppSelector(statusSelector)
 
   return (
     <div className={styleForm.buttonForm}>

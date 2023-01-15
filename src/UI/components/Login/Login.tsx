@@ -9,14 +9,16 @@ import { NavLink } from 'react-router-dom'
 import * as Yup from 'yup'
 
 import { PATH } from '../../../assets/Routes/path'
-import { statusSelector } from '../../../bll/selectors/selectors'
 import { loginTC } from '../../../bll/store/auth-reducer'
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
+import { useAppDispatch } from '../../../hooks/hooks'
 import styleForm from '../../styles/form.module.css'
+import { ButtonForm } from '../common/ButtonForm/ButtonForm'
+import { EmailTextField } from '../common/EmailTextField/EmailTextField'
+import { PasswordTextField } from '../common/PasswordTextField/PasswordTextField'
+
 import style from './Login.module.scss'
 
 export const Login = () => {
-  const status = useAppSelector(statusSelector)
   const dispatch = useAppDispatch()
 
   const LoginSchema = Yup.object().shape({

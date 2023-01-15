@@ -1,26 +1,18 @@
 import React from 'react'
 
-import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
-import TextField from '@mui/material/TextField'
 import { useFormik } from 'formik'
 import { Navigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
-import { PATH } from '../../assets/Routes/path'
-import { sendNewPasswordTC } from '../../bll/store/passwordChanger-reducer'
-import { AppRootStateType } from '../../bll/store/store'
-import { useAppDispatch } from '../../hooks/hooks'
-import { ButtonForm } from '../common/ButtonForm/ButtonForm'
-import { PasswordTextField } from '../common/PasswordTextField/PasswordTextField'
-
-import styleForm from './../../styles/form.module.css'
 import { PATH } from '../../../assets/Routes/path'
 import { isPasswordChangedSelector } from '../../../bll/selectors/selectors'
 import { sendNewPasswordTC } from '../../../bll/store/passwordChanger-reducer'
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
+import { useAppSelector, useAppDispatch } from '../../../hooks/hooks'
 import styleForm from '../../styles/form.module.css'
+import { ButtonForm } from '../common/ButtonForm/ButtonForm'
+import { PasswordTextField } from '../common/PasswordTextField/PasswordTextField'
 
 export const NewPassword = () => {
   const dispatch = useAppDispatch()

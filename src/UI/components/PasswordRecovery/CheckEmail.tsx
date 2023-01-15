@@ -5,21 +5,14 @@ import Grid from '@mui/material/Grid'
 import { useFormik } from 'formik'
 import { useNavigate } from 'react-router-dom'
 
-import letterIcon from '../../../assets/images/letter.png'
-import { statusSelector } from '../../../bll/selectors/selectors'
-import { useAppSelector } from '../../../hooks/hooks'
-import styleForm from '../../styles/form.module.css'
-
 import { PATH } from '../../../assets/Routes/path'
 import { ButtonForm } from '../common/ButtonForm/ButtonForm'
 
-import letterIcon from './../../assets/images/letter.png'
+import letterIcon from './../../../assets/images/letter.png'
 import styleForm from './../../styles/form.module.css'
 import s from './checkEmail.module.css'
 
 export const CheckEmail = () => {
-  const status = useAppSelector(statusSelector)
-
   const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {},

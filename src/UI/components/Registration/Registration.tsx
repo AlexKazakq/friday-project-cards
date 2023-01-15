@@ -7,13 +7,12 @@ import { NavLink } from 'react-router-dom'
 import * as Yup from 'yup'
 
 import { PATH } from '../../../assets/Routes/path'
+import { RegisterTC } from '../../../bll/store/register-reducer'
+import { useAppDispatch } from '../../../hooks/hooks'
 import styleForm from '../../styles/form.module.css'
 import { ButtonForm } from '../common/ButtonForm/ButtonForm'
 import { EmailTextField } from '../common/EmailTextField/EmailTextField'
 import { PasswordTextField } from '../common/PasswordTextField/PasswordTextField'
-import { PATH } from '../../../assets/Routes/path'
-import { RegisterTC } from '../../../bll/store/register-reducer'
-import { useAppDispatch } from '../../../hooks/hooks'
 
 export const Registration = () => {
   const dispatch = useAppDispatch()
@@ -41,39 +40,39 @@ export const Registration = () => {
     },
   })
 
-  return(
-      <Grid container justifyContent={'center'}>
-        <Grid item justifyContent={'center'} className={styleForm.form}>
-          <form onSubmit={formik.handleSubmit}>
-            <FormControl className={styleForm.formContainer}>
-              <h3>Sign UP</h3>
-              <EmailTextField
-                  emailErrors={formik.errors.email}
-                  emailTouched={formik.touched.email}
-                  getFieldProps={formik.getFieldProps('email')}
-              />
-              <PasswordTextField
-                  passwordErrors={formik.errors.password}
-                  passwordTouched={formik.touched.password}
-                  getFieldProps={formik.getFieldProps('password')}
-                  label={'Password'}
-              />
-              <PasswordTextField
-                  passwordErrors={formik.errors.confirm}
-                  passwordTouched={formik.touched.confirm}
-                  getFieldProps={formik.getFieldProps('confirm')}
-                  label={'Confirm'}
-              />
+  return (
+    <Grid container justifyContent={'center'}>
+      <Grid item justifyContent={'center'} className={styleForm.form}>
+        <form onSubmit={formik.handleSubmit}>
+          <FormControl className={styleForm.formContainer}>
+            <h3>Sign UP</h3>
+            <EmailTextField
+              emailErrors={formik.errors.email}
+              emailTouched={formik.touched.email}
+              getFieldProps={formik.getFieldProps('email')}
+            />
+            <PasswordTextField
+              passwordErrors={formik.errors.password}
+              passwordTouched={formik.touched.password}
+              getFieldProps={formik.getFieldProps('password')}
+              label={'Password'}
+            />
+            <PasswordTextField
+              passwordErrors={formik.errors.confirm}
+              passwordTouched={formik.touched.confirm}
+              getFieldProps={formik.getFieldProps('confirm')}
+              label={'Confirm'}
+            />
 
-              <ButtonForm buttonName={'Sign Up'} />
+            <ButtonForm buttonName={'Sign Up'} />
 
-              <p>Already have an account?</p>
-              <NavLink to={PATH.LOGIN} className={styleForm.linkForm}>
-                Sign In
-              </NavLink>
-            </FormControl>
-          </form>
-        </Grid>
+            <p>Already have an account?</p>
+            <NavLink to={PATH.LOGIN} className={styleForm.linkForm}>
+              Sign In
+            </NavLink>
+          </FormControl>
+        </form>
       </Grid>
+    </Grid>
   )
 }
