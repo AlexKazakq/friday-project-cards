@@ -1,15 +1,21 @@
 import React from 'react'
 
-import { Button, FormControl, Grid } from '@mui/material'
+import Button from '@mui/material/Button'
+import FormControl from '@mui/material/FormControl'
+import Grid from '@mui/material/Grid'
 import { useNavigate } from 'react-router-dom'
 
 import { PATH } from '../../assets/Routes/path'
+import { statusSelector } from '../../bll/selectors/selectors'
+import { useAppSelector } from '../../hooks/hooks'
 
 import letterIcon from './../../assets/images/letter.png'
 import styleForm from './../../styles/form.module.css'
 import s from './checkEmail.module.css'
 
 export const CheckEmail = () => {
+  const status = useAppSelector(statusSelector)
+
   const navigate = useNavigate()
 
   return (
@@ -28,6 +34,7 @@ export const CheckEmail = () => {
               onClick={() => {
                 navigate(PATH.LOGIN)
               }}
+              disabled={status === 'loading'}
             >
               Back to login
             </Button>

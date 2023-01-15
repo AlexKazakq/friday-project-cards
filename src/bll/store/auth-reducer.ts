@@ -44,7 +44,6 @@ export const logoutTC = () => (dispatch: Dispatch) => {
   authAPI
     .logOut()
     .then(res => {
-      debugger
       dispatch(setLoggedOut({ isLoggedIn: false }))
       dispatch(setAppStatus({ status: 'succeeded' }))
     })

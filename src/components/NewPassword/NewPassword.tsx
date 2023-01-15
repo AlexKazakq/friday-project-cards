@@ -2,22 +2,19 @@ import React from 'react'
 
 import { Button, FormControl, Grid, TextField } from '@mui/material'
 import { useFormik } from 'formik'
-import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import * as Yup from 'yup'
 
 import { PATH } from '../../assets/Routes/path'
+import { isPasswordChangedSelector } from '../../bll/selectors/selectors'
 import { sendNewPasswordTC } from '../../bll/store/passwordChanger-reducer'
-import { AppRootStateType } from '../../bll/store/store'
-import { useAppDispatch } from '../../hooks/hooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 
 import styleForm from './../../styles/form.module.css'
 
 export const NewPassword = () => {
   const dispatch = useAppDispatch()
-  const isPasswordChanged = useSelector<AppRootStateType, boolean>(
-    state => state.sendNewPassword.changed
-  )
+  const isPasswordChanged = useAppSelector(isPasswordChangedSelector)
 
   const NewPasswordValidationSchema = Yup.object().shape({
     password: Yup.string().min(2, 'Password should be more then 2 characters').required('Required'),
