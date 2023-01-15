@@ -22,3 +22,5 @@ export const isEmailSendSelector = createSelector(
   state,
   state => state.passwordRecovery.isEmailSend
 )
+
+export const cardPacksSelector = createSelector(state, state => state.packs.cardPacks)

@@ -26,6 +26,7 @@ const initialState = {
     name: ' ',
     email: ' ',
     avatar: ' ',
+    _id: ' ',
   },
 }
 

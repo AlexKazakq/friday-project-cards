@@ -4,10 +4,10 @@ import { authAPI } from '../../api/auth-api'
 
 import { setIsLoggedIn } from './auth-reducer'
 
-const initialState: InitialStateType = {
+const initialState = {
   status: 'idle',
-  error: null,
-  info: null,
+  error: null as null | string,
+  info: null as null | string,
   isInitialized: false,
 }
 
@@ -48,9 +48,3 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
 }
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
-type InitialStateType = {
-  status: RequestStatusType
-  error: null | string
-  info: null | string
-  isInitialized: boolean
-}

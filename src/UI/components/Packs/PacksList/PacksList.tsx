@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import EditIcon from '@mui/icons-material/Edit'
+import SchoolIcon from '@mui/icons-material/School'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -9,8 +12,12 @@ import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 
+import { cardPacksSelector, profileInfoSelector } from '../../../../bll/selectors/selectors'
+import { setPacksTC } from '../../../../bll/store/packs-reducer'
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
+
 interface Column {
-  id: 'name' | 'cards' | 'update' | 'created' | 'actions'
+  id: 'name' | 'cards' | 'updated' | 'created' | 'actions'
   label: string
   minWidth?: number
   align?: 'right'
@@ -21,7 +28,7 @@ const columns: readonly Column[] = [
   { id: 'name', label: 'Name' },
   { id: 'cards', label: 'Cards' },
   {
-    id: 'update',
+    id: 'updated',
     label: 'Last Updated',
   },
   {
@@ -36,16 +43,53 @@ const columns: readonly Column[] = [
 
 interface Data {
   name: string
-  cards: string
-  update: string
+  cards: number
+  updated: string
   created: string
-  actions: string
+  actions: any
 }
-const rows: Data[] = [] // то что мы получаем из запроса
 
 export const PacksList = () => {
+  const cardPacks = useAppSelector(cardPacksSelector)
+  const profileInfo = useAppSelector(profileInfoSelector)
   const [page, setPage] = useState(0)
   const [cardsPerPage, setCardsPerPage] = useState(10)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(setPacksTC())
+  }, [])
+
+  function createData(
+    name: string,
+    cards: number,
+    updated: string,
+    created: string,
+    actions: any
+  ): Data {
+    return { name, cards, updated, created, actions }
+  }
+
+  const rows: Data[] = cardPacks.map(pack => {
+    const actions =
+      profileInfo._id === pack.user_id ? (
+        <div>
+          <SchoolIcon />
+          <span> </span>
+          <EditIcon />
+          <span> </span>
+          <DeleteForeverIcon />
+        </div>
+      ) : (
+        <div>
+          <SchoolIcon />
+        </div>
+      )
+
+    debugger
+
+    return createData(pack.name, pack.cardsCount, pack.updated, pack.created, actions)
+  })
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
