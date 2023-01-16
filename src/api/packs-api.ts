@@ -43,12 +43,12 @@ type getPacksResponseType = {
 }
 
 export type PacksParamsType = {
-  packName: string
+  packName?: string
   min?: number
   max?: number
   sortPacks?: string
   page?: number
   pageCount?: number
-  user_id: string
+  user_id?: string
   block?: boolean
 }

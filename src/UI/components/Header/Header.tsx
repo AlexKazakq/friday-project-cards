@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { PATH } from '../../../assets/Routes/path'
 import { isLoggedInSelector, profileInfoSelector } from '../../../bll/selectors/selectors'
-import { getUserProfileTC } from '../../../bll/store/profile-reducer'
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
+import { useAppSelector } from '../../../hooks/hooks'
 import SuperButton from '../common/SuperButton/SuperButton'
 import { AvatarImg } from '../Profile/Avatar'
 
@@ -16,13 +15,12 @@ export function Header() {
   const isLoggedIn = useAppSelector(isLoggedInSelector)
   const profileInfo = useAppSelector(profileInfoSelector)
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (!isLoggedIn) {
       return
     }
-    dispatch(getUserProfileTC())
+    // dispatch(getUserProfileTC())
   }, [])
 
   let HeaderRight = () => {

@@ -3,21 +3,24 @@ import React, { useState } from 'react'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
+import { profileInfoSelector } from '../../../../bll/selectors/selectors'
+import { useAppSelector } from '../../../../hooks/hooks'
+
 type SupperButtonPropsType = {
   firstValue: string
   secondValue: string
-  filterShowMyOrAllPacks: (alignment: string) => void
+  changeToggleButton: (userId: string) => void
 }
 export const SupperToggleButton = ({
   firstValue,
   secondValue,
-  filterShowMyOrAllPacks,
+  changeToggleButton,
 }: SupperButtonPropsType) => {
-  const [alignment, setAlignment] = useState(firstValue)
-
+  const profileInfo = useAppSelector(profileInfoSelector)
+  const [alignment, setAlignment] = useState(secondValue)
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     setAlignment(newAlignment)
-    filterShowMyOrAllPacks(newAlignment)
+    newAlignment === 'My' ? changeToggleButton(profileInfo._id) : changeToggleButton('')
   }
 
   return (
@@ -28,10 +31,20 @@ export const SupperToggleButton = ({
       onChange={handleChange}
       aria-label="Platform"
     >
-      <ToggleButton size={'small'} value={firstValue} sx={{ width: '80px' }}>
+      <ToggleButton
+        size={'small'}
+        value={firstValue}
+        sx={{ width: '80px' }}
+        disabled={alignment === 'My'}
+      >
         {firstValue}
       </ToggleButton>
-      <ToggleButton size={'small'} value={secondValue} sx={{ width: '80px' }}>
+      <ToggleButton
+        size={'small'}
+        value={secondValue}
+        sx={{ width: '80px' }}
+        disabled={alignment !== 'My'}
+      >
         {secondValue}
       </ToggleButton>
     </ToggleButtonGroup>
