@@ -3,24 +3,22 @@ import React, { useState } from 'react'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
-import { profileInfoSelector } from '../../../../bll/selectors/selectors'
-import { useAppSelector } from '../../../../hooks/hooks'
-
 type SupperButtonPropsType = {
   firstValue: string
   secondValue: string
-  changeToggleButton: (userId: string) => void
+  isMyPacks: boolean
+  showMyOrAllPacks: (isMyPacks: boolean) => void
 }
 export const SupperToggleButton = ({
   firstValue,
   secondValue,
-  changeToggleButton,
+  isMyPacks,
+  showMyOrAllPacks,
 }: SupperButtonPropsType) => {
-  const profileInfo = useAppSelector(profileInfoSelector)
-  const [alignment, setAlignment] = useState(secondValue)
+  const [alignment, setAlignment] = useState(isMyPacks === false ? secondValue : firstValue)
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     setAlignment(newAlignment)
-    newAlignment === 'My' ? changeToggleButton(profileInfo._id) : changeToggleButton('')
+    newAlignment === 'My' ? showMyOrAllPacks(true) : showMyOrAllPacks(false)
   }
 
   return (
