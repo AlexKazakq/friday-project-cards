@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useCallback, useState } from 'react'
 
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices'
 import SearchIcon from '@mui/icons-material/Search'
@@ -11,9 +11,15 @@ import { SupperToggleButton } from '../../common/ToggleButton/ToggleButton'
 
 import s from './packsSetting.module.css'
 
-export const PacksSetting = () => {
+export type PacksSettingType = {
+  SearchByPackName: (packName: string) => void
+  filterShowMyOrAllPacks: (alignment: string) => void
+}
+
+export const PacksSetting = (props: PacksSettingType) => {
   const [value1, setValue1] = useState<number>(0)
   const [value2, setValue2] = useState<number>(10)
+  const [packName, setPackName] = useState<string>('')
   const change = (event: Event, value: number | number[]) => {
     if (Array.isArray(value)) {
       let [a, b] = value
@@ -25,6 +31,15 @@ export const PacksSetting = () => {
     }
   }
 
+  let SearchByPackName = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setPackName(e.currentTarget.value)
+    props.SearchByPackName(e.currentTarget.value)
+  }, [])
+
+  let filterShowMyOrAllPacks = useCallback((alignment: string) => {
+    props.filterShowMyOrAllPacks(alignment)
+  }, [])
+
   return (
     <div className={s.wrapper}>
       <div className={s.items}>
@@ -32,6 +47,8 @@ export const PacksSetting = () => {
         <FormControl size={'small'} fullWidth>
           <OutlinedInput
             id="outlined-adornment-amount"
+            onChange={SearchByPackName}
+            value={packName}
             startAdornment={
               <InputAdornment position="start">
                 <SearchIcon />
@@ -44,7 +61,11 @@ export const PacksSetting = () => {
       <div className={s.items}>
         <span className={s.title}>Show packs card</span>
         <div>
-          <SupperToggleButton firstValue={'My'} secondValue={'All'} />
+          <SupperToggleButton
+            firstValue={'My'}
+            secondValue={'All'}
+            filterShowMyOrAllPacks={filterShowMyOrAllPacks}
+          />
         </div>
       </div>
       <div className={s.items}>

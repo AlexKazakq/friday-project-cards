@@ -12,9 +12,11 @@ import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 
+import { PacksParamsType } from '../../../../api/packs-api'
 import { cardPacksSelector, profileInfoSelector } from '../../../../bll/selectors/selectors'
-import { setPacksTC } from '../../../../bll/store/packs-reducer'
+import { setPacksWithParamsTC } from '../../../../bll/store/packs-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
+import { useDebounce } from '../../../../hooks/useDebounce'
 
 interface Column {
   id: 'name' | 'cards' | 'updated' | 'created' | 'actions'
@@ -49,16 +51,21 @@ interface Data {
   actions: any
 }
 
-export const PacksList = () => {
+export const PacksList = (props: PacksParamsType) => {
   const cardPacks = useAppSelector(cardPacksSelector)
   const profileInfo = useAppSelector(profileInfoSelector)
+  const debouncedValue = useDebounce<string>(props.packName, 500)
   const [page, setPage] = useState(0)
   const [cardsPerPage, setCardsPerPage] = useState(10)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(setPacksTC())
-  }, [])
+    dispatch(setPacksWithParamsTC({ packName: props.packName, user_id: props.user_id }))
+  }, [debouncedValue])
+
+  useEffect(() => {
+    dispatch(setPacksWithParamsTC({ packName: props.packName, user_id: props.user_id }))
+  }, [props.user_id])
 
   function createData(
     name: string,
@@ -85,8 +92,6 @@ export const PacksList = () => {
           <SchoolIcon />
         </div>
       )
-
-    debugger
 
     return createData(pack.name, pack.cardsCount, pack.updated, pack.created, actions)
   })

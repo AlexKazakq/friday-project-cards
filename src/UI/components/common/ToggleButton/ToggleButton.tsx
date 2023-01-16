@@ -6,12 +6,18 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 type SupperButtonPropsType = {
   firstValue: string
   secondValue: string
+  filterShowMyOrAllPacks: (alignment: string) => void
 }
-export const SupperToggleButton = ({ firstValue, secondValue }: SupperButtonPropsType) => {
+export const SupperToggleButton = ({
+  firstValue,
+  secondValue,
+  filterShowMyOrAllPacks,
+}: SupperButtonPropsType) => {
   const [alignment, setAlignment] = useState(firstValue)
 
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     setAlignment(newAlignment)
+    filterShowMyOrAllPacks(newAlignment)
   }
 
   return (
