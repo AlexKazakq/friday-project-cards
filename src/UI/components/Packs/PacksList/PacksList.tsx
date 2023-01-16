@@ -86,8 +86,6 @@ export const PacksList = () => {
         </div>
       )
 
-    debugger
-
     return createData(pack.name, pack.cardsCount, pack.updated, pack.created, actions)
   })
 
