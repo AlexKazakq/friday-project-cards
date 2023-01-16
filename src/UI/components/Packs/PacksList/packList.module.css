@@ -1,0 +1,13 @@
+.icons {
+    display: flex;
+    justify-content: space-between;
+
+    width: 60%;
+}
+.navLink {
+    color: black;
+}
+
+.icons a {
+    color: black;
+}

@@ -11,6 +11,7 @@ import tableStyle from '../../styles/table.module.css'
 import { TableHeader } from '../common/TableHeader/TableHeader'
 
 import s from './cards.module.css'
+import { CardsList } from './CardsList/CardsList'
 
 export const Cards = () => {
   return (
@@ -35,6 +36,7 @@ export const Cards = () => {
           />
         </FormControl>
       </div>
+      <CardsList />
     </div>
   )
 }

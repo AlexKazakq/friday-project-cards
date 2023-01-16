@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import EditIcon from '@mui/icons-material/Edit'
-import SchoolIcon from '@mui/icons-material/School'
 import Paper from '@mui/material/Paper'
+import Rating from '@mui/material/Rating'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -11,17 +9,17 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
-import { NavLink } from 'react-router-dom'
 
-import { PATH } from '../../../../assets/Routes/path'
-import { cardPacksSelector, profileInfoSelector } from '../../../../bll/selectors/selectors'
-import { setPackId } from '../../../../bll/store/cards-reducer'
+import {
+  cardPacksSelector,
+  cardsSelector,
+  packIdForCard,
+} from '../../../../bll/selectors/selectors'
+import { setCardsWithParamsTC } from '../../../../bll/store/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 
-import s from './packList.module.css'
-
 interface Column {
-  id: 'name' | 'cards' | 'updated' | 'created' | 'actions'
+  id: 'question' | 'answer' | 'updated' | 'grade'
   label: string
   minWidth?: number
   align?: 'right'
@@ -29,90 +27,48 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: 'name', label: 'Name' },
-  { id: 'cards', label: 'Cards' },
+  { id: 'question', label: 'Question' },
+  { id: 'answer', label: 'Answer' },
   {
     id: 'updated',
     label: 'Last Updated',
   },
   {
-    id: 'created',
-    label: 'Created by',
-  },
-  {
-    id: 'actions',
-    label: 'Actions',
+    id: 'grade',
+    label: 'Grade',
   },
 ]
 
 interface Data {
-  name: string
-  cards: number
+  question: string
+  answer: string
   updated: string
-  created: string
-  actions: any
+  grade: any
 }
 
-export const PacksList = () => {
+export const CardsList = () => {
   const cardPacks = useAppSelector(cardPacksSelector)
-  const profileInfo = useAppSelector(profileInfoSelector)
+  const cards = useAppSelector(cardsSelector)
   const [page, setPage] = useState(0)
   const [cardsPerPage, setCardsPerPage] = useState(10)
+  const packId = useAppSelector(packIdForCard)
   const dispatch = useAppDispatch()
 
   console.log(cardPacks)
+  useEffect(() => {
+    if (packId) {
+      dispatch(setCardsWithParamsTC({ cardsPack_id: packId }))
+    }
+  }, [])
 
-  const showCardByIdHandler = (id: string) => {
-    dispatch(setPackId({ packId: id }))
+  function createData(question: string, answer: string, updated: string, grade: any): Data {
+    return { question, answer, updated, grade }
   }
 
-  function createData(
-    name: string,
-    cards: number,
-    updated: string,
-    created: string,
-    actions: any
-  ): Data {
-    return { name, cards, updated, created, actions }
-  }
+  const rows: Data[] = cards.map(card => {
+    const grade = <Rating name="disabled" value={card.grade} disabled />
 
-  const rows: Data[] = cardPacks.map(pack => {
-    const actions =
-      profileInfo._id === pack.user_id ? (
-        <div key={pack._id} className={s.icons}>
-          <div>
-            <NavLink
-              to={PATH.CARDS}
-              onClick={() => showCardByIdHandler(pack._id)}
-              className={s.navLink}
-            >
-              <SchoolIcon />
-            </NavLink>
-          </div>
-          <NavLink
-            to={PATH.CARDS}
-            onClick={() => showCardByIdHandler(pack._id)}
-            className={s.navLink}
-          >
-            <EditIcon />
-          </NavLink>
-          <div>
-            <DeleteForeverIcon />
-          </div>
-        </div>
-      ) : (
-        <div key={pack._id}>
-          <NavLink
-            to={PATH.CARDS}
-            onClick={() => showCardByIdHandler(pack._id)}
-            className={s.navLink}
-          >
-            <SchoolIcon />
-          </NavLink>
-        </div>
-      )
-
-    return createData(pack.name, pack.cardsCount, pack.updated, pack.created, actions)
+    return createData(card.question, card.answer, card.updated, grade)
   })
 
   console.log(rows)
@@ -145,7 +101,7 @@ export const PacksList = () => {
           <TableBody>
             {rows.slice(page * cardsPerPage, page * cardsPerPage + cardsPerPage).map(row => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.cards}>
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.answer}>
                   {columns.map(column => {
                     const value = row[column.id]
 
