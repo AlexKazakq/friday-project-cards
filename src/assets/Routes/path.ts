@@ -8,4 +8,5 @@ export const PATH = {
   RECOVERY: '/recovery',
   CHECK_EMAIL: '/check-email',
   PACKS: '/packs',
+  CARDS: '/cards',
 }

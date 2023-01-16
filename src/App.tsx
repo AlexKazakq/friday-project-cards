@@ -9,6 +9,7 @@ import { PrivateRoutesLogin } from './assets/Routes/PrivateRoutesLogin'
 import { PrivateRoutesLogout } from './assets/Routes/PrivateRoutesLogout'
 import { initializeAppTC } from './bll/store/app-reducer'
 import { useAppDispatch, useAppSelector } from './hooks/hooks'
+import { Cards } from './UI/components/Cards/Cards'
 import { Error404 } from './UI/components/Error404/Error404'
 import { Header } from './UI/components/Header/Header'
 import { Login } from './UI/components/Login/Login'
@@ -57,6 +58,7 @@ function App() {
         <Route element={<PrivateRoutesLogout />}>
           <Route path={PATH.PROFILE} element={<Profile />} />
           <Route path={PATH.PACKS} element={<Packs />} />
+          <Route path={PATH.CARDS} element={<Cards />} />
         </Route>
 
         <Route element={<PrivateRoutesLogin />}>
