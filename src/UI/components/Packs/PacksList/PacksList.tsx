@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import EditIcon from '@mui/icons-material/Edit'
@@ -13,8 +13,7 @@ import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 
 import { cardPacksSelector, profileInfoSelector } from '../../../../bll/selectors/selectors'
-import { setPacksTC } from '../../../../bll/store/packs-reducer'
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
+import { useAppSelector } from '../../../../hooks/hooks'
 
 interface Column {
   id: 'name' | 'cards' | 'updated' | 'created' | 'actions'
@@ -54,11 +53,8 @@ export const PacksList = () => {
   const profileInfo = useAppSelector(profileInfoSelector)
   const [page, setPage] = useState(0)
   const [cardsPerPage, setCardsPerPage] = useState(10)
-  const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    dispatch(setPacksTC())
-  }, [])
+  console.log(cardPacks)
 
   function createData(
     name: string,
@@ -89,6 +85,7 @@ export const PacksList = () => {
     return createData(pack.name, pack.cardsCount, pack.updated, pack.created, actions)
   })
 
+  console.log(rows)
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
   }

@@ -47,26 +47,6 @@ const slice = createSlice({
 export const profileReducer = slice.reducer
 
 export const { setUserProfile, setNewProfileData } = slice.actions
-
-export const getUserProfileTC = () => async (dispatch: Dispatch) => {
-  dispatch(setAppStatus({ status: 'loading' }))
-  try {
-    const res = await profileAPI.getProfileInfo()
-
-    dispatch(setUserProfile({ profile: res.data }))
-    dispatch(setAppStatus({ status: 'succeeded' }))
-  } catch (e) {
-    const err = e as Error | AxiosError<{ error: string }>
-
-    if (axios.isAxiosError(err)) {
-      const error = err.response?.data ? err.response.data.error : err.message
-
-      dispatch(setAppStatus({ status: 'failed' }))
-      dispatch(setAppError({ error: error }))
-    }
-  }
-}
-
 export const updateProfileDataTC = (data: UpdateProfileDataType) => async (dispatch: Dispatch) => {
   dispatch(setAppStatus({ status: 'loading' }))
   try {

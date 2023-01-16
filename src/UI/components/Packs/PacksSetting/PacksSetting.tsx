@@ -7,7 +7,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 import OutlinedInput from '@mui/material/OutlinedInput'
 
 import { PacksParamsType } from '../../../../api/packs-api'
-import { cardPacksMaxCountSelector } from '../../../../bll/selectors/selectors'
+import { cardPacksMaxCountSelector, profileInfoSelector } from '../../../../bll/selectors/selectors'
 import { setPacksWithParamsTC } from '../../../../bll/store/packs-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { useDebounce } from '../../../../hooks/useDebounce'
@@ -17,14 +17,17 @@ import { SupperToggleButton } from '../../common/ToggleButton/ToggleButton'
 import s from './packsSetting.module.css'
 
 export const PacksSetting = () => {
+  const cardPacksMaxCount = useAppSelector(cardPacksMaxCountSelector)
   const [value1, setValue1] = useState<number>(0)
-  const [value2, setValue2] = useState<number>(53)
+  const [value2, setValue2] = useState<number>(cardPacksMaxCount)
+  const [isMyPacks, SetIsMyPacks] = useState<boolean>(false)
   const [packName, setPackName] = useState<string>('')
   const [params, setParams] = useState<PacksParamsType>({})
   const dispatch = useAppDispatch()
   const debouncedValue = useDebounce<PacksParamsType>(params, 500)
-  const cardPacksMaxCount = useAppSelector(cardPacksMaxCountSelector)
+  const profileInfo = useAppSelector(profileInfoSelector)
 
+  console.log(cardPacksMaxCount)
   const change = (event: Event, value: number | number[]) => {
     if (Array.isArray(value)) {
       let [a, b] = value
@@ -41,12 +44,24 @@ export const PacksSetting = () => {
     setPackName(e.currentTarget.value)
     setParams({ ...params, packName: e.currentTarget.value })
   }
-  const changeToggleButton = (userId: string) => {
-    setParams({ ...params, user_id: userId })
+  const showMyOrAllPacks = (isMyPacks: boolean) => {
+    SetIsMyPacks(isMyPacks)
+    isMyPacks === true
+      ? setParams({ ...params, user_id: profileInfo._id })
+      : setParams({ ...params, user_id: undefined })
   }
   const clearFilter = () => {
-    console.log('clearFilter')
-    setParams({})
+    SetIsMyPacks(false)
+    setPackName('')
+    setValue1(0)
+    setValue2(53)
+    setParams({
+      ...params,
+      packName: undefined,
+      user_id: undefined,
+      min: undefined,
+      max: undefined,
+    })
   }
 
   useEffect(() => {
@@ -77,7 +92,8 @@ export const PacksSetting = () => {
           <SupperToggleButton
             firstValue={'My'}
             secondValue={'All'}
-            changeToggleButton={changeToggleButton}
+            isMyPacks={isMyPacks}
+            showMyOrAllPacks={showMyOrAllPacks}
           />
         </div>
       </div>
@@ -87,7 +103,7 @@ export const PacksSetting = () => {
         <div>
           <span className={s.leftCount}>{value1}</span>
           <SuperRange onChange={change} value={[value1, value2]} max={cardPacksMaxCount} />
-          <span className={s.rightCount}>{cardPacksMaxCount}</span>
+          <span className={s.rightCount}>{value2}</span>
         </div>
       </div>
       <div className={s.items}>
