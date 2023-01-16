@@ -73,7 +73,7 @@ export const PacksList = () => {
   const rows: Data[] = cardPacks.map(pack => {
     const actions =
       profileInfo._id === pack.user_id ? (
-        <div>
+        <div key={pack._id}>
           <SchoolIcon />
           <span> </span>
           <EditIcon />
@@ -81,7 +81,7 @@ export const PacksList = () => {
           <DeleteForeverIcon />
         </div>
       ) : (
-        <div>
+        <div key={pack._id}>
           <SchoolIcon />
         </div>
       )

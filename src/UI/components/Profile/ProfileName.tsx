@@ -47,8 +47,6 @@ export const ProfileName = (props: ProfileNameType) => {
     if (e.key === 'Escape') {
       deactivateEditMode()
     } else if (e.key === 'Enter') {
-      debugger
-      console.log('enter')
       e.preventDefault()
       editName()
     }

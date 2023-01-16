@@ -48,20 +48,6 @@ export const profileReducer = slice.reducer
 
 export const { setUserProfile, setNewProfileData } = slice.actions
 
-// export const getUserProfileTC = () => (dispatch: Dispatch) => {
-//   dispatch(setAppStatus({ status: 'loading' }))
-//   profileAPI
-//     .getProfileInfo()
-//     .then(res => {
-//       dispatch(setUserProfile({ profile: res.data }))
-//       dispatch(setAppStatus({ status: 'succeeded' }))
-//     })
-//     .catch(e => {
-//       dispatch(setAppStatus({ status: 'failed' }))
-//       dispatch(setAppError({ error: e.response.data.error }))
-//     })
-// }
-
 export const getUserProfileTC = () => async (dispatch: Dispatch) => {
   dispatch(setAppStatus({ status: 'loading' }))
   try {

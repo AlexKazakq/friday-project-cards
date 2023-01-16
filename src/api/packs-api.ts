@@ -17,6 +17,20 @@ export const packsAPI = {
   getPacks() {
     return instance.get<getPacksResponseType>('cards/pack')
   },
+  getPacksWithParams(params: PacksParamsType) {
+    return instance.get<getPacksResponseType>('cards/pack', {
+      params: {
+        packName: params.packName,
+        min: params.min,
+        max: params.max,
+        sortPacks: params.sortPacks,
+        page: params.page,
+        pageCount: params.pageCount,
+        user_id: params.user_id,
+        block: params.block,
+      },
+    })
+  },
 }
 
 type getPacksResponseType = {
@@ -26,4 +40,15 @@ type getPacksResponseType = {
   minCardsCount: null | number
   page: null | number
   pageCount: null | number
+}
+
+export type PacksParamsType = {
+  packName?: string
+  min?: number
+  max?: number
+  sortPacks?: string
+  page?: number
+  pageCount?: number
+  user_id?: string
+  block?: boolean
 }

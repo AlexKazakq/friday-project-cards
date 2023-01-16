@@ -15,7 +15,6 @@ export function InfoSnackbar() {
   const dispatch = useAppDispatch()
   const info = useAppSelector(infoSelector)
 
-  console.log(info)
   const handleClose = (event?: React.SyntheticEvent<any> | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return
