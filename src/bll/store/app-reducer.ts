@@ -5,6 +5,7 @@ import { authAPI } from '../../api/auth-api'
 
 import { setIsLoggedIn } from './auth-reducer'
 import { setUserProfile } from './profile-reducer'
+import { AppDispatch } from './store'
 
 const initialState = {
   status: 'idle',
@@ -36,7 +37,7 @@ export const appReducer = slice.reducer
 
 export const { setAppInitialized, setAppStatus, setAppError, setAppInfo } = slice.actions
 
-export const initializeAppTC = () => async (dispatch: Dispatch) => {
+export const initializeAppTC = () => async (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: 'loading' }))
   try {
     const res = await authAPI.me()

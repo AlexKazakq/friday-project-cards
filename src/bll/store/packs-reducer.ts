@@ -4,6 +4,7 @@ import axios, { AxiosError } from 'axios'
 import { packsAPI, PacksParamsType } from '../../api/packs-api'
 
 import { setAppError, setAppStatus } from './app-reducer'
+import { AppDispatch } from './store'
 
 const initialState = {
   cardPacks: [] as CardPacksType[],
@@ -53,7 +54,7 @@ export const { setPacks, setMaxPacksCount } = slice.actions
 //   }
 // }
 
-export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch: Dispatch) => {
+export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: 'loading' }))
   try {
     const res = await packsAPI.getPacksWithParams(params)

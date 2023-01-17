@@ -4,6 +4,7 @@ import axios, { AxiosError } from 'axios'
 import { newPasswordAPI } from '../../api/auth-api'
 
 import { setAppError, setAppInfo, setAppStatus } from './app-reducer'
+import { AppDispatch } from './store'
 
 const initialState = {
   changed: false,
@@ -23,25 +24,26 @@ export const passwordChangerReducer = slice.reducer
 
 export const { setPasswordChanger } = slice.actions
 
-export const sendNewPasswordTC = (data: NewPasswordResponseType) => async (dispatch: Dispatch) => {
-  dispatch(setAppStatus({ status: 'loading' }))
-  try {
-    const res = await newPasswordAPI.sendNewPassword(data)
+export const sendNewPasswordTC =
+  (data: NewPasswordResponseType) => async (dispatch: AppDispatch) => {
+    dispatch(setAppStatus({ status: 'loading' }))
+    try {
+      const res = await newPasswordAPI.sendNewPassword(data)
 
-    dispatch(setPasswordChanger({ changed: true }))
-    dispatch(setAppStatus({ status: 'succeeded' }))
-    dispatch(setAppInfo({ info: res.data.info }))
-  } catch (e) {
-    const err = e as Error | AxiosError<{ error: string }>
+      dispatch(setPasswordChanger({ changed: true }))
+      dispatch(setAppStatus({ status: 'succeeded' }))
+      dispatch(setAppInfo({ info: res.data.info }))
+    } catch (e) {
+      const err = e as Error | AxiosError<{ error: string }>
 
-    if (axios.isAxiosError(err)) {
-      const error = err.response?.data ? err.response.data.error : err.message
+      if (axios.isAxiosError(err)) {
+        const error = err.response?.data ? err.response.data.error : err.message
 
-      dispatch(setAppError({ error: error }))
-      dispatch(setAppStatus({ status: 'failed' }))
+        dispatch(setAppError({ error: error }))
+        dispatch(setAppStatus({ status: 'failed' }))
+      }
     }
   }
-}
 
 export type NewPasswordResponseType = {
   password: string

@@ -4,6 +4,7 @@ import axios, { AxiosError } from 'axios'
 import { cardsAPI, CardsParamsType } from '../../api/cards-api'
 
 import { setAppError, setAppStatus } from './app-reducer'
+import { AppDispatch } from './store'
 
 const initialState = {
   cards: [] as CardsType[],
@@ -31,7 +32,7 @@ export const cardsReducer = slice.reducer
 
 export const { setCards, setPackUserData } = slice.actions
 
-export const setCardsWithParamsTC = (params: CardsParamsType) => async (dispatch: Dispatch) => {
+export const setCardsWithParamsTC = (params: CardsParamsType) => async (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: 'loading' }))
   try {
     const res = await cardsAPI.getCardsWithParams(params)

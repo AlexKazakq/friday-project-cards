@@ -18,16 +18,16 @@ export const instance = axios.create({
 
 export const authAPI = {
   logIn(payload: LoginDataType) {
-    return instance.post<LoginResponseType>('auth/login', payload)
+    return instance.post<UserType>('auth/login', payload)
   },
   register(payload: RegisterDataType) {
-    return instance.post('/auth/register', payload)
+    return instance.post<RegisterResponseType>('/auth/register', payload)
   },
   logOut() {
-    return instance.delete('/auth/me')
+    return instance.delete<LogOutResponseType>('/auth/me')
   },
   me() {
-    return instance.post('/auth/me')
+    return instance.post<UserType>('/auth/me')
   },
 }
 
@@ -69,16 +69,29 @@ export const passwordRecoveryAPI = {
   },
 }
 
-type LoginResponseType = {
+export type UserType = {
   _id: string
   email: string
   name: string
-  avatar?: string
-  publicCardPacksCount: number
+  avatar: string
+  publicCardPacksCount: number // количество колод
+
   created: Date
   updated: Date
   isAdmin: boolean
-  verified: boolean
+  verified: boolean // подтвердил ли почту
   rememberMe: boolean
+
   error?: string
+  // profile?: string
+}
+
+type RegisterResponseType = {
+  addedUser: Object
+  error?: string
+}
+
+type LogOutResponseType = {
+  info: string
+  error: string
 }

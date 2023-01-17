@@ -4,6 +4,7 @@ import axios, { AxiosError } from 'axios'
 import { authAPI } from '../../api/auth-api'
 
 import { setAppError, setAppStatus } from './app-reducer'
+import { AppDispatch } from './store'
 
 const initialState = {
   registered: false,
@@ -13,7 +14,7 @@ const slice = createSlice({
   name: 'register',
   initialState,
   reducers: {
-    isRegistered(state, action: PayloadAction<{ registered: boolean }>) {
+    setRegistered(state, action: PayloadAction<{ registered: boolean }>) {
       state.registered = action.payload.registered
     },
   },
@@ -21,14 +22,14 @@ const slice = createSlice({
 
 export const regReducer = slice.reducer
 
-export const { isRegistered } = slice.actions
+export const { setRegistered } = slice.actions
 
-export const RegisterTC = (data: RegisterDataType) => async (dispatch: Dispatch) => {
+export const RegisterTC = (data: RegisterDataType) => async (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: 'loading' }))
   try {
     const res = await authAPI.register(data)
 
-    dispatch(isRegistered({ registered: true }))
+    dispatch(setRegistered({ registered: true }))
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>

@@ -5,6 +5,7 @@ import { authAPI } from '../../api/auth-api'
 
 import { setAppError, setAppStatus } from './app-reducer'
 import { setNewProfileData } from './profile-reducer'
+import { AppDispatch } from './store'
 
 const initialState = {
   isLoggedIn: false,
@@ -24,7 +25,7 @@ export const authReducer = slice.reducer
 
 export const { setIsLoggedIn } = slice.actions
 
-export const loginTC = (data: LoginDataType) => async (dispatch: Dispatch) => {
+export const loginTC = (data: LoginDataType) => async (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: 'loading' }))
   try {
     const res = await authAPI.logIn(data)

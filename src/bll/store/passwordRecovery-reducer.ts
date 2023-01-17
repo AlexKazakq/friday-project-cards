@@ -4,6 +4,7 @@ import axios, { AxiosError } from 'axios'
 import { passwordRecoveryAPI, profileAPI } from '../../api/auth-api'
 
 import { setAppError, setAppStatus } from './app-reducer'
+import { AppDispatch } from './store'
 
 const initialState = {
   email: ' ',
@@ -27,7 +28,7 @@ export const passwordRecoveryReducer = slice.reducer
 
 export const { setInstructionForRecovery, setIsEmailSend } = slice.actions
 
-export const sendInstructionForRecoveryTC = (email: string) => async (dispatch: Dispatch) => {
+export const sendInstructionForRecoveryTC = (email: string) => async (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: 'loading' }))
   try {
     const res = await passwordRecoveryAPI.sendInstructionForRecovery(email)
