@@ -35,19 +35,20 @@ export const profileAPI = {
   getProfileInfo() {
     return instance.post('auth/me')
   },
-  updateProfile(payload: UpdateProfileDataType) {
+  updateProfile<UpdateProfileResponseType>(payload: UpdateProfileDataType) {
     return instance.put('auth/me', payload)
   },
 }
 
 export const newPasswordAPI = {
-  sendNewPassword(payload: NewPasswordResponseType) {
+  sendNewPassword<LogOutResponseType>(payload: NewPasswordResponseType) {
+    // NewPassword have same type of response as LogOutResponse
     return axios.post('https://neko-back.herokuapp.com/2.0/auth/set-new-password', payload)
   },
 }
 
 export const passwordRecoveryAPI = {
-  sendInstructionForRecovery(email: string) {
+  sendInstructionForRecovery<LogOutResponseType>(email: string) {
     console.log('passwordRecoveryAPI')
 
     return axios.post('https://neko-back.herokuapp.com/2.0/auth/forgot', {
@@ -87,11 +88,16 @@ export type UserType = {
 }
 
 type RegisterResponseType = {
-  addedUser: Object
+  addedUser: UserType
   error?: string
 }
 
 type LogOutResponseType = {
   info: string
   error: string
+}
+
+type UpdateProfileResponseType = {
+  updatedUser: UserType
+  error?: string
 }
