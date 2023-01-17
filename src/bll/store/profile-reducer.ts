@@ -37,9 +37,16 @@ const slice = createSlice({
     setUserProfile(state, action: PayloadAction<{ profile: ProfileType }>) {
       state.profile = action.payload.profile
     },
-    setNewProfileData(state, action: PayloadAction<{ nickName: string; avatar: string }>) {
+    setNewProfileData(
+      state,
+      action: PayloadAction<{ nickName: string; avatar?: string; email: string; id: string }>
+    ) {
       state.profile.name = action.payload.nickName
-      state.profile.avatar = action.payload.avatar
+      state.profile.email = action.payload.email
+      state.profile._id = action.payload.id
+      if (action.payload.avatar) {
+        state.profile.avatar = action.payload.avatar
+      }
     },
   },
 })
@@ -56,6 +63,8 @@ export const updateProfileDataTC = (data: UpdateProfileDataType) => async (dispa
       setNewProfileData({
         nickName: res.data.updatedUser.name,
         avatar: res.data.updatedUser.avatar,
+        email: res.data.updatedUser.email,
+        id: res.data.updatedUser._id,
       })
     )
     dispatch(setAppStatus({ status: 'succeeded' }))

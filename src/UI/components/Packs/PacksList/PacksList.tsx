@@ -15,7 +15,7 @@ import { NavLink } from 'react-router-dom'
 
 import { PATH } from '../../../../assets/Routes/path'
 import { cardPacksSelector, profileInfoSelector } from '../../../../bll/selectors/selectors'
-import { setPackId } from '../../../../bll/store/cards-reducer'
+import { PackUserDataType, setPackUserData } from '../../../../bll/store/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 
 import s from './packList.module.css'
@@ -62,8 +62,8 @@ export const PacksList = () => {
 
   console.log(cardPacks)
 
-  const showCardByIdHandler = (id: string) => {
-    dispatch(setPackId({ packId: id }))
+  const showCardByIdHandler = (userData: PackUserDataType) => {
+    dispatch(setPackUserData({ userData }))
   }
 
   function createData(
@@ -83,7 +83,13 @@ export const PacksList = () => {
           <div>
             <NavLink
               to={PATH.CARDS}
-              onClick={() => showCardByIdHandler(pack._id)}
+              onClick={() =>
+                showCardByIdHandler({
+                  packId: pack._id,
+                  packUserId: pack.user_id,
+                  packUserName: pack.user_name,
+                })
+              }
               className={s.navLink}
             >
               <SchoolIcon />
@@ -91,7 +97,13 @@ export const PacksList = () => {
           </div>
           <NavLink
             to={PATH.CARDS}
-            onClick={() => showCardByIdHandler(pack._id)}
+            onClick={() =>
+              showCardByIdHandler({
+                packId: pack._id,
+                packUserId: pack.user_id,
+                packUserName: pack.user_name,
+              })
+            }
             className={s.navLink}
           >
             <EditIcon />
@@ -104,7 +116,13 @@ export const PacksList = () => {
         <div key={pack._id}>
           <NavLink
             to={PATH.CARDS}
-            onClick={() => showCardByIdHandler(pack._id)}
+            onClick={() =>
+              showCardByIdHandler({
+                packId: pack._id,
+                packUserId: pack.user_id,
+                packUserName: pack.user_name,
+              })
+            }
             className={s.navLink}
           >
             <SchoolIcon />
@@ -112,7 +130,7 @@ export const PacksList = () => {
         </div>
       )
 
-    return createData(pack.name, pack.cardsCount, pack.updated, pack.created, actions)
+    return createData(pack.name, pack.cardsCount, pack.updated, pack.user_name, actions)
   })
 
   console.log(rows)

@@ -4,6 +4,7 @@ import axios, { AxiosError } from 'axios'
 import { authAPI } from '../../api/auth-api'
 
 import { setAppError, setAppStatus } from './app-reducer'
+import { setNewProfileData } from './profile-reducer'
 
 const initialState = {
   isLoggedIn: false,
@@ -26,10 +27,18 @@ export const { setIsLoggedIn } = slice.actions
 export const loginTC = (data: LoginDataType) => async (dispatch: Dispatch) => {
   dispatch(setAppStatus({ status: 'loading' }))
   try {
-    await authAPI.logIn(data)
+    const res = await authAPI.logIn(data)
 
     dispatch(setIsLoggedIn({ isLoggedIn: true }))
     dispatch(setAppStatus({ status: 'succeeded' }))
+    dispatch(
+      setNewProfileData({
+        nickName: res.data.name,
+        avatar: res.data.avatar,
+        email: res.data.email,
+        id: res.data._id,
+      })
+    )
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
 
@@ -49,6 +58,7 @@ export const logoutTC = () => async (dispatch: Dispatch) => {
 
     dispatch(setIsLoggedIn({ isLoggedIn: false }))
     dispatch(setAppStatus({ status: 'succeeded' }))
+    dispatch(setNewProfileData({ nickName: ' ', avatar: ' ', email: ' ', id: ' ' }))
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
 

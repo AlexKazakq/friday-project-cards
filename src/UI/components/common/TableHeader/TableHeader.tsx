@@ -14,7 +14,9 @@ export const TableHeader = ({ title, buttonName }: PacksHeaderType) => {
   return (
     <div className={s.wrapper}>
       <span className={s.title}>{title}</span>
-      <SuperButton onClick={onClickHandler}>{buttonName}</SuperButton>
+      <SuperButton onClick={onClickHandler} className={s.button}>
+        {buttonName}
+      </SuperButton>
     </div>
   )
 }

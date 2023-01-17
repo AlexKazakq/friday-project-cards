@@ -82,4 +82,5 @@ export type CardPacksType = {
   cardsCount: number
   created: string
   updated: string
+  user_name: string
 }

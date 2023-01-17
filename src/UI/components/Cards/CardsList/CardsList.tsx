@@ -13,7 +13,7 @@ import TableRow from '@mui/material/TableRow'
 import {
   cardPacksSelector,
   cardsSelector,
-  packIdForCard,
+  packUserDataSelector,
 } from '../../../../bll/selectors/selectors'
 import { setCardsWithParamsTC } from '../../../../bll/store/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
@@ -51,13 +51,13 @@ export const CardsList = () => {
   const cards = useAppSelector(cardsSelector)
   const [page, setPage] = useState(0)
   const [cardsPerPage, setCardsPerPage] = useState(10)
-  const packId = useAppSelector(packIdForCard)
+  const packUserData = useAppSelector(packUserDataSelector)
   const dispatch = useAppDispatch()
 
   console.log(cardPacks)
   useEffect(() => {
-    if (packId) {
-      dispatch(setCardsWithParamsTC({ cardsPack_id: packId }))
+    if (packUserData.packId) {
+      dispatch(setCardsWithParamsTC({ cardsPack_id: packUserData.packId }))
     }
   }, [])
 
