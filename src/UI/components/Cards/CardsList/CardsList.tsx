@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import EditIcon from '@mui/icons-material/Edit'
@@ -12,13 +12,8 @@ import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 
-import {
-  cardPacksSelector,
-  cardsSelector,
-  packUserDataSelector,
-} from '../../../../bll/selectors/selectors'
-import { setCardsWithParamsTC } from '../../../../bll/store/cards-reducer'
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
+import { cardsSelector } from '../../../../bll/selectors/selectors'
+import { useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
 
 interface Column {
@@ -55,19 +50,9 @@ interface Data {
 }
 
 export const CardsList = () => {
-  const cardPacks = useAppSelector(cardPacksSelector)
   const cards = useAppSelector(cardsSelector)
   const [page, setPage] = useState(0)
   const [cardsPerPage, setCardsPerPage] = useState(10)
-  const packUserData = useAppSelector(packUserDataSelector)
-  const dispatch = useAppDispatch()
-
-  console.log(cardPacks)
-  useEffect(() => {
-    if (packUserData.packId) {
-      dispatch(setCardsWithParamsTC({ cardsPack_id: packUserData.packId }))
-    }
-  }, [])
 
   function createData(
     question: string,
@@ -96,7 +81,6 @@ export const CardsList = () => {
     return createData(card.question, card.answer, dateFormatUtils(card.updated), grade, actions)
   })
 
-  console.log(rows)
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage)
   }
