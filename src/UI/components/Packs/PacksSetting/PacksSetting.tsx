@@ -17,17 +17,24 @@ import { SupperToggleButton } from '../../common/ToggleButton/ToggleButton'
 import s from './packsSetting.module.css'
 
 export const PacksSetting = () => {
+  const [params, setParams] = useState<PacksParamsType>({})
+  const debouncedValue = useDebounce<PacksParamsType>(params, 500)
   const cardPacksMaxCount = useAppSelector(cardPacksMaxCountSelector)
-  const [value1, setValue1] = useState<number>(0)
-  const [value2, setValue2] = useState<number>(cardPacksMaxCount)
   const [isMyPacks, SetIsMyPacks] = useState<boolean>(false)
   const [packName, setPackName] = useState<string>('')
-  const [params, setParams] = useState<PacksParamsType>({})
   const dispatch = useAppDispatch()
-  const debouncedValue = useDebounce<PacksParamsType>(params, 500)
   const profileInfo = useAppSelector(profileInfoSelector)
+  const [value1, setValue1] = useState<number>(0)
+  const [value2, setValue2] = useState<number>(0)
 
-  console.log(cardPacksMaxCount)
+  useEffect(() => {
+    dispatch(setPacksWithParamsTC({ ...params }))
+  }, [debouncedValue])
+
+  useEffect(() => {
+    setValue2(cardPacksMaxCount)
+  }, [cardPacksMaxCount])
+
   const change = (event: Event, value: number | number[]) => {
     if (Array.isArray(value)) {
       let [a, b] = value
@@ -46,7 +53,7 @@ export const PacksSetting = () => {
   }
   const showMyOrAllPacks = (isMyPacks: boolean) => {
     SetIsMyPacks(isMyPacks)
-    isMyPacks === true
+    isMyPacks
       ? setParams({ ...params, user_id: profileInfo._id })
       : setParams({ ...params, user_id: undefined })
   }
@@ -54,7 +61,7 @@ export const PacksSetting = () => {
     SetIsMyPacks(false)
     setPackName('')
     setValue1(0)
-    setValue2(53)
+    setValue2(cardPacksMaxCount)
     setParams({
       ...params,
       packName: undefined,
@@ -63,10 +70,6 @@ export const PacksSetting = () => {
       max: undefined,
     })
   }
-
-  useEffect(() => {
-    dispatch(setPacksWithParamsTC({ ...params }))
-  }, [debouncedValue])
 
   return (
     <div className={s.wrapper}>

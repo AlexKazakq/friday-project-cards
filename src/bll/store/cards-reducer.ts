@@ -12,7 +12,6 @@ const initialState = {
   minGrade: null as null | number,
   page: null as null | number,
   pageCount: null as null | number,
-  packUserData: {} as PackUserDataType,
 }
 
 export const slice = createSlice({
@@ -22,16 +21,14 @@ export const slice = createSlice({
     setCards(state, action: PayloadAction<{ cards: CardsType[] }>) {
       state.cards = action.payload.cards
     },
-    setPackUserData(state, action: PayloadAction<{ userData: PackUserDataType }>) {
-      state.packUserData = action.payload.userData
-    },
   },
 })
 export const cardsReducer = slice.reducer
 
-export const { setCards, setPackUserData } = slice.actions
+export const { setCards } = slice.actions
 
 export const setCardsWithParamsTC = (params: CardsParamsType) => async (dispatch: Dispatch) => {
+  dispatch(setCards({ cards: [] as CardsType[] }))
   dispatch(setAppStatus({ status: 'loading' }))
   try {
     const res = await cardsAPI.getCardsWithParams(params)
@@ -60,10 +57,4 @@ export type CardsType = {
   created: string
   updated: string
   _id: string
-}
-
-export type PackUserDataType = {
-  packUserId: string
-  packId: string
-  packUserName: string
 }

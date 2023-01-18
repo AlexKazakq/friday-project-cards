@@ -15,8 +15,9 @@ import { NavLink } from 'react-router-dom'
 
 import { PATH } from '../../../../assets/Routes/path'
 import { cardPacksSelector, profileInfoSelector } from '../../../../bll/selectors/selectors'
-import { PackUserDataType, setPackUserData } from '../../../../bll/store/cards-reducer'
+import { PackUserDataType, setPackUserData } from '../../../../bll/store/packUserData-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
+import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
 
 import s from './packList.module.css'
 
@@ -50,17 +51,16 @@ interface Data {
   cards: number
   updated: string
   created: string
-  actions: any
+  actions: JSX.Element
 }
 
 export const PacksList = () => {
   const cardPacks = useAppSelector(cardPacksSelector)
   const profileInfo = useAppSelector(profileInfoSelector)
+
   const [page, setPage] = useState(0)
   const [cardsPerPage, setCardsPerPage] = useState(10)
   const dispatch = useAppDispatch()
-
-  console.log(cardPacks)
 
   const showCardByIdHandler = (userData: PackUserDataType) => {
     dispatch(setPackUserData({ userData }))
@@ -71,7 +71,7 @@ export const PacksList = () => {
     cards: number,
     updated: string,
     created: string,
-    actions: any
+    actions: JSX.Element
   ): Data {
     return { name, cards, updated, created, actions }
   }
@@ -130,7 +130,13 @@ export const PacksList = () => {
         </div>
       )
 
-    return createData(pack.name, pack.cardsCount, pack.updated, pack.user_name, actions)
+    return createData(
+      pack.name,
+      pack.cardsCount,
+      dateFormatUtils(pack.updated),
+      pack.user_name,
+      actions
+    )
   })
 
   console.log(rows)
@@ -181,7 +187,7 @@ export const PacksList = () => {
       </TableContainer>
       <TablePagination
         sx={{}}
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[2, 6, 10]}
         component="div"
         count={rows.length}
         rowsPerPage={cardsPerPage}

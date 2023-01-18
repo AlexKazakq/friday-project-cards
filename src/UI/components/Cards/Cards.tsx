@@ -22,8 +22,6 @@ export const Cards = () => {
     profile._id === packUserData.packUserId ? 'My Pack' : `${packUserData.packUserName}'s Pack`
   const buttonTitle = profile._id === packUserData.packUserId ? 'Add new pack' : 'Learn to pack'
 
-  debugger
-
   return (
     <div className={tableStyle.wrapper}>
       <div>

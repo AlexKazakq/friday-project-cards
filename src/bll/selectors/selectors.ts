@@ -28,4 +28,4 @@ export const cardPacksMaxCountSelector = createSelector(state, state => state.pa
 
 export const cardsSelector = createSelector(state, state => state.cards.cards)
 
-export const packUserDataSelector = createSelector(state, state => state.cards.packUserData)
+export const packUserDataSelector = createSelector(state, state => state.packUserData.packUserData)

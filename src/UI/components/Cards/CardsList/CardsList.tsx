@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import EditIcon from '@mui/icons-material/Edit'
 import Paper from '@mui/material/Paper'
 import Rating from '@mui/material/Rating'
 import Table from '@mui/material/Table'
@@ -17,9 +19,10 @@ import {
 } from '../../../../bll/selectors/selectors'
 import { setCardsWithParamsTC } from '../../../../bll/store/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
+import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
 
 interface Column {
-  id: 'question' | 'answer' | 'updated' | 'grade'
+  id: 'question' | 'answer' | 'updated' | 'grade' | 'actions'
   label: string
   minWidth?: number
   align?: 'right'
@@ -37,13 +40,18 @@ const columns: readonly Column[] = [
     id: 'grade',
     label: 'Grade',
   },
+  {
+    id: 'actions',
+    label: 'Actions',
+  },
 ]
 
 interface Data {
   question: string
   answer: string
   updated: string
-  grade: any
+  grade: JSX.Element
+  actions: JSX.Element
 }
 
 export const CardsList = () => {
@@ -61,14 +69,31 @@ export const CardsList = () => {
     }
   }, [])
 
-  function createData(question: string, answer: string, updated: string, grade: any): Data {
-    return { question, answer, updated, grade }
+  function createData(
+    question: string,
+    answer: string,
+    updated: string,
+    grade: JSX.Element,
+    actions: JSX.Element
+  ): Data {
+    return { question, answer, updated, grade, actions }
   }
 
   const rows: Data[] = cards.map(card => {
-    const grade = <Rating name="disabled" value={card.grade} disabled />
+    const grade = (
+      <div>
+        <Rating name="disabled" value={card.grade} disabled />
+      </div>
+    )
+    const actions = (
+      <div>
+        <EditIcon />
 
-    return createData(card.question, card.answer, card.updated, grade)
+        <DeleteForeverIcon />
+      </div>
+    )
+
+    return createData(card.question, card.answer, dateFormatUtils(card.updated), grade, actions)
   })
 
   console.log(rows)
@@ -119,7 +144,7 @@ export const CardsList = () => {
       </TableContainer>
       <TablePagination
         sx={{}}
-        rowsPerPageOptions={[10, 25, 100]}
+        rowsPerPageOptions={[4, 6, 10]}
         component="div"
         count={rows.length}
         rowsPerPage={cardsPerPage}
