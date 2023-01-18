@@ -21,8 +21,8 @@ export const NewPassword = () => {
   const NewPasswordValidationSchema = Yup.object().shape({
     password: Yup.string().min(2, 'Password should be more then 2 characters').required('Required'),
   })
-
-  const token = window.location.href.split('/')[5]
+  const lengthUrl = window.location.href.split('/').length
+  const token = window.location.href.split('/')[lengthUrl - 1]
   const formik = useFormik({
     initialValues: {
       password: '',

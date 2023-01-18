@@ -7,7 +7,6 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { PATH } from './assets/Routes/path'
 import { PrivateRoutesLogin } from './assets/Routes/PrivateRoutesLogin'
 import { PrivateRoutesLogout } from './assets/Routes/PrivateRoutesLogout'
-import { PrivateRoutesRegister } from './assets/Routes/PrivateRoutesRegister'
 import { initializeAppTC } from './bll/store/app-reducer'
 import { useAppDispatch, useAppSelector } from './hooks/hooks'
 import { Cards } from './UI/components/Cards/Cards'
@@ -70,7 +69,7 @@ function App() {
           <Route path={PATH.SET_NEW_PASSWORD} element={<NewPassword />} />
         </Route>
       </Routes>
-      <ErrorSnackbar />
+      {/*<ErrorSnackbar />*/}
       <InfoSnackbar />
     </div>
   )
