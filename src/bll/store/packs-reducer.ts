@@ -7,11 +7,11 @@ import { setAppError, setAppStatus } from './app-reducer'
 
 const initialState = {
   cardPacks: [] as CardPacksType[],
-  cardPacksTotalCount: null as null | number,
+  cardPacksTotalCount: 0,
   maxCardsCount: 0,
   minCardsCount: null as null | number,
-  page: null as null | number,
-  pageCount: null as null | number,
+  page: 0,
+  pageCount: 4,
 }
 
 export const slice = createSlice({
@@ -27,33 +27,17 @@ export const slice = createSlice({
     setMaxPacksCount(state, action: PayloadAction<{ maxCardsCount: number }>) {
       state.maxCardsCount = action.payload.maxCardsCount
     },
+    setCardPacksTotalCount(state, action: PayloadAction<{ cardPacksTotalCount: number }>) {
+      state.cardPacksTotalCount = action.payload.cardPacksTotalCount
+    },
   },
 })
 export const packsReducer = slice.reducer
 
-export const { setPacks, setMaxPacksCount } = slice.actions
-
-// export const setPacksTC = () => async (dispatch: Dispatch) => {
-//   dispatch(setAppStatus({ status: 'loading' }))
-//   try {
-//     const res = await packsAPI.getPacksWithParams({})
-//
-//     dispatch(setPacks({ packs: res.data.cardPacks }))
-//     dispatch(setMaxPacksCount({ maxCardsCount: 53 }))
-//     dispatch(setAppStatus({ status: 'succeeded' }))
-//   } catch (e) {
-//     const err = e as Error | AxiosError<{ error: string }>
-//
-//     if (axios.isAxiosError(err)) {
-//       const error = err.response?.data ? err.response.data.error : err.message
-//
-//       dispatch(setAppStatus({ status: 'failed' }))
-//       dispatch(setAppError({ error: error }))
-//     }
-//   }
-// }
+export const { setPacks, setMaxPacksCount, setCardPacksTotalCount } = slice.actions
 
 export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch: Dispatch) => {
+  debugger
   dispatch(setPacks({ packs: [] as CardPacksType[] }))
   dispatch(setAppStatus({ status: 'loading' }))
   try {
@@ -62,6 +46,11 @@ export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch
     dispatch(setPacks({ packs: res.data.cardPacks }))
     dispatch(setAppStatus({ status: 'succeeded' }))
     dispatch(setMaxPacksCount({ maxCardsCount: res.data.maxCardsCount }))
+    dispatch(
+      setCardPacksTotalCount({
+        cardPacksTotalCount: res.data.cardPacksTotalCount ? res.data.cardPacksTotalCount : 0,
+      })
+    )
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
 

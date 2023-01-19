@@ -1,99 +1,47 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices'
 
-import { PacksParamsType } from '../../../../api/packs-api'
-import { cardPacksMaxCountSelector, profileInfoSelector } from '../../../../bll/selectors/selectors'
-import { setPacksWithParamsTC } from '../../../../bll/store/packs-reducer'
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
-import { useDebounce } from '../../../../hooks/useDebounce'
 import { SearchInput } from '../../common/SearchInput/SearchInput'
 import SuperRange from '../../common/SuperRange/SuperRange'
 import { SupperToggleButton } from '../../common/ToggleButton/ToggleButton'
 
 import s from './packsSetting.module.css'
 
-export const PacksSetting = () => {
-  const [params, setParams] = useState<PacksParamsType>({})
-  const debouncedValue = useDebounce<PacksParamsType>(params, 500)
-  const cardPacksMaxCount = useAppSelector(cardPacksMaxCountSelector)
-  const [isMyPacks, SetIsMyPacks] = useState<boolean>(false)
-  const [packName, setPackName] = useState<string>('')
-  const dispatch = useAppDispatch()
-  const profileInfo = useAppSelector(profileInfoSelector)
-  const [value1, setValue1] = useState<number>(0)
-  const [value2, setValue2] = useState<number>(0)
+type PacksSettingType = {
+  packName: string
+  isMyPacks: boolean
+  minValue: number
+  maxValue: number
+  cardPacksMaxCount: number
+  searchByPackName: (packName: string) => void
+  showMyOrAllPacks: (isMyPacks: boolean) => void
+  clearFilter: () => void
 
-  useEffect(() => {
-    dispatch(setPacksWithParamsTC({ ...params }))
-  }, [debouncedValue])
-
-  useEffect(() => {
-    setValue2(cardPacksMaxCount)
-  }, [cardPacksMaxCount])
-
-  const change = (event: Event, value: number | number[]) => {
-    if (Array.isArray(value)) {
-      let [a, b] = value
-
-      setValue1(a)
-      setValue2(b)
-      setParams({ ...params, min: a, max: b })
-    } else {
-      setValue1(value)
-    }
-  }
-
+  changeNumberOfCards: (event: Event, value: number | number[]) => void
+}
+export const PacksSetting = (props: PacksSettingType) => {
   let SearchByPackName = (name: string) => {
-    setPackName(name)
-    setParams({ ...params, packName: name })
+    props.searchByPackName(name)
   }
   const showMyOrAllPacks = (isMyPacks: boolean) => {
-    SetIsMyPacks(isMyPacks)
-    isMyPacks
-      ? setParams({ ...params, user_id: profileInfo._id })
-      : setParams({ ...params, user_id: undefined })
-  }
-  const clearFilter = () => {
-    SetIsMyPacks(false)
-    setPackName('')
-    setValue1(0)
-    setValue2(cardPacksMaxCount)
-    setParams({
-      ...params,
-      packName: undefined,
-      user_id: undefined,
-      min: undefined,
-      max: undefined,
-    })
+    props.showMyOrAllPacks(isMyPacks)
   }
 
   return (
     <div className={s.wrapper}>
-      <SearchInput inputName={'Search'} searchName={packName} setParamName={SearchByPackName} />
-      {/*<div className={s.items}>*/}
-      {/*  <span className={s.title}>Search</span>*/}
-      {/*  <FormControl size={'small'} fullWidth>*/}
-      {/*    <OutlinedInput*/}
-      {/*      id="outlined-adornment-amount"*/}
-      {/*      onChange={SearchByPackName}*/}
-      {/*      value={packName}*/}
-      {/*      startAdornment={*/}
-      {/*        <InputAdornment position="start">*/}
-      {/*          <SearchIcon />*/}
-      {/*        </InputAdornment>*/}
-      {/*      }*/}
-      {/*      placeholder="Provide your text"*/}
-      {/*    />*/}
-      {/*  </FormControl>*/}
-      {/*</div>*/}
+      <SearchInput
+        inputName={'Search'}
+        searchName={props.packName}
+        setParamName={SearchByPackName}
+      />
       <div className={s.items}>
         <span className={s.title}>Show packs card</span>
         <div>
           <SupperToggleButton
             firstValue={'My'}
             secondValue={'All'}
-            isMyPacks={isMyPacks}
+            isMyPacks={props.isMyPacks}
             showMyOrAllPacks={showMyOrAllPacks}
           />
         </div>
@@ -102,13 +50,17 @@ export const PacksSetting = () => {
         <span className={s.title}>Number of cards</span>
 
         <div>
-          <span className={s.leftCount}>{value1}</span>
-          <SuperRange onChange={change} value={[value1, value2]} max={cardPacksMaxCount} />
-          <span className={s.rightCount}>{value2}</span>
+          <span className={s.leftCount}>{props.minValue}</span>
+          <SuperRange
+            onChange={props.changeNumberOfCards}
+            value={[props.minValue, props.maxValue]}
+            max={props.cardPacksMaxCount}
+          />
+          <span className={s.rightCount}>{props.maxValue}</span>
         </div>
       </div>
       <div className={s.items}>
-        <CleaningServicesIcon onClick={clearFilter} />
+        <CleaningServicesIcon onClick={props.clearFilter} />
       </div>
     </div>
   )

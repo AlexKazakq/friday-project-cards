@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import EditIcon from '@mui/icons-material/Edit'
@@ -14,7 +14,11 @@ import TableRow from '@mui/material/TableRow'
 import { NavLink } from 'react-router-dom'
 
 import { PATH } from '../../../../assets/Routes/path'
-import { cardPacksSelector, profileInfoSelector } from '../../../../bll/selectors/selectors'
+import {
+  cardPacksSelector,
+  cardPacksTotalCountSelector,
+  profileInfoSelector,
+} from '../../../../bll/selectors/selectors'
 import { PackUserDataType, setPackUserData } from '../../../../bll/store/packUserData-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
@@ -54,12 +58,16 @@ interface Data {
   actions: JSX.Element
 }
 
-export const PacksList = () => {
+type PacksListType = {
+  page: number
+  cardsPerPage: number
+  handleChangeRowsPerPage: (cardsPerPage: number) => void
+  changePage: (event: unknown, newPage: number) => void
+}
+export const PacksList = (props: PacksListType) => {
   const cardPacks = useAppSelector(cardPacksSelector)
   const profileInfo = useAppSelector(profileInfoSelector)
-
-  const [page, setPage] = useState(0)
-  const [cardsPerPage, setCardsPerPage] = useState(10)
+  const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const dispatch = useAppDispatch()
 
   const showCardByIdHandler = (userData: PackUserDataType) => {
@@ -139,19 +147,13 @@ export const PacksList = () => {
     )
   })
 
-  console.log(rows)
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage)
-  }
-
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCardsPerPage(+event.target.value)
-    setPage(0)
+    props.handleChangeRowsPerPage(+event.target.value)
   }
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer sx={{ maxHeight: 640 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -167,7 +169,7 @@ export const PacksList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * cardsPerPage, page * cardsPerPage + cardsPerPage).map(row => {
+            {rows.map(row => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.cards}>
                   {columns.map(column => {
@@ -187,13 +189,13 @@ export const PacksList = () => {
       </TableContainer>
       <TablePagination
         sx={{}}
-        rowsPerPageOptions={[2, 6, 10]}
+        rowsPerPageOptions={[4, 6, 10]}
         component="div"
-        count={rows.length}
-        rowsPerPage={cardsPerPage}
-        page={page}
+        count={cardPacksTotalCount}
+        rowsPerPage={props.cardsPerPage}
+        page={props.page}
         labelRowsPerPage={'Cards per page'}
-        onPageChange={handleChangePage}
+        onPageChange={props.changePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Paper>

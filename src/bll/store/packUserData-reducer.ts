@@ -2,12 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 let storrageUserData: PackUserDataType
 
+console.log(localStorage.getItem('packUserData'))
+
 if (localStorage.getItem('packUserData') !== null) {
   storrageUserData = JSON.parse(localStorage.getItem('packUserData') as string) as PackUserDataType
-  debugger
 } else {
   storrageUserData = {} as PackUserDataType
-  debugger
 }
 
 const initialState = {

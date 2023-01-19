@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
@@ -15,11 +15,15 @@ export const SupperToggleButton = ({
   isMyPacks,
   showMyOrAllPacks,
 }: SupperButtonPropsType) => {
-  const [alignment, setAlignment] = useState(isMyPacks === false ? secondValue : firstValue)
+  const [alignment, setAlignment] = useState(!isMyPacks ? secondValue : firstValue)
   const handleChange = (event: React.MouseEvent<HTMLElement>, newAlignment: string) => {
     setAlignment(newAlignment)
     newAlignment === 'My' ? showMyOrAllPacks(true) : showMyOrAllPacks(false)
   }
+
+  useEffect(() => {
+    setAlignment(!isMyPacks ? secondValue : firstValue)
+  }, [isMyPacks])
 
   return (
     <ToggleButtonGroup
