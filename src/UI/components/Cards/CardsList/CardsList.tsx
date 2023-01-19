@@ -12,11 +12,7 @@ import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 
-import {
-  cardPacksSelector,
-  cardsSelector,
-  packUserDataSelector,
-} from '../../../../bll/selectors/selectors'
+import { cardsSelector, packUserDataSelector } from '../../../../bll/selectors/selectors'
 import { setCardsWithParamsTC } from '../../../../bll/store/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
@@ -55,14 +51,12 @@ interface Data {
 }
 
 export const CardsList = () => {
-  const cardPacks = useAppSelector(cardPacksSelector)
   const cards = useAppSelector(cardsSelector)
   const [page, setPage] = useState(0)
   const [cardsPerPage, setCardsPerPage] = useState(10)
   const packUserData = useAppSelector(packUserDataSelector)
   const dispatch = useAppDispatch()
 
-  console.log(cardPacks)
   useEffect(() => {
     if (packUserData.packId) {
       dispatch(setCardsWithParamsTC({ cardsPack_id: packUserData.packId }))

@@ -3,9 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 let storrageUserData: PackUserDataType
 
 if (localStorage.getItem('packUserData') !== null) {
-  storrageUserData = JSON.parse(
-    sessionStorage.getItem('packUserData') as string
-  ) as PackUserDataType
+  storrageUserData = JSON.parse(localStorage.getItem('packUserData') as string) as PackUserDataType
   debugger
 } else {
   storrageUserData = {} as PackUserDataType
@@ -22,7 +20,7 @@ export const slice = createSlice({
   reducers: {
     setPackUserData(state, action: PayloadAction<{ userData: PackUserDataType }>) {
       state.packUserData = action.payload.userData
-      sessionStorage.setItem('packUserData', JSON.stringify(state.packUserData))
+      localStorage.setItem('packUserData', JSON.stringify(state.packUserData))
     },
   },
 })
