@@ -39,6 +39,8 @@ export const Packs = () => {
     setPage(0)
     setParams({ ...params, pageCount: cardsPerPage })
   }
+
+  console.log(1)
   const searchByPackName = (packName: string) => {
     setPackName(packName)
     setParams({ ...params, packName: packName })
