@@ -54,16 +54,14 @@ export const { setPacks, setMaxPacksCount } = slice.actions
 //   }
 // }
 
-export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch: AppDispatch) => {
+export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch: Dispatch) => {
   dispatch(setAppStatus({ status: 'loading' }))
   try {
     const res = await packsAPI.getPacksWithParams(params)
 
     dispatch(setPacks({ packs: res.data.cardPacks }))
     dispatch(setAppStatus({ status: 'succeeded' }))
-    dispatch(
-      setMaxPacksCount({ maxCardsCount: res.data.maxCardsCount ? res.data.maxCardsCount : 0 })
-    )
+    dispatch(setMaxPacksCount({ maxCardsCount: res.data.maxCardsCount }))
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
 

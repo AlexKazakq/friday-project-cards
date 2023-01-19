@@ -6,6 +6,7 @@ import { appReducer } from './app-reducer'
 import { authReducer } from './auth-reducer'
 import { cardsReducer } from './cards-reducer'
 import { packsReducer } from './packs-reducer'
+import { packUserDataReducer } from './packUserData-reducer'
 import { passwordChangerReducer } from './passwordChanger-reducer'
 import { passwordRecoveryReducer } from './passwordRecovery-reducer'
 import { profileReducer } from './profile-reducer'
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   sendNewPassword: passwordChangerReducer,
   packs: packsReducer,
   cards: cardsReducer,
+  packUserData: packUserDataReducer,
 })
 
 export const store = configureStore({

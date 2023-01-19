@@ -9,6 +9,7 @@ import { NavLink } from 'react-router-dom'
 import * as Yup from 'yup'
 
 import { PATH } from '../../../assets/Routes/path'
+import { setAppError } from '../../../bll/store/app-reducer'
 import { loginTC } from '../../../bll/store/auth-reducer'
 import { useAppDispatch } from '../../../hooks/hooks'
 import styleForm from '../../styles/form.module.css'
@@ -35,6 +36,7 @@ export const Login = () => {
     validationSchema: LoginSchema,
     onSubmit: values => {
       dispatch(loginTC(values))
+      dispatch(setAppError({ error: null }))
     },
   })
 

@@ -1,33 +1,37 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices'
-import SearchIcon from '@mui/icons-material/Search'
-import FormControl from '@mui/material/FormControl'
-import InputAdornment from '@mui/material/InputAdornment'
-import OutlinedInput from '@mui/material/OutlinedInput'
 
 import { PacksParamsType } from '../../../../api/packs-api'
 import { cardPacksMaxCountSelector, profileInfoSelector } from '../../../../bll/selectors/selectors'
 import { setPacksWithParamsTC } from '../../../../bll/store/packs-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { useDebounce } from '../../../../hooks/useDebounce'
+import { SearchInput } from '../../common/SearchInput/SearchInput'
 import SuperRange from '../../common/SuperRange/SuperRange'
 import { SupperToggleButton } from '../../common/ToggleButton/ToggleButton'
 
 import s from './packsSetting.module.css'
 
 export const PacksSetting = () => {
+  const [params, setParams] = useState<PacksParamsType>({})
+  const debouncedValue = useDebounce<PacksParamsType>(params, 500)
   const cardPacksMaxCount = useAppSelector(cardPacksMaxCountSelector)
-  const [value1, setValue1] = useState<number>(0)
-  const [value2, setValue2] = useState<number>(cardPacksMaxCount)
   const [isMyPacks, SetIsMyPacks] = useState<boolean>(false)
   const [packName, setPackName] = useState<string>('')
-  const [params, setParams] = useState<PacksParamsType>({})
   const dispatch = useAppDispatch()
-  const debouncedValue = useDebounce<PacksParamsType>(params, 500)
   const profileInfo = useAppSelector(profileInfoSelector)
+  const [value1, setValue1] = useState<number>(0)
+  const [value2, setValue2] = useState<number>(0)
 
-  console.log(cardPacksMaxCount)
+  useEffect(() => {
+    dispatch(setPacksWithParamsTC({ ...params }))
+  }, [debouncedValue])
+
+  useEffect(() => {
+    setValue2(cardPacksMaxCount)
+  }, [cardPacksMaxCount])
+
   const change = (event: Event, value: number | number[]) => {
     if (Array.isArray(value)) {
       let [a, b] = value
@@ -40,13 +44,13 @@ export const PacksSetting = () => {
     }
   }
 
-  let SearchByPackName = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setPackName(e.currentTarget.value)
-    setParams({ ...params, packName: e.currentTarget.value })
+  let SearchByPackName = (name: string) => {
+    setPackName(name)
+    setParams({ ...params, packName: name })
   }
   const showMyOrAllPacks = (isMyPacks: boolean) => {
     SetIsMyPacks(isMyPacks)
-    isMyPacks === true
+    isMyPacks
       ? setParams({ ...params, user_id: profileInfo._id })
       : setParams({ ...params, user_id: undefined })
   }
@@ -54,7 +58,7 @@ export const PacksSetting = () => {
     SetIsMyPacks(false)
     setPackName('')
     setValue1(0)
-    setValue2(53)
+    setValue2(cardPacksMaxCount)
     setParams({
       ...params,
       packName: undefined,
@@ -64,28 +68,25 @@ export const PacksSetting = () => {
     })
   }
 
-  useEffect(() => {
-    dispatch(setPacksWithParamsTC({ ...params }))
-  }, [debouncedValue])
-
   return (
     <div className={s.wrapper}>
-      <div className={s.items}>
-        <span className={s.title}>Search</span>
-        <FormControl size={'small'} fullWidth>
-          <OutlinedInput
-            id="outlined-adornment-amount"
-            onChange={SearchByPackName}
-            value={packName}
-            startAdornment={
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            }
-            placeholder="Provide your text"
-          />
-        </FormControl>
-      </div>
+      <SearchInput inputName={'Search'} searchName={packName} setParamName={SearchByPackName} />
+      {/*<div className={s.items}>*/}
+      {/*  <span className={s.title}>Search</span>*/}
+      {/*  <FormControl size={'small'} fullWidth>*/}
+      {/*    <OutlinedInput*/}
+      {/*      id="outlined-adornment-amount"*/}
+      {/*      onChange={SearchByPackName}*/}
+      {/*      value={packName}*/}
+      {/*      startAdornment={*/}
+      {/*        <InputAdornment position="start">*/}
+      {/*          <SearchIcon />*/}
+      {/*        </InputAdornment>*/}
+      {/*      }*/}
+      {/*      placeholder="Provide your text"*/}
+      {/*    />*/}
+      {/*  </FormControl>*/}
+      {/*</div>*/}
       <div className={s.items}>
         <span className={s.title}>Show packs card</span>
         <div>

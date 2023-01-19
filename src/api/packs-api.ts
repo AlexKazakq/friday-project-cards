@@ -37,7 +37,7 @@ export const packsAPI = {
 type getPacksResponseType = {
   cardPacks: CardPacksType[]
   cardPacksTotalCount: null | number
-  maxCardsCount: null | number
+  maxCardsCount: number
   minCardsCount: null | number
   page: null | number
   pageCount: null | number

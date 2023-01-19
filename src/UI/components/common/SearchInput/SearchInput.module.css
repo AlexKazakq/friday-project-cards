@@ -1,0 +1,10 @@
+.items {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.title {
+    font-weight: 600;
+}
