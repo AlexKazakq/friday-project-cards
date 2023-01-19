@@ -1,7 +1,7 @@
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 
-import { packsAPI, PacksParamsType } from '../../api/packs-api'
+import { AddPacksParamsType, packsAPI, PacksParamsType } from '../../api/packs-api'
 
 import { setAppError, setAppStatus } from './app-reducer'
 import { AppDispatch } from './store'
@@ -22,17 +22,18 @@ export const slice = createSlice({
     setPacks(state, action: PayloadAction<{ packs: CardPacksType[] }>) {
       state.cardPacks = action.payload.packs
     },
-    addPack(state, action: PayloadAction<{ pack: CardPacksType }>) {
+    setAddPack(state, action: PayloadAction<{ pack: CardPacksType }>) {
       state.cardPacks.unshift(action.payload.pack)
     },
     setMaxPacksCount(state, action: PayloadAction<{ maxCardsCount: number }>) {
       state.maxCardsCount = action.payload.maxCardsCount
     },
+    deletePack(state, action: PayloadAction<{ pack: CardPacksType }>) {},
   },
 })
 export const packsReducer = slice.reducer
 
-export const { setPacks, setMaxPacksCount } = slice.actions
+export const { setPacks, setMaxPacksCount, setAddPack } = slice.actions
 
 // export const setPacksTC = () => async (dispatch: Dispatch) => {
 //   dispatch(setAppStatus({ status: 'loading' }))
@@ -54,7 +55,7 @@ export const { setPacks, setMaxPacksCount } = slice.actions
 //   }
 // }
 
-export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch: Dispatch) => {
+export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: 'loading' }))
   try {
     const res = await packsAPI.getPacksWithParams(params)
@@ -62,6 +63,26 @@ export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch
     dispatch(setPacks({ packs: res.data.cardPacks }))
     dispatch(setAppStatus({ status: 'succeeded' }))
     dispatch(setMaxPacksCount({ maxCardsCount: res.data.maxCardsCount }))
+  } catch (e) {
+    const err = e as Error | AxiosError<{ error: string }>
+
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message
+
+      dispatch(setAppStatus({ status: 'failed' }))
+      dispatch(setAppError({ error: error }))
+    }
+  }
+}
+
+export const addNewPackTC = (params: AddPacksParamsType) => async (dispatch: AppDispatch) => {
+  debugger
+  dispatch(setAppStatus({ status: 'loading' }))
+  try {
+    const res = await packsAPI.setAddPack(params)
+
+    dispatch(setAddPack({ pack: res.data.newCardsPack }))
+    dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
 

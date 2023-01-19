@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { addNewPackTC } from '../../../../bll/store/packs-reducer'
+import { useAppDispatch } from '../../../../hooks/hooks'
 import SuperButton from '../SuperButton/SuperButton'
 
 import s from './packsHeader.module.css'
@@ -9,7 +11,20 @@ type PacksHeaderType = {
   buttonName: string
 }
 export const TableHeader = ({ title, buttonName }: PacksHeaderType) => {
-  const onClickHandler = () => {}
+  const dispatch = useAppDispatch()
+  const onClickHandler = () => {
+    debugger
+    console.log('added new pack')
+    dispatch(
+      addNewPackTC({
+        cardsPack: {
+          name: 'New pack for test',
+          deckCover: '',
+          private: false,
+        },
+      })
+    )
+  }
 
   return (
     <div className={s.wrapper}>

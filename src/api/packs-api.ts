@@ -1,3 +1,5 @@
+import { resolveObjectURL } from 'buffer'
+
 import axios from 'axios'
 
 import { CardPacksType } from '../bll/store/packs-reducer'
@@ -32,6 +34,12 @@ export const packsAPI = {
       },
     })
   },
+  addPack(params: AddPacksParamsType) {
+    return instance.post<AddPacksResponseType>('/cards/pack', params)
+  },
+  deletePack(params: string) {
+    return instance.delete<deletePacksResponseType>('/cards/pack', params)
+  },
 }
 
 type getPacksResponseType = {
@@ -52,4 +60,20 @@ export type PacksParamsType = {
   pageCount?: number
   user_id?: string
   block?: boolean
+}
+
+export type AddPacksParamsType = {
+  cardsPack: {
+    name?: string
+    deckCover?: string
+    private?: boolean
+  }
+}
+
+export type AddPacksResponseType = {
+  newCardsPack: any
+}
+
+export type deletePacksResponseType = {
+  deletedCardsPack: {}
 }
