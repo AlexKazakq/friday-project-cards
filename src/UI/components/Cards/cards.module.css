@@ -1,7 +1,5 @@
 .items {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    padding: 20px;
 }
 .title {
     margin: 20px 0;
@@ -27,4 +25,12 @@
     left: -1500px;
     zoom: 2%;
 
+}
+
+.filters {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: left;
+
+    margin: 20px 0;
 }

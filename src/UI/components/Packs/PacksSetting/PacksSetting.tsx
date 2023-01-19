@@ -1,16 +1,13 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices'
-import SearchIcon from '@mui/icons-material/Search'
-import FormControl from '@mui/material/FormControl'
-import InputAdornment from '@mui/material/InputAdornment'
-import OutlinedInput from '@mui/material/OutlinedInput'
 
 import { PacksParamsType } from '../../../../api/packs-api'
 import { cardPacksMaxCountSelector, profileInfoSelector } from '../../../../bll/selectors/selectors'
 import { setPacksWithParamsTC } from '../../../../bll/store/packs-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { useDebounce } from '../../../../hooks/useDebounce'
+import { SearchInput } from '../../common/SearchInput/SearchInput'
 import SuperRange from '../../common/SuperRange/SuperRange'
 import { SupperToggleButton } from '../../common/ToggleButton/ToggleButton'
 
@@ -47,9 +44,9 @@ export const PacksSetting = () => {
     }
   }
 
-  let SearchByPackName = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setPackName(e.currentTarget.value)
-    setParams({ ...params, packName: e.currentTarget.value })
+  let SearchByPackName = (name: string) => {
+    setPackName(name)
+    setParams({ ...params, packName: name })
   }
   const showMyOrAllPacks = (isMyPacks: boolean) => {
     SetIsMyPacks(isMyPacks)
@@ -73,22 +70,23 @@ export const PacksSetting = () => {
 
   return (
     <div className={s.wrapper}>
-      <div className={s.items}>
-        <span className={s.title}>Search</span>
-        <FormControl size={'small'} fullWidth>
-          <OutlinedInput
-            id="outlined-adornment-amount"
-            onChange={SearchByPackName}
-            value={packName}
-            startAdornment={
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            }
-            placeholder="Provide your text"
-          />
-        </FormControl>
-      </div>
+      <SearchInput inputName={'Search'} searchName={packName} setParamName={SearchByPackName} />
+      {/*<div className={s.items}>*/}
+      {/*  <span className={s.title}>Search</span>*/}
+      {/*  <FormControl size={'small'} fullWidth>*/}
+      {/*    <OutlinedInput*/}
+      {/*      id="outlined-adornment-amount"*/}
+      {/*      onChange={SearchByPackName}*/}
+      {/*      value={packName}*/}
+      {/*      startAdornment={*/}
+      {/*        <InputAdornment position="start">*/}
+      {/*          <SearchIcon />*/}
+      {/*        </InputAdornment>*/}
+      {/*      }*/}
+      {/*      placeholder="Provide your text"*/}
+      {/*    />*/}
+      {/*  </FormControl>*/}
+      {/*</div>*/}
       <div className={s.items}>
         <span className={s.title}>Show packs card</span>
         <div>
