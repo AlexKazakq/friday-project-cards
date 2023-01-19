@@ -48,8 +48,6 @@ export const newPasswordAPI = {
 
 export const passwordRecoveryAPI = {
   sendInstructionForRecovery(email: string) {
-    console.log('passwordRecoveryAPI')
-
     return axios.post('https://neko-back.herokuapp.com/2.0/auth/forgot', {
       email: email,
       message: `<div style="padding: 15px;

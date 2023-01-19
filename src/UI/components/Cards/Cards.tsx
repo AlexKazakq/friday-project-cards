@@ -31,7 +31,7 @@ export const Cards = () => {
     if (packUserData.packId) {
       dispatch(setCardsWithParamsTC({ ...params, cardsPack_id: packUserData.packId }))
     }
-  }, [debouncedValue])
+  }, [debouncedValue, packUserData])
   let SearchByCardQuestion = (name: string) => {
     setCardQuestionName(name)
     setParams({ ...params, cardQuestion: name })
@@ -66,20 +66,6 @@ export const Cards = () => {
           />
         </div>
       </div>
-      {/*<div className={s.items}>*/}
-      {/*  <span className={s.title}>Search</span>*/}
-      {/*  <FormControl size={'small'} sx={{ width: '20%' }}>*/}
-      {/*    <OutlinedInput*/}
-      {/*      id="outlined-adornment-amount"*/}
-      {/*      startAdornment={*/}
-      {/*        <InputAdornment position="start">*/}
-      {/*          <SearchIcon />*/}
-      {/*        </InputAdornment>*/}
-      {/*      }*/}
-      {/*      placeholder="Provide your text"*/}
-      {/*    />*/}
-      {/*  </FormControl>*/}
-      {/*</div>*/}
       <CardsList />
     </div>
   )

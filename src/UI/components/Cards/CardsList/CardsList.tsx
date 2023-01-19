@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import EditIcon from '@mui/icons-material/Edit'
@@ -12,8 +12,9 @@ import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 
-import { cardsSelector } from '../../../../bll/selectors/selectors'
-import { useAppSelector } from '../../../../hooks/hooks'
+import { cardsSelector, packUserDataSelector } from '../../../../bll/selectors/selectors'
+import { setCardsWithParamsTC } from '../../../../bll/store/cards-reducer'
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
 
 interface Column {
@@ -53,6 +54,14 @@ export const CardsList = () => {
   const cards = useAppSelector(cardsSelector)
   const [page, setPage] = useState(0)
   const [cardsPerPage, setCardsPerPage] = useState(10)
+  const packUserData = useAppSelector(packUserDataSelector)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    if (packUserData.packId) {
+      dispatch(setCardsWithParamsTC({ cardsPack_id: packUserData.packId }))
+    }
+  }, [])
 
   function createData(
     question: string,
@@ -128,7 +137,7 @@ export const CardsList = () => {
       </TableContainer>
       <TablePagination
         sx={{}}
-        rowsPerPageOptions={[4, 6, 10]}
+        rowsPerPageOptions={[2, 6, 10]}
         component="div"
         count={rows.length}
         rowsPerPage={cardsPerPage}

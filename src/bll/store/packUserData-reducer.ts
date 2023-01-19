@@ -2,14 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 let storrageUserData: PackUserDataType
 
+console.log(localStorage.getItem('packUserData'))
+
 if (localStorage.getItem('packUserData') !== null) {
-  storrageUserData = JSON.parse(
-    sessionStorage.getItem('packUserData') as string
-  ) as PackUserDataType
-  debugger
+  storrageUserData = JSON.parse(localStorage.getItem('packUserData') as string) as PackUserDataType
 } else {
   storrageUserData = {} as PackUserDataType
-  debugger
 }
 
 const initialState = {
@@ -22,7 +20,7 @@ export const slice = createSlice({
   reducers: {
     setPackUserData(state, action: PayloadAction<{ userData: PackUserDataType }>) {
       state.packUserData = action.payload.userData
-      sessionStorage.setItem('packUserData', JSON.stringify(state.packUserData))
+      localStorage.setItem('packUserData', JSON.stringify(state.packUserData))
     },
   },
 })
