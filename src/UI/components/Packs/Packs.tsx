@@ -41,6 +41,7 @@ export const Packs = () => {
   }
 
   console.log(1)
+  console.log(2)
   const searchByPackName = (packName: string) => {
     setPackName(packName)
     setParams({ ...params, packName: packName })
