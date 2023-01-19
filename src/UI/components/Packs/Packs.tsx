@@ -27,6 +27,8 @@ export const Packs = () => {
 
   const dispatch = useAppDispatch()
 
+  console.log('New')
+
   useEffect(() => {
     dispatch(setPacksWithParamsTC({ ...params }))
   }, [debouncedValue])
