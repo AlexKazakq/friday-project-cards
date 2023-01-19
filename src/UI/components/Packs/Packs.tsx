@@ -28,6 +28,7 @@ export const Packs = () => {
   const dispatch = useAppDispatch()
 
   console.log('New')
+  console.log('Test2')
 
   useEffect(() => {
     dispatch(setPacksWithParamsTC({ ...params }))
