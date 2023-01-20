@@ -7,7 +7,7 @@ import { setAppError, setAppStatus } from './app-reducer'
 
 const initialState = {
   cards: [] as CardsType[],
-  cardsTotalCount: null as null | number,
+  cardsTotalCount: 0,
   maxGrade: null as null | number,
   minGrade: null as null | number,
   page: null as null | number,
@@ -21,11 +21,14 @@ export const slice = createSlice({
     setCards(state, action: PayloadAction<{ cards: CardsType[] }>) {
       state.cards = action.payload.cards
     },
+    setCardsTotalCount(state, action: PayloadAction<{ cardsTotalCount: number }>) {
+      state.cardsTotalCount = action.payload.cardsTotalCount
+    },
   },
 })
 export const cardsReducer = slice.reducer
 
-export const { setCards } = slice.actions
+export const { setCards, setCardsTotalCount } = slice.actions
 
 export const setCardsWithParamsTC = (params: CardsParamsType) => async (dispatch: Dispatch) => {
   dispatch(setCards({ cards: [] as CardsType[] }))
@@ -35,6 +38,11 @@ export const setCardsWithParamsTC = (params: CardsParamsType) => async (dispatch
 
     dispatch(setCards({ cards: res.data.cards }))
     dispatch(setAppStatus({ status: 'succeeded' }))
+    dispatch(
+      setCardsTotalCount({
+        cardsTotalCount: res.data.cardsTotalCount ? res.data.cardsTotalCount : 0,
+      })
+    )
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
 

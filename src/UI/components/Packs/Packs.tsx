@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react'
 
 import { PacksParamsType } from '../../../api/packs-api'
-import { cardPacksMaxCountSelector, profileInfoSelector } from '../../../bll/selectors/selectors'
+import {
+  cardPacksMaxCountSelector,
+  cardPacksMinCountSelector,
+  cardPacksTotalCountSelector,
+  profileInfoSelector,
+} from '../../../bll/selectors/selectors'
 import { setPacksWithParamsTC } from '../../../bll/store/packs-reducer'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import { useDebounce } from '../../../hooks/useDebounce'
@@ -14,6 +19,8 @@ import { PacksSetting } from './PacksSetting/PacksSetting'
 export const Packs = () => {
   const profileInfo = useAppSelector(profileInfoSelector)
   const cardPacksMaxCount = useAppSelector(cardPacksMaxCountSelector)
+  const cardPacksMinCount = useAppSelector(cardPacksMinCountSelector)
+  const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
 
   const [isMyPacks, SetIsMyPacks] = useState<boolean>(false)
   const [packName, setPackName] = useState<string>('')
@@ -33,14 +40,14 @@ export const Packs = () => {
 
   useEffect(() => {
     setMaxValue(cardPacksMaxCount)
-  }, [cardPacksMaxCount])
-  const ChangeRowsPerPage = (cardsPerPage: number) => {
-    setCardsPerPage(cardsPerPage)
+    setMinValue(cardPacksMinCount)
+  }, [cardPacksMaxCount, cardPacksMinCount])
+  const ChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCardsPerPage(+event.target.value)
+    //setCardsPerPage(cardsPerPage)
     setPage(0)
-    setParams({ ...params, pageCount: cardsPerPage })
+    setParams({ ...params, pageCount: +event.target.value })
   }
-
-  console.log(3)
 
   const searchByPackName = (packName: string) => {
     setPackName(packName)
@@ -81,7 +88,14 @@ export const Packs = () => {
 
   const changePage = (event: unknown, newPage: number) => {
     setPage(newPage)
-    setParams({ ...params, page: newPage })
+    setParams({
+      ...params,
+      page: newPage,
+      pageCount:
+        cardPacksTotalCount - (newPage + 1) * cardsPerPage > 0
+          ? cardsPerPage
+          : cardPacksTotalCount - newPage * cardsPerPage,
+    })
   }
 
   return (

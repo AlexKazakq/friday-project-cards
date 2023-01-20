@@ -25,11 +25,13 @@ export const isEmailSendSelector = createSelector(
 
 export const cardPacksSelector = createSelector(state, state => state.packs.cardPacks)
 export const cardPacksMaxCountSelector = createSelector(state, state => state.packs.maxCardsCount)
+export const cardPacksMinCountSelector = createSelector(state, state => state.packs.minCardsCount)
 export const cardPacksTotalCountSelector = createSelector(
   state,
   state => state.packs.cardPacksTotalCount
 )
 
 export const cardsSelector = createSelector(state, state => state.cards.cards)
+export const cardsTotalCountSelector = createSelector(state, state => state.cards.cardsTotalCount)
 
 export const packUserDataSelector = createSelector(state, state => state.packUserData.packUserData)

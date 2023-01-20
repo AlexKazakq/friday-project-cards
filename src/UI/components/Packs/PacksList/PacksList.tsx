@@ -61,7 +61,7 @@ interface Data {
 type PacksListType = {
   page: number
   cardsPerPage: number
-  handleChangeRowsPerPage: (cardsPerPage: number) => void
+  handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void
   changePage: (event: unknown, newPage: number) => void
 }
 export const PacksList = (props: PacksListType) => {
@@ -147,9 +147,9 @@ export const PacksList = (props: PacksListType) => {
     )
   })
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.handleChangeRowsPerPage(+event.target.value)
-  }
+  // const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   props.handleChangeRowsPerPage(+event.target.value)
+  // }
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -196,7 +196,7 @@ export const PacksList = (props: PacksListType) => {
         page={props.page}
         labelRowsPerPage={'Cards per page'}
         onPageChange={props.changePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+        onRowsPerPageChange={props.handleChangeRowsPerPage}
       />
     </Paper>
   )

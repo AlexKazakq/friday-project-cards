@@ -4,7 +4,11 @@ import { NavLink } from 'react-router-dom'
 
 import { CardsParamsType } from '../../../api/cards-api'
 import { PATH } from '../../../assets/Routes/path'
-import { packUserDataSelector, profileInfoSelector } from '../../../bll/selectors/selectors'
+import {
+  cardsTotalCountSelector,
+  packUserDataSelector,
+  profileInfoSelector,
+} from '../../../bll/selectors/selectors'
 import { setCardsWithParamsTC } from '../../../bll/store/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import { useDebounce } from '../../../hooks/useDebounce'
@@ -18,9 +22,12 @@ import { CardsList } from './CardsList/CardsList'
 export const Cards = () => {
   const profile = useAppSelector(profileInfoSelector)
   const packUserData = useAppSelector(packUserDataSelector)
+  const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
   const [params, setParams] = useState<CardsParamsType>({ cardsPack_id: packUserData.packId })
   const [cardQuestionName, setCardQuestionName] = useState<string>('')
   const [cardAnswerName, setCardAnswerName] = useState<string>('')
+  const [cardsPerPage, setCardsPerPage] = useState<number>(4)
+  const [page, setPage] = useState<number>(0)
   const debouncedValue = useDebounce<CardsParamsType>(params, 500)
   const dispatch = useAppDispatch()
   const title =
@@ -31,8 +38,29 @@ export const Cards = () => {
     if (packUserData.packId) {
       dispatch(setCardsWithParamsTC({ ...params, cardsPack_id: packUserData.packId }))
     }
-  }, [debouncedValue, packUserData])
+  }, [debouncedValue])
+
+  const ChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCardsPerPage(+event.target.value)
+    //setCardsPerPage(cardsPerPage)
+    setPage(0)
+    setParams({ ...params, pageCount: +event.target.value })
+  }
+
+  const changePage = (event: unknown, newPage: number) => {
+    setPage(newPage)
+    setParams({
+      ...params,
+      page: newPage,
+      pageCount:
+        cardsTotalCount - (newPage + 1) * cardsPerPage > 0
+          ? cardsPerPage
+          : cardsTotalCount - newPage * cardsPerPage,
+    })
+  }
+
   let SearchByCardQuestion = (name: string) => {
+    setPage(0)
     setCardQuestionName(name)
     setParams({ ...params, cardQuestion: name })
   }
@@ -66,7 +94,12 @@ export const Cards = () => {
           />
         </div>
       </div>
-      <CardsList />
+      <CardsList
+        page={page}
+        changePage={changePage}
+        cardsPerPage={cardsPerPage}
+        handleChangeRowsPerPage={ChangeRowsPerPage}
+      />
     </div>
   )
 }

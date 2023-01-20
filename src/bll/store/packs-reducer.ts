@@ -9,7 +9,7 @@ const initialState = {
   cardPacks: [] as CardPacksType[],
   cardPacksTotalCount: 0,
   maxCardsCount: 0,
-  minCardsCount: null as null | number,
+  minCardsCount: 0,
   page: 0,
   pageCount: 4,
 }
@@ -27,6 +27,9 @@ export const slice = createSlice({
     setMaxPacksCount(state, action: PayloadAction<{ maxCardsCount: number }>) {
       state.maxCardsCount = action.payload.maxCardsCount
     },
+    setMinPacksCount(state, action: PayloadAction<{ minCardsCount: number }>) {
+      state.minCardsCount = action.payload.minCardsCount
+    },
     setCardPacksTotalCount(state, action: PayloadAction<{ cardPacksTotalCount: number }>) {
       state.cardPacksTotalCount = action.payload.cardPacksTotalCount
     },
@@ -34,7 +37,8 @@ export const slice = createSlice({
 })
 export const packsReducer = slice.reducer
 
-export const { setPacks, setMaxPacksCount, setCardPacksTotalCount } = slice.actions
+export const { setPacks, setMaxPacksCount, setMinPacksCount, setCardPacksTotalCount } =
+  slice.actions
 
 export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch: Dispatch) => {
   debugger
@@ -46,6 +50,9 @@ export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch
     dispatch(setPacks({ packs: res.data.cardPacks }))
     dispatch(setAppStatus({ status: 'succeeded' }))
     dispatch(setMaxPacksCount({ maxCardsCount: res.data.maxCardsCount }))
+    dispatch(
+      setMinPacksCount({ minCardsCount: res.data.minCardsCount ? res.data.minCardsCount : 0 })
+    )
     dispatch(
       setCardPacksTotalCount({
         cardPacksTotalCount: res.data.cardPacksTotalCount ? res.data.cardPacksTotalCount : 0,

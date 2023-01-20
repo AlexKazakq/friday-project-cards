@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import EditIcon from '@mui/icons-material/Edit'
@@ -12,7 +12,11 @@ import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 
-import { cardsSelector, packUserDataSelector } from '../../../../bll/selectors/selectors'
+import {
+  cardsSelector,
+  cardsTotalCountSelector,
+  packUserDataSelector,
+} from '../../../../bll/selectors/selectors'
 import { setCardsWithParamsTC } from '../../../../bll/store/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
@@ -50,11 +54,18 @@ interface Data {
   actions: JSX.Element
 }
 
-export const CardsList = () => {
+type CardsListType = {
+  page: number
+  cardsPerPage: number
+  handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void
+  changePage: (event: unknown, newPage: number) => void
+}
+
+export const CardsList = (props: CardsListType) => {
   const cards = useAppSelector(cardsSelector)
-  const [page, setPage] = useState(0)
-  const [cardsPerPage, setCardsPerPage] = useState(10)
   const packUserData = useAppSelector(packUserDataSelector)
+  const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -90,18 +101,9 @@ export const CardsList = () => {
     return createData(card.question, card.answer, dateFormatUtils(card.updated), grade, actions)
   })
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage)
-  }
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCardsPerPage(+event.target.value)
-    setPage(0)
-  }
-
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
+      <TableContainer sx={{ maxHeight: 640 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -117,7 +119,7 @@ export const CardsList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.slice(page * cardsPerPage, page * cardsPerPage + cardsPerPage).map(row => {
+            {rows.map(row => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.answer}>
                   {columns.map(column => {
@@ -137,14 +139,14 @@ export const CardsList = () => {
       </TableContainer>
       <TablePagination
         sx={{}}
-        rowsPerPageOptions={[2, 6, 10]}
+        rowsPerPageOptions={[4, 6, 10]}
         component="div"
-        count={rows.length}
-        rowsPerPage={cardsPerPage}
-        page={page}
+        count={cardsTotalCount}
+        rowsPerPage={props.cardsPerPage}
+        page={props.page}
         labelRowsPerPage={'Cards per page'}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+        onPageChange={props.changePage}
+        onRowsPerPageChange={props.handleChangeRowsPerPage}
       />
     </Paper>
   )
