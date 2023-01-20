@@ -18,7 +18,7 @@ export const TableHeader = ({ title, buttonName }: PacksHeaderType) => {
     dispatch(
       addNewPackTC({
         cardsPack: {
-          name: 'New pack for test',
+          name: 'New pack for test1',
           deckCover: '',
           private: false,
         },

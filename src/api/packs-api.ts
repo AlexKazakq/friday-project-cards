@@ -37,8 +37,15 @@ export const packsAPI = {
   addPack(params: AddPacksParamsType) {
     return instance.post<AddPacksResponseType>('/cards/pack', params)
   },
-  deletePack(params: string) {
-    return instance.delete<deletePacksResponseType>('/cards/pack', params)
+  deletePack(params: DeletePacksParamsType) {
+    debugger
+    console.log(`?id=${params.id}`)
+
+    // @ts-ignore
+    return instance.delete<deletePacksResponseType>('/cards/pack', `?id=${params.id}`)
+  },
+  updatePack(params: UpdatePacksParamsType) {
+    return instance.put('/cards/pack', params)
   },
 }
 
@@ -76,4 +83,19 @@ export type AddPacksResponseType = {
 
 export type deletePacksResponseType = {
   deletedCardsPack: {}
+}
+
+export type updatePacksResponseType = {
+  updatedCardsPack: {}
+}
+
+export type DeletePacksParamsType = {
+  id: string
+}
+
+export type UpdatePacksParamsType = {
+  cardsPack: {
+    _id: string
+    name: string
+  }
 }

@@ -13,8 +13,10 @@ import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import { NavLink } from 'react-router-dom'
 
+import { UpdatePacksParamsType } from '../../../../api/packs-api'
 import { PATH } from '../../../../assets/Routes/path'
 import { cardPacksSelector, profileInfoSelector } from '../../../../bll/selectors/selectors'
+import { deletePackTC, updatePackTC } from '../../../../bll/store/packs-reducer'
 import { PackUserDataType, setPackUserData } from '../../../../bll/store/packUserData-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
@@ -65,6 +67,14 @@ export const PacksList = () => {
   const showCardByIdHandler = (userData: PackUserDataType) => {
     dispatch(setPackUserData({ userData }))
   }
+  const DeletePackByIdHandler = (id: string) => {
+    debugger
+    dispatch(deletePackTC({ id }))
+  }
+
+  const UpdatePackByIdHandler = (_id: string, name: string) => {
+    dispatch(updatePackTC({ cardsPack: { _id, name } }))
+  }
 
   function createData(
     name: string,
@@ -106,10 +116,22 @@ export const PacksList = () => {
             }
             className={s.navLink}
           >
-            <EditIcon />
+            <EditIcon onClick={() => UpdatePackByIdHandler(pack._id, 'new name')} />
           </NavLink>
           <div>
-            <DeleteForeverIcon />
+            <NavLink
+              to={PATH.PACKS}
+              onClick={() =>
+                showCardByIdHandler({
+                  packId: pack._id,
+                  packUserId: pack.user_id,
+                  packUserName: pack.user_name,
+                })
+              }
+              className={s.navLink}
+            >
+              <DeleteForeverIcon onClick={() => DeletePackByIdHandler(pack._id)} />
+            </NavLink>
           </div>
         </div>
       ) : (
