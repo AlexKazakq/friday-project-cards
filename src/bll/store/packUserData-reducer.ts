@@ -1,18 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-let storrageUserData: PackUserDataType
+let storageUserData: PackUserDataType
 
 console.log(localStorage.getItem('packUserData'))
 
 if (localStorage.getItem('packUserData') !== null) {
-  storrageUserData = JSON.parse(localStorage.getItem('packUserData') as string) as PackUserDataType
+  storageUserData = JSON.parse(localStorage.getItem('packUserData') as string) as PackUserDataType
 } else {
-  storrageUserData = {} as PackUserDataType
+  storageUserData = {} as PackUserDataType
 }
 
 const initialState = {
-  packUserData: storrageUserData,
-  status: null as null | string,
+  packUserData: storageUserData,
+  status: null as null | searchStatusType,
 }
 
 export const slice = createSlice({
@@ -23,7 +23,7 @@ export const slice = createSlice({
       state.packUserData = action.payload.userData
       localStorage.setItem('packUserData', JSON.stringify(state.packUserData))
     },
-    setSearchStatus(state, action: PayloadAction<{ status: string | null }>) {
+    setSearchStatus(state, action: PayloadAction<{ status: searchStatusType | null }>) {
       state.status = action.payload.status
     },
   },
