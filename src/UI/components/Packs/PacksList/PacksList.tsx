@@ -51,11 +51,12 @@ const columns: readonly Column[] = [
 ]
 
 interface Data {
-  name: string
+  name: JSX.Element
   cards: number
   updated: string
   created: string
   actions: JSX.Element
+  id: string
 }
 
 type PacksListType = {
@@ -75,75 +76,61 @@ export const PacksList = (props: PacksListType) => {
   }
 
   function createData(
-    name: string,
+    name: JSX.Element,
     cards: number,
     updated: string,
     created: string,
-    actions: JSX.Element
+    actions: JSX.Element,
+    id: string
   ): Data {
-    return { name, cards, updated, created, actions }
+    return { name, cards, updated, created, actions, id }
   }
 
   const rows: Data[] = cardPacks.map(pack => {
     const actions =
       profileInfo._id === pack.user_id ? (
         <div key={pack._id} className={s.icons}>
-          <div>
-            <NavLink
-              to={PATH.CARDS}
-              onClick={() =>
-                showCardByIdHandler({
-                  packId: pack._id,
-                  packUserId: pack.user_id,
-                  packUserName: pack.user_name,
-                })
-              }
-              className={s.navLink}
-            >
-              <SchoolIcon />
-            </NavLink>
-          </div>
-          <NavLink
-            to={PATH.CARDS}
-            onClick={() =>
-              showCardByIdHandler({
-                packId: pack._id,
-                packUserId: pack.user_id,
-                packUserName: pack.user_name,
-              })
-            }
-            className={s.navLink}
-          >
+          <button className={s.button} disabled={pack.cardsCount === 0}>
+            <SchoolIcon />
+          </button>
+          <button className={s.button}>
             <EditIcon />
-          </NavLink>
-          <div>
+          </button>
+          <button className={s.button}>
             <DeleteForeverIcon />
-          </div>
+          </button>
         </div>
       ) : (
         <div key={pack._id}>
-          <NavLink
-            to={PATH.CARDS}
-            onClick={() =>
-              showCardByIdHandler({
-                packId: pack._id,
-                packUserId: pack.user_id,
-                packUserName: pack.user_name,
-              })
-            }
-            className={s.navLink}
-          >
+          <button className={s.button} disabled={pack.cardsCount === 0}>
             <SchoolIcon />
-          </NavLink>
+          </button>
         </div>
       )
 
+    const name = (
+      <NavLink
+        to={PATH.CARDS}
+        onClick={() =>
+          showCardByIdHandler({
+            packId: pack._id,
+            packUserId: pack.user_id,
+            packUserName: pack.user_name,
+          })
+        }
+        className={s.navLink}
+      >
+        {pack.name}
+      </NavLink>
+    )
+
     return createData(
-      pack.name,
+      name,
       pack.cardsCount,
       dateFormatUtils(pack.updated),
       pack.user_name,
-      actions
+      actions,
+      pack._id
     )
   })
 
@@ -171,7 +158,7 @@ export const PacksList = (props: PacksListType) => {
           <TableBody>
             {rows.map(row => {
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.cards}>
+                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                   {columns.map(column => {
                     const value = row[column.id]
 
@@ -187,6 +174,7 @@ export const PacksList = (props: PacksListType) => {
           </TableBody>
         </Table>
       </TableContainer>
+      {cardPacks.length === 0 && <div className={s.notFound}>Nothing found for your request</div>}
       <TablePagination
         sx={{}}
         rowsPerPageOptions={[4, 6, 10]}

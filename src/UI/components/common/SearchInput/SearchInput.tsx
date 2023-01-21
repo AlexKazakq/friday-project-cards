@@ -11,6 +11,7 @@ type SearchInputType = {
   inputName: string
   searchName: string
   setParamName: (name: string) => void
+  disable?: boolean
 }
 export const SearchInput = (props: SearchInputType) => {
   let Search = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -22,6 +23,7 @@ export const SearchInput = (props: SearchInputType) => {
       <span className={s.title}>{props.inputName}</span>
       <FormControl size={'small'} fullWidth>
         <OutlinedInput
+          disabled={props.disable}
           id="outlined-adornment-amount"
           onChange={Search}
           value={props.searchName}

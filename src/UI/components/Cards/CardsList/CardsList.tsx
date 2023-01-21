@@ -16,13 +16,16 @@ import {
   cardsSelector,
   cardsTotalCountSelector,
   packUserDataSelector,
+  profileInfoSelector,
 } from '../../../../bll/selectors/selectors'
 import { setCardsWithParamsTC } from '../../../../bll/store/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
 
+import s from './cardsList.module.css'
+
 interface Column {
-  id: 'question' | 'answer' | 'updated' | 'grade' | 'actions'
+  id: 'question' | 'answer' | 'updated' | 'grade'
   label: string
   minWidth?: number
   align?: 'right'
@@ -40,10 +43,6 @@ const columns: readonly Column[] = [
     id: 'grade',
     label: 'Grade',
   },
-  {
-    id: 'actions',
-    label: 'Actions',
-  },
 ]
 
 interface Data {
@@ -51,7 +50,6 @@ interface Data {
   answer: string
   updated: string
   grade: JSX.Element
-  actions: JSX.Element
 }
 
 type CardsListType = {
@@ -65,6 +63,7 @@ export const CardsList = (props: CardsListType) => {
   const cards = useAppSelector(cardsSelector)
   const packUserData = useAppSelector(packUserDataSelector)
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
+  const profileInfo = useAppSelector(profileInfoSelector)
 
   const dispatch = useAppDispatch()
 
@@ -74,80 +73,83 @@ export const CardsList = (props: CardsListType) => {
     }
   }, [])
 
-  function createData(
-    question: string,
-    answer: string,
-    updated: string,
-    grade: JSX.Element,
-    actions: JSX.Element
-  ): Data {
-    return { question, answer, updated, grade, actions }
+  function createData(question: string, answer: string, updated: string, grade: JSX.Element): Data {
+    return { question, answer, updated, grade }
   }
 
   const rows: Data[] = cards.map(card => {
-    const grade = (
-      <div>
-        <Rating name="disabled" value={card.grade} disabled />
-      </div>
-    )
-    const actions = (
-      <div>
-        <EditIcon />
+    let grade
 
-        <DeleteForeverIcon />
-      </div>
-    )
+    profileInfo._id === card.user_id
+      ? (grade = (
+          <div>
+            <Rating name="disabled" value={card.grade} disabled />
+            <EditIcon />
 
-    return createData(card.question, card.answer, dateFormatUtils(card.updated), grade, actions)
+            <DeleteForeverIcon />
+          </div>
+        ))
+      : (grade = (
+          <div>
+            <Rating name="disabled" value={card.grade} disabled />
+          </div>
+        ))
+
+    return createData(card.question, card.answer, dateFormatUtils(card.updated), grade)
   })
 
-  return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 640 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map(column => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(row => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.answer}>
-                  {columns.map(column => {
-                    const value = row[column.id]
+  if (cardsTotalCount !== 0) {
+    return (
+      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+        <TableContainer sx={{ maxHeight: 640 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map(column => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map(row => {
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.answer}>
+                    {columns.map(column => {
+                      const value = row[column.id]
 
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {value}
-                      </TableCell>
-                    )
-                  })}
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        sx={{}}
-        rowsPerPageOptions={[4, 6, 10]}
-        component="div"
-        count={cardsTotalCount}
-        rowsPerPage={props.cardsPerPage}
-        page={props.page}
-        labelRowsPerPage={'Cards per page'}
-        onPageChange={props.changePage}
-        onRowsPerPageChange={props.handleChangeRowsPerPage}
-      />
-    </Paper>
-  )
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {value}
+                        </TableCell>
+                      )
+                    })}
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {cards.length === 0 && <div>Nothing found for your request</div>}
+        <TablePagination
+          sx={{}}
+          rowsPerPageOptions={[4, 6, 10]}
+          component="div"
+          count={cardsTotalCount}
+          rowsPerPage={props.cardsPerPage}
+          page={props.page}
+          labelRowsPerPage={'Cards per page'}
+          onPageChange={props.changePage}
+          onRowsPerPageChange={props.handleChangeRowsPerPage}
+        />
+      </Paper>
+    )
+  } else {
+    return <div className={s.empty}>This pack is empty</div>
+  }
 }

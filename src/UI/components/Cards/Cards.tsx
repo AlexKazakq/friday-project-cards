@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { CardsParamsType } from '../../../api/cards-api'
 import { PATH } from '../../../assets/Routes/path'
 import {
+  cardsSelector,
   cardsTotalCountSelector,
   packUserDataSelector,
   profileInfoSelector,
@@ -20,6 +21,7 @@ import s from './cards.module.css'
 import { CardsList } from './CardsList/CardsList'
 
 export const Cards = () => {
+  const cards = useAppSelector(cardsSelector)
   const profile = useAppSelector(profileInfoSelector)
   const packUserData = useAppSelector(packUserDataSelector)
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
@@ -77,7 +79,11 @@ export const Cards = () => {
           Back to Packs List
         </NavLink>
       </div>
-      <TableHeader title={title} buttonName={buttonTitle} />
+      <TableHeader
+        title={title}
+        buttonName={buttonTitle}
+        disable={cards.length === 0 && profile._id !== packUserData.packUserId}
+      />
       <div className={s.filters}>
         <div className={s.items}>
           <SearchInput
