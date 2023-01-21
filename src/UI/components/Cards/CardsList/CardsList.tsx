@@ -15,6 +15,7 @@ import TableRow from '@mui/material/TableRow'
 import {
   cardsSelector,
   cardsTotalCountSelector,
+  packStatusSelector,
   packUserDataSelector,
   profileInfoSelector,
 } from '../../../../bll/selectors/selectors'
@@ -64,6 +65,7 @@ export const CardsList = (props: CardsListType) => {
   const packUserData = useAppSelector(packUserDataSelector)
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
   const profileInfo = useAppSelector(profileInfoSelector)
+  const packUserStatus = useAppSelector(packStatusSelector)
 
   const dispatch = useAppDispatch()
 
@@ -84,9 +86,12 @@ export const CardsList = (props: CardsListType) => {
       ? (grade = (
           <div>
             <Rating name="disabled" value={card.grade} disabled />
-            <EditIcon />
-
-            <DeleteForeverIcon />
+            <button className={s.button}>
+              <EditIcon />
+            </button>
+            <button className={s.button}>
+              <DeleteForeverIcon />
+            </button>
           </div>
         ))
       : (grade = (
@@ -98,7 +103,7 @@ export const CardsList = (props: CardsListType) => {
     return createData(card.question, card.answer, dateFormatUtils(card.updated), grade)
   })
 
-  if (cardsTotalCount !== 0) {
+  if (packUserData.cardsCount !== 0) {
     return (
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <TableContainer sx={{ maxHeight: 640 }}>
@@ -135,7 +140,7 @@ export const CardsList = (props: CardsListType) => {
             </TableBody>
           </Table>
         </TableContainer>
-        {cards.length === 0 && <div>Nothing found for your request</div>}
+        {cards.length === 0 && <div className={s.notFound}>{packUserStatus}</div>}
         <TablePagination
           sx={{}}
           rowsPerPageOptions={[4, 6, 10]}

@@ -4,6 +4,7 @@ import axios, { AxiosError } from 'axios'
 import { packsAPI, PacksParamsType } from '../../api/packs-api'
 
 import { setAppError, setAppStatus } from './app-reducer'
+import { setSearchStatus } from './packUserData-reducer'
 
 const initialState = {
   cardPacks: [] as CardPacksType[],
@@ -44,6 +45,7 @@ export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch
   debugger
   dispatch(setPacks({ packs: [] as CardPacksType[] }))
   dispatch(setAppStatus({ status: 'loading' }))
+  dispatch(setSearchStatus({ status: 'Wait...' }))
   try {
     const res = await packsAPI.getPacksWithParams(params)
 
@@ -58,6 +60,11 @@ export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch
         cardPacksTotalCount: res.data.cardPacksTotalCount ? res.data.cardPacksTotalCount : 0,
       })
     )
+    if (initialState.cardPacks.length === 0) {
+      dispatch(setSearchStatus({ status: 'No matches found...' }))
+    } else {
+      dispatch(setSearchStatus({ status: null }))
+    }
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
 
@@ -66,6 +73,7 @@ export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch
 
       dispatch(setAppStatus({ status: 'failed' }))
       dispatch(setAppError({ error: error }))
+      dispatch(setSearchStatus({ status: null }))
     }
   }
 }

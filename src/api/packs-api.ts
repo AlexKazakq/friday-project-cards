@@ -15,8 +15,6 @@ export const instance = axios.create({
 
 export const packsAPI = {
   getPacksWithParams(params: PacksParamsType) {
-    debugger
-
     return instance.get<getPacksResponseType>('cards/pack', {
       params: {
         packName: params.packName,

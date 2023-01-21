@@ -84,22 +84,24 @@ export const Cards = () => {
         buttonName={buttonTitle}
         disable={cards.length === 0 && profile._id !== packUserData.packUserId}
       />
-      <div className={s.filters}>
-        <div className={s.items}>
-          <SearchInput
-            inputName={'Search by Question'}
-            searchName={cardQuestionName}
-            setParamName={SearchByCardQuestion}
-          />
+      {packUserData.cardsCount !== 0 && (
+        <div className={s.filters}>
+          <div className={s.items}>
+            <SearchInput
+              inputName={'Search by Question'}
+              searchName={cardQuestionName}
+              setParamName={SearchByCardQuestion}
+            />
+          </div>
+          <div className={s.items}>
+            <SearchInput
+              inputName={'Search by Answer'}
+              searchName={cardAnswerName}
+              setParamName={SearchByCardAnswer}
+            />
+          </div>
         </div>
-        <div className={s.items}>
-          <SearchInput
-            inputName={'Search by Answer'}
-            searchName={cardAnswerName}
-            setParamName={SearchByCardAnswer}
-          />
-        </div>
-      </div>
+      )}
       <CardsList
         page={page}
         changePage={changePage}

@@ -10,3 +10,15 @@
     font-weight: 700;
     color: #0066cc;
 }
+.notFound {
+    margin-top: 20px;
+
+    font-size: 18px;
+    text-align: center;
+
+    opacity: 0.7;
+}
+.button {
+    background: none;
+    border: none;
+}

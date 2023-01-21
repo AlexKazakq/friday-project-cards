@@ -12,6 +12,7 @@ if (localStorage.getItem('packUserData') !== null) {
 
 const initialState = {
   packUserData: storrageUserData,
+  status: null as null | string,
 }
 
 export const slice = createSlice({
@@ -22,14 +23,20 @@ export const slice = createSlice({
       state.packUserData = action.payload.userData
       localStorage.setItem('packUserData', JSON.stringify(state.packUserData))
     },
+    setSearchStatus(state, action: PayloadAction<{ status: string | null }>) {
+      state.status = action.payload.status
+    },
   },
 })
 export const packUserDataReducer = slice.reducer
 
-export const { setPackUserData } = slice.actions
+export const { setPackUserData, setSearchStatus } = slice.actions
 
 export type PackUserDataType = {
   packUserId: string
   packId: string
   packUserName: string
+  cardsCount: number
 }
+
+export type searchStatusType = 'Wait...' | 'No matches found...' | null

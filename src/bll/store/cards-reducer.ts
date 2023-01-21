@@ -4,6 +4,7 @@ import axios, { AxiosError } from 'axios'
 import { cardsAPI, CardsParamsType } from '../../api/cards-api'
 
 import { setAppError, setAppStatus } from './app-reducer'
+import { setSearchStatus } from './packUserData-reducer'
 
 const initialState = {
   cards: [] as CardsType[],
@@ -33,6 +34,7 @@ export const { setCards, setCardsTotalCount } = slice.actions
 export const setCardsWithParamsTC = (params: CardsParamsType) => async (dispatch: Dispatch) => {
   dispatch(setCards({ cards: [] as CardsType[] }))
   dispatch(setAppStatus({ status: 'loading' }))
+  dispatch(setSearchStatus({ status: 'Wait...' }))
   try {
     const res = await cardsAPI.getCardsWithParams(params)
 
@@ -43,6 +45,11 @@ export const setCardsWithParamsTC = (params: CardsParamsType) => async (dispatch
         cardsTotalCount: res.data.cardsTotalCount ? res.data.cardsTotalCount : 0,
       })
     )
+    if (initialState.cardsTotalCount === 0) {
+      dispatch(setSearchStatus({ status: 'No matches found...' }))
+    } else {
+      dispatch(setSearchStatus({ status: null }))
+    }
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
 
@@ -51,6 +58,7 @@ export const setCardsWithParamsTC = (params: CardsParamsType) => async (dispatch
 
       dispatch(setAppStatus({ status: 'failed' }))
       dispatch(setAppError({ error: error }))
+      dispatch(setSearchStatus({ status: null }))
     }
   }
 }

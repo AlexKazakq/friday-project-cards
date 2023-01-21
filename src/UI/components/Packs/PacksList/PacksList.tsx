@@ -17,6 +17,7 @@ import { PATH } from '../../../../assets/Routes/path'
 import {
   cardPacksSelector,
   cardPacksTotalCountSelector,
+  packStatusSelector,
   profileInfoSelector,
 } from '../../../../bll/selectors/selectors'
 import { PackUserDataType, setPackUserData } from '../../../../bll/store/packUserData-reducer'
@@ -69,6 +70,7 @@ export const PacksList = (props: PacksListType) => {
   const cardPacks = useAppSelector(cardPacksSelector)
   const profileInfo = useAppSelector(profileInfoSelector)
   const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
+  const packUserStatus = useAppSelector(packStatusSelector)
   const dispatch = useAppDispatch()
 
   const showCardByIdHandler = (userData: PackUserDataType) => {
@@ -116,6 +118,7 @@ export const PacksList = (props: PacksListType) => {
             packId: pack._id,
             packUserId: pack.user_id,
             packUserName: pack.user_name,
+            cardsCount: pack.cardsCount,
           })
         }
         className={s.navLink}
@@ -174,7 +177,9 @@ export const PacksList = (props: PacksListType) => {
           </TableBody>
         </Table>
       </TableContainer>
-      {cardPacks.length === 0 && <div className={s.notFound}>Nothing found for your request</div>}
+      {(cardPacksTotalCount === 0 || packUserStatus === 'Wait...') && (
+        <div className={s.notFound}>{packUserStatus}</div>
+      )}
       <TablePagination
         sx={{}}
         rowsPerPageOptions={[4, 6, 10]}
