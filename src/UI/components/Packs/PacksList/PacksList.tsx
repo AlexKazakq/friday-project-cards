@@ -23,6 +23,7 @@ import {
 import { PackUserDataType, setPackUserData } from '../../../../bll/store/packUserData-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
+import SuperSort from '../../common/SuperSort/SuperSort'
 
 import s from './packList.module.css'
 
@@ -65,6 +66,8 @@ type PacksListType = {
   cardsPerPage: number
   handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void
   changePage: (event: unknown, newPage: number) => void
+  sort: string
+  onChangeSort: (newSort: string) => void
 }
 export const PacksList = (props: PacksListType) => {
   const cardPacks = useAppSelector(cardPacksSelector)
@@ -183,6 +186,7 @@ export const PacksList = (props: PacksListType) => {
                   style={{ minWidth: column.minWidth }}
                 >
                   {column.label}
+                  <SuperSort sort={props.sort} value={column.id} onChange={props.onChangeSort} />
                 </TableCell>
               ))}
             </TableRow>

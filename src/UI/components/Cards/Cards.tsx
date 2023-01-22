@@ -44,7 +44,6 @@ export const Cards = () => {
 
   const ChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCardsPerPage(+event.target.value)
-    //setCardsPerPage(cardsPerPage)
     setPage(0)
     setParams({ ...params, pageCount: +event.target.value })
   }

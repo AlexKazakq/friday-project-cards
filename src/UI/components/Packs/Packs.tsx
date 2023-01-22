@@ -29,6 +29,7 @@ export const Packs = () => {
   const [maxValue, setMaxValue] = useState<number>(0)
   const [cardsPerPage, setCardsPerPage] = useState<number>(4)
   const [page, setPage] = useState<number>(0)
+  const [sort, setSort] = useState<string>('')
 
   const debouncedValue = useDebounce<PacksParamsType>(params, 500)
 
@@ -44,7 +45,6 @@ export const Packs = () => {
   }, [cardPacksMaxCount, cardPacksMinCount])
   const ChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCardsPerPage(+event.target.value)
-    //setCardsPerPage(cardsPerPage)
     setPage(0)
     setParams({ ...params, pageCount: +event.target.value })
   }
@@ -86,6 +86,12 @@ export const Packs = () => {
     }
   }
 
+  const onChangeSort = (newSort: string) => {
+    setSort(newSort)
+    setPage(0)
+    setParams({ ...params, sortPacks: newSort })
+  }
+
   const changePage = (event: unknown, newPage: number) => {
     setPage(newPage)
     setParams({
@@ -117,6 +123,8 @@ export const Packs = () => {
         handleChangeRowsPerPage={ChangeRowsPerPage}
         cardsPerPage={cardsPerPage}
         changePage={changePage}
+        sort={sort}
+        onChangeSort={onChangeSort}
       />
     </div>
   )
