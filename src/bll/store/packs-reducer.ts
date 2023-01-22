@@ -42,7 +42,6 @@ export const { setPacks, setMaxPacksCount, setMinPacksCount, setCardPacksTotalCo
   slice.actions
 
 export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch: Dispatch) => {
-  debugger
   dispatch(setPacks({ packs: [] as CardPacksType[] }))
   dispatch(setAppStatus({ status: 'loading' }))
   dispatch(setSearchStatus({ status: 'Wait...' }))

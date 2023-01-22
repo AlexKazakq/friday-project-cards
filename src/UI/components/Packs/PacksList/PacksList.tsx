@@ -11,7 +11,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 import { PATH } from '../../../../assets/Routes/path'
 import {
@@ -71,10 +71,17 @@ export const PacksList = (props: PacksListType) => {
   const profileInfo = useAppSelector(profileInfoSelector)
   const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const packUserStatus = useAppSelector(packStatusSelector)
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
   const showCardByIdHandler = (userData: PackUserDataType) => {
     dispatch(setPackUserData({ userData }))
+  }
+
+  const goToLearnHandler = (userData: PackUserDataType) => {
+    showCardByIdHandler(userData)
+
+    navigate(PATH.LEARN)
   }
 
   function createData(
@@ -92,7 +99,18 @@ export const PacksList = (props: PacksListType) => {
     const actions =
       profileInfo._id === pack.user_id ? (
         <div key={pack._id} className={s.icons}>
-          <button className={s.button} disabled={pack.cardsCount === 0}>
+          <button
+            className={s.button}
+            disabled={pack.cardsCount === 0}
+            onClick={() =>
+              goToLearnHandler({
+                packId: pack._id,
+                packUserId: pack.user_id,
+                packUserName: pack.user_name,
+                cardsCount: pack.cardsCount,
+              })
+            }
+          >
             <SchoolIcon />
           </button>
           <button className={s.button}>
@@ -104,7 +122,18 @@ export const PacksList = (props: PacksListType) => {
         </div>
       ) : (
         <div key={pack._id}>
-          <button className={s.button} disabled={pack.cardsCount === 0}>
+          <button
+            className={s.button}
+            disabled={pack.cardsCount === 0}
+            onClick={() =>
+              goToLearnHandler({
+                packId: pack._id,
+                packUserId: pack.user_id,
+                packUserName: pack.user_name,
+                cardsCount: pack.cardsCount,
+              })
+            }
+          >
             <SchoolIcon />
           </button>
         </div>

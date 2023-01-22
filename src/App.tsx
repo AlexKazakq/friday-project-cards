@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from './hooks/hooks'
 import { Cards } from './UI/components/Cards/Cards'
 import { Error404 } from './UI/components/Error404/Error404'
 import { Header } from './UI/components/Header/Header'
+import { Learn } from './UI/components/Learn/Learn'
 import { Login } from './UI/components/Login/Login'
 import { NewPassword } from './UI/components/NewPassword/NewPassword'
 import { Packs } from './UI/components/Packs/Packs'
@@ -59,6 +60,7 @@ function App() {
           <Route path={PATH.PROFILE} element={<Profile />} />
           <Route path={PATH.PACKS} element={<Packs />} />
           <Route path={PATH.CARDS} element={<Cards />} />
+          <Route path={PATH.LEARN} element={<Learn />} />
         </Route>
 
         <Route element={<PrivateRoutesLogin />}>
