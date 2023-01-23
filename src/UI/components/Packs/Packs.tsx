@@ -88,7 +88,7 @@ export const Packs = () => {
 
   const onChangeSort = (newSort: string) => {
     setSort(newSort)
-    setPage(0)
+    changePage(null, 0)
     setParams({ ...params, sortPacks: newSort })
   }
 
@@ -96,7 +96,7 @@ export const Packs = () => {
     setPage(newPage)
     setParams({
       ...params,
-      page: newPage,
+      page: newPage + 1,
       pageCount:
         cardPacksTotalCount - (newPage + 1) * cardsPerPage > 0
           ? cardsPerPage

@@ -223,6 +223,8 @@ export const PacksList = (props: PacksListType) => {
         labelRowsPerPage={'Cards per page'}
         onPageChange={props.changePage}
         onRowsPerPageChange={props.handleChangeRowsPerPage}
+        showFirstButton={true}
+        showLastButton={true}
       />
     </Paper>
   )

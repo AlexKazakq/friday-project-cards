@@ -25,11 +25,14 @@ export const Cards = () => {
   const profile = useAppSelector(profileInfoSelector)
   const packUserData = useAppSelector(packUserDataSelector)
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
+
   const [params, setParams] = useState<CardsParamsType>({ cardsPack_id: packUserData.packId })
   const [cardQuestionName, setCardQuestionName] = useState<string>('')
   const [cardAnswerName, setCardAnswerName] = useState<string>('')
   const [cardsPerPage, setCardsPerPage] = useState<number>(4)
   const [page, setPage] = useState<number>(0)
+  const [sort, setSort] = useState<string>('')
+
   const debouncedValue = useDebounce<CardsParamsType>(params, 500)
   const dispatch = useAppDispatch()
   const title =
@@ -52,7 +55,7 @@ export const Cards = () => {
     setPage(newPage)
     setParams({
       ...params,
-      page: newPage,
+      page: newPage + 1,
       pageCount:
         cardsTotalCount - (newPage + 1) * cardsPerPage > 0
           ? cardsPerPage
@@ -69,6 +72,12 @@ export const Cards = () => {
   let SearchByCardAnswer = (name: string) => {
     setCardAnswerName(name)
     setParams({ ...params, cardAnswer: name })
+  }
+
+  const onChangeSort = (newSort: string) => {
+    setSort(newSort)
+    changePage(null, 0)
+    setParams({ ...params, sortCards: newSort })
   }
 
   return (
@@ -106,6 +115,8 @@ export const Cards = () => {
         changePage={changePage}
         cardsPerPage={cardsPerPage}
         handleChangeRowsPerPage={ChangeRowsPerPage}
+        sort={sort}
+        onChangeSort={onChangeSort}
       />
     </div>
   )

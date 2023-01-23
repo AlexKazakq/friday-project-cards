@@ -22,6 +22,7 @@ import {
 import { setCardsWithParamsTC } from '../../../../bll/store/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
+import SuperSort from '../../common/SuperSort/SuperSort'
 
 import s from './cardsList.module.css'
 
@@ -58,6 +59,8 @@ type CardsListType = {
   cardsPerPage: number
   handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void
   changePage: (event: unknown, newPage: number) => void
+  sort: string
+  onChangeSort: (newSort: string) => void
 }
 
 export const CardsList = (props: CardsListType) => {
@@ -117,6 +120,7 @@ export const CardsList = (props: CardsListType) => {
                     style={{ minWidth: column.minWidth }}
                   >
                     {column.label}
+                    <SuperSort sort={props.sort} value={column.id} onChange={props.onChangeSort} />
                   </TableCell>
                 ))}
               </TableRow>
@@ -143,7 +147,7 @@ export const CardsList = (props: CardsListType) => {
         {cards.length === 0 && <div className={s.notFound}>{packUserStatus}</div>}
         <TablePagination
           sx={{}}
-          rowsPerPageOptions={[4, 6, 10]}
+          rowsPerPageOptions={[4, 6, 10, 50]}
           component="div"
           count={cardsTotalCount}
           rowsPerPage={props.cardsPerPage}
