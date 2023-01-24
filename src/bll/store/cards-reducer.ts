@@ -1,7 +1,12 @@
 import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 
-import { cardsAPI, CardsParamsType } from '../../api/cards-api'
+import {
+  AddedCardParamsType,
+  cardsAPI,
+  CardsParamsType,
+  DeleteCardParamsType,
+} from '../../api/cards-api'
 
 import { setAppError, setAppStatus } from './app-reducer'
 import { AppDispatch } from './store'
@@ -28,13 +33,50 @@ export const cardsReducer = slice.reducer
 
 export const { setCards } = slice.actions
 
-export const setCardsWithParamsTC = (params: CardsParamsType) => async (dispatch: Dispatch) => {
+export const setCardsWithParamsTC = (params: CardsParamsType) => async (dispatch: AppDispatch) => {
   dispatch(setCards({ cards: [] as CardsType[] }))
   dispatch(setAppStatus({ status: 'loading' }))
   try {
     const res = await cardsAPI.getCardsWithParams(params)
 
     dispatch(setCards({ cards: res.data.cards }))
+    dispatch(setAppStatus({ status: 'succeeded' }))
+  } catch (e) {
+    const err = e as Error | AxiosError<{ error: string }>
+
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message
+
+      dispatch(setAppStatus({ status: 'failed' }))
+      dispatch(setAppError({ error: error }))
+    }
+  }
+}
+
+export const deleteCardTC = (params: DeleteCardParamsType) => async (dispatch: AppDispatch) => {
+  dispatch(setAppStatus({ status: 'loading' }))
+  try {
+    const res = await cardsAPI.deleteCard(params)
+
+    dispatch(setAppStatus({ status: 'succeeded' }))
+  } catch (e) {
+    const err = e as Error | AxiosError<{ error: string }>
+
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message
+
+      dispatch(setAppStatus({ status: 'failed' }))
+      dispatch(setAppError({ error: error }))
+    }
+  }
+}
+
+export const addNewCardTC = (params: AddedCardParamsType) => async (dispatch: AppDispatch) => {
+  dispatch(setCards({ cards: [] as CardsType[] }))
+  dispatch(setAppStatus({ status: 'loading' }))
+  try {
+    const res = await cardsAPI.addNewCard(params)
+
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>

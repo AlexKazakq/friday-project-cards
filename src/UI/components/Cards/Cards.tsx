@@ -23,9 +23,10 @@ export const Cards = () => {
   const [cardAnswerName, setCardAnswerName] = useState<string>('')
   const debouncedValue = useDebounce<CardsParamsType>(params, 500)
   const dispatch = useAppDispatch()
+  // const isMyPack: boolean = profile._id === packUserData.packUserId
   const title =
     profile._id === packUserData.packUserId ? 'My Pack' : `${packUserData.packUserName}'s Pack`
-  const buttonTitle = profile._id === packUserData.packUserId ? 'Add new pack' : 'Learn to pack'
+  const buttonTitle = profile._id === packUserData.packUserId ? 'Add new card' : 'Learn to pack'
 
   useEffect(() => {
     if (packUserData.packId) {
@@ -49,7 +50,7 @@ export const Cards = () => {
           Back to Packs List
         </NavLink>
       </div>
-      <TableHeader title={title} buttonName={buttonTitle} />
+      <TableHeader title={title} buttonName={buttonTitle} cardsPack_id={packUserData.packId} />
       <div className={s.filters}>
         <div className={s.items}>
           <SearchInput

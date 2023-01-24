@@ -6,10 +6,8 @@ if (localStorage.getItem('packUserData') !== null) {
   storrageUserData = JSON.parse(
     sessionStorage.getItem('packUserData') as string
   ) as PackUserDataType
-  debugger
 } else {
   storrageUserData = {} as PackUserDataType
-  debugger
 }
 
 const initialState = {

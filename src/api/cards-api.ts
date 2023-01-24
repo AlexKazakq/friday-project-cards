@@ -28,6 +28,13 @@ export const cardsAPI = {
       },
     })
   },
+  addNewCard(params: AddedCardParamsType) {
+    return instance.post<getCardsResponseType>('cards/card', params)
+  },
+  deleteCard(params: DeleteCardParamsType) {
+    // @ts-ignore
+    return instance.delete<DeleteCardResponseType>('cards/card', params)
+  },
 }
 
 type getCardsResponseType = {
@@ -49,4 +56,26 @@ export type CardsParamsType = {
   sortCards?: string
   page?: number
   pageCount?: number
+}
+
+export type AddedCardParamsType = {
+  card: {
+    cardsPack_id: string | undefined
+    question?: string
+    answer?: string
+    grade?: 0 // 0..5, не обязателен
+    shots?: 0
+    answerImg?: string // "url or base 64"  не обязателен
+    questionImg?: string // "url or base 64"  не обязателен
+    questionVideo?: string // "url or base 64"  не обязателен
+    answerVideo?: string // "url or base 64"  не обязателен
+  }
+}
+
+export type DeleteCardResponseType = {
+  deletedCard?: {}
+}
+
+export type DeleteCardParamsType = {
+  id: string
 }

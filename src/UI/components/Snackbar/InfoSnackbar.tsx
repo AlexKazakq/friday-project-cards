@@ -13,7 +13,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 })
 
 export function InfoSnackbar() {
-  debugger
   const dispatch = useAppDispatch()
   const info = useAppSelector(infoSelector)
   const error = useAppSelector(errorSelector)

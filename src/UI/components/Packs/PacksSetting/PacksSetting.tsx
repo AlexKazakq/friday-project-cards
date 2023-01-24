@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices'
+import { useSelector } from 'react-redux'
 
 import { PacksParamsType } from '../../../../api/packs-api'
 import { cardPacksMaxCountSelector, profileInfoSelector } from '../../../../bll/selectors/selectors'
