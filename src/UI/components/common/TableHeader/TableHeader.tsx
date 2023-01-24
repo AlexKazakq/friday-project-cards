@@ -8,14 +8,13 @@ type PacksHeaderType = {
   title: string
   buttonName: string
   disable?: boolean
+  onClick?: () => void
 }
-export const TableHeader = ({ title, buttonName, disable }: PacksHeaderType) => {
-  const onClickHandler = () => {}
-
+export const TableHeader = ({ title, buttonName, disable, onClick }: PacksHeaderType) => {
   return (
     <div className={s.wrapper}>
       <span className={s.title}>{title}</span>
-      <SuperButton onClick={onClickHandler} className={s.button} disabled={disable}>
+      <SuperButton onClick={onClick} className={s.button} disabled={disable}>
         {buttonName}
       </SuperButton>
     </div>

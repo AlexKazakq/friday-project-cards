@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 import { CardsParamsType } from '../../../api/cards-api'
 import { PATH } from '../../../assets/Routes/path'
@@ -33,17 +33,27 @@ export const Cards = () => {
   const [page, setPage] = useState<number>(0)
   const [sort, setSort] = useState<string>('')
 
+  const navigate = useNavigate()
+
   const debouncedValue = useDebounce<CardsParamsType>(params, 500)
   const dispatch = useAppDispatch()
-  const title =
-    profile._id === packUserData.packUserId ? 'My Pack' : `${packUserData.packUserName}'s Pack`
-  const buttonTitle = profile._id === packUserData.packUserId ? 'Add new pack' : 'Learn to pack'
 
   useEffect(() => {
     if (packUserData.packId) {
       dispatch(setCardsWithParamsTC({ ...params, cardsPack_id: packUserData.packId }))
     }
   }, [debouncedValue])
+
+  const title =
+    profile._id === packUserData.packUserId ? 'My Pack' : `${packUserData.packUserName}'s Pack`
+  const buttonTitle = profile._id === packUserData.packUserId ? 'Add new pack' : 'Learn to pack'
+  const onClickHandler = () => {
+    if (profile._id === packUserData.packUserId) {
+      alert('add card')
+    } else {
+      navigate('/learn')
+    }
+  }
 
   const ChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCardsPerPage(+event.target.value)
@@ -91,6 +101,7 @@ export const Cards = () => {
         title={title}
         buttonName={buttonTitle}
         disable={cards.length === 0 && profile._id !== packUserData.packUserId}
+        onClick={onClickHandler}
       />
       {packUserData.cardsCount !== 0 && (
         <div className={s.filters}>
@@ -117,6 +128,7 @@ export const Cards = () => {
         handleChangeRowsPerPage={ChangeRowsPerPage}
         sort={sort}
         onChangeSort={onChangeSort}
+        cards={cards}
       />
     </div>
   )

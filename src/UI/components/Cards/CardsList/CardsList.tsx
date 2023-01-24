@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import EditIcon from '@mui/icons-material/Edit'
@@ -13,14 +13,13 @@ import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 
 import {
-  cardsSelector,
   cardsTotalCountSelector,
   packStatusSelector,
   packUserDataSelector,
   profileInfoSelector,
 } from '../../../../bll/selectors/selectors'
-import { setCardsWithParamsTC } from '../../../../bll/store/cards-reducer'
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
+import { CardsType } from '../../../../bll/store/cards-reducer'
+import { useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
 import SuperSort from '../../common/SuperSort/SuperSort'
 
@@ -55,6 +54,7 @@ interface Data {
 }
 
 type CardsListType = {
+  cards: CardsType[]
   page: number
   cardsPerPage: number
   handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void
@@ -64,25 +64,16 @@ type CardsListType = {
 }
 
 export const CardsList = (props: CardsListType) => {
-  const cards = useAppSelector(cardsSelector)
   const packUserData = useAppSelector(packUserDataSelector)
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
   const profileInfo = useAppSelector(profileInfoSelector)
   const packUserStatus = useAppSelector(packStatusSelector)
 
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    if (packUserData.packId) {
-      dispatch(setCardsWithParamsTC({ cardsPack_id: packUserData.packId }))
-    }
-  }, [])
-
   function createData(question: string, answer: string, updated: string, grade: JSX.Element): Data {
     return { question, answer, updated, grade }
   }
 
-  const rows: Data[] = cards.map(card => {
+  const rows: Data[] = props.cards.map(card => {
     let grade
 
     profileInfo._id === card.user_id
@@ -144,7 +135,7 @@ export const CardsList = (props: CardsListType) => {
             </TableBody>
           </Table>
         </TableContainer>
-        {cards.length === 0 && <div className={s.notFound}>{packUserStatus}</div>}
+        {props.cards.length === 0 && <div className={s.notFound}>{packUserStatus}</div>}
         <TablePagination
           sx={{}}
           rowsPerPageOptions={[4, 6, 10, 50]}
