@@ -2,21 +2,24 @@ import React from 'react'
 
 import { useAppDispatch } from '../../../../hooks/hooks'
 import { AddPackModal } from '../../modals/AddPackModal'
+import SuperButton from '../SuperButton/SuperButton'
 
 import s from './packsHeader.module.css'
 
 type PacksHeaderType = {
   title: string
   buttonName: string
+  disable?: boolean
+  onClick?: () => void
   cardsPack_id?: string | undefined
 }
-export const TableHeader = ({ title, buttonName, cardsPack_id }: PacksHeaderType) => {
-  const dispatch = useAppDispatch()
-
+export const TableHeader = ({ title, buttonName, disable, onClick }: PacksHeaderType) => {
   return (
     <div className={s.wrapper}>
       <span className={s.title}>{title}</span>
-      <AddPackModal />
+      <SuperButton onClick={onClick} className={s.button} disabled={disable}>
+        {buttonName}
+      </SuperButton>
     </div>
   )
 }

@@ -1,0 +1,23 @@
+.block {
+    width: 440px;
+    margin: 50px auto 0 auto
+}
+.title {
+    margin-bottom: 50px;
+
+    text-align: center;
+}
+.question {
+    margin-bottom: 0;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    opacity: 1;
+}
+.questionText {
+    margin-top: 0;
+    margin-bottom: 20px;
+
+    font-size: 18px;
+}

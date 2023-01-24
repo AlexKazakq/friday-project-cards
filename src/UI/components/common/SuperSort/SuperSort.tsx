@@ -1,18 +1,14 @@
 import React from 'react'
 
-// eslint-disable-next-line import/no-unresolved
-import sortArrow from './../../../../icons/arrow-sort.svg'
-// eslint-disable-next-line import/no-unresolved
-import downArrow from './../../../../icons/down-arrow.svg'
-// eslint-disable-next-line import/no-unresolved
-import upArrow from './../../../../icons/up-arrow.svg'
-// eslint-disable-next-line import/no-unresolved
-import s from './../../HW15.module.css'
+import downIconImg from '../../../../assets/images/down.png'
+import noneIconImg from '../../../../assets/images/noneIcon.png'
+import upIconImg from '../../../../assets/images/up.png'
 
-// добавить в проект иконки и импортировать
-const downIcon = downArrow
-const upIcon = upArrow
-const noneIcon = sortArrow
+import s from './SuperSort.module.css'
+
+const downIcon = downIconImg
+const upIcon = upIconImg
+const noneIcon = noneIconImg
 
 export type SuperSortPropsType = {
   id?: string
@@ -22,8 +18,6 @@ export type SuperSortPropsType = {
 }
 
 export const pureChange = (sort: string, down: string, up: string) => {
-  // пишет студент, sort: (click) => down (click) => up (click) => '' (click) => down ...
-  // return sort === down ? up : sort === up ? '' : down
   if (sort === down) {
     return up
   } else if (sort === up) {
@@ -33,7 +27,7 @@ export const pureChange = (sort: string, down: string, up: string) => {
   }
 }
 
-const SuperSort: React.FC<SuperSortPropsType> = ({ sort, value, onChange, id = 'hw15' }) => {
+const SuperSort: React.FC<SuperSortPropsType> = ({ sort, value, onChange, id = 'sort' }) => {
   const up = '0' + value
   const down = '1' + value
 
@@ -41,22 +35,17 @@ const SuperSort: React.FC<SuperSortPropsType> = ({ sort, value, onChange, id = '
     onChange(pureChange(sort, down, up))
   }
 
-  let icon //= sort === down ? downIcon : sort === up ? upIcon : noneIcon
+  let icon = ''
 
   if (sort === down) {
     icon = downIcon
   } else if (sort === up) {
     icon = upIcon
-  } else {
-    icon = noneIcon
-  }
+  } else icon = noneIcon
 
   return (
     <span id={id + '-sort-' + value} onClick={onChangeCallback}>
-      {/*сделать иконку*/}
-      <img className={s.img} id={id + '-icon-' + sort} src={icon} />
-
-      {/*{icon} /!*а это убрать*!/*/}
+      <img className={s.imgIcon} id={id + '-icon-' + sort} src={icon} />
     </span>
   )
 }

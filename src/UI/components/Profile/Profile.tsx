@@ -3,7 +3,9 @@ import React, { useCallback } from 'react'
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
+import { useNavigate } from 'react-router-dom'
 
+import { PATH } from '../../../assets/Routes/path'
 import { profileInfoSelector, statusSelector } from '../../../bll/selectors/selectors'
 import { logoutTC } from '../../../bll/store/auth-reducer'
 import { updateProfileDataTC } from '../../../bll/store/profile-reducer'
@@ -15,6 +17,7 @@ import s from './profile.module.css'
 import { ProfileName } from './ProfileName'
 
 export const Profile = () => {
+  const navigate = useNavigate()
   const profileInfo = useAppSelector(profileInfoSelector)
   const status = useAppSelector(statusSelector)
   const dispatch = useAppDispatch()
@@ -33,15 +36,22 @@ export const Profile = () => {
           </div>
           <ProfileName nickname={profileInfo.name} updateNickname={updateNickname} />
           <p>{profileInfo.email}</p>
-          <Button
-            variant={'contained'}
-            color={'primary'}
-            disabled={status === 'loading'}
-            className={styleForm.button}
-            onClick={() => dispatch(logoutTC())}
-          >
+          <div className={styleForm.buttonForm}>
+            <Button
+              variant={'contained'}
+              color={'primary'}
+              disabled={status === 'loading'}
+              className={styleForm.button}
+              onClick={() => {
+                navigate(PATH.PACKS)
+              }}
+            >
+              Go to packs
+            </Button>
+          </div>
+          <a onClick={() => dispatch(logoutTC())} className={styleForm.linkForm}>
             Log out
-          </Button>
+          </a>
         </FormControl>
       </Grid>
     </Grid>

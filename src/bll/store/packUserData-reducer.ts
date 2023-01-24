@@ -1,17 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-let storrageUserData: PackUserDataType
+let storageUserData: PackUserDataType
+
+console.log(localStorage.getItem('packUserData'))
 
 if (localStorage.getItem('packUserData') !== null) {
-  storrageUserData = JSON.parse(
-    sessionStorage.getItem('packUserData') as string
-  ) as PackUserDataType
+  storageUserData = JSON.parse(localStorage.getItem('packUserData') as string) as PackUserDataType
 } else {
-  storrageUserData = {} as PackUserDataType
+  storageUserData = {} as PackUserDataType
 }
 
 const initialState = {
-  packUserData: storrageUserData,
+  packUserData: storageUserData,
+  status: null as null | searchStatusType,
 }
 
 export const slice = createSlice({
@@ -20,16 +21,22 @@ export const slice = createSlice({
   reducers: {
     setPackUserData(state, action: PayloadAction<{ userData: PackUserDataType }>) {
       state.packUserData = action.payload.userData
-      sessionStorage.setItem('packUserData', JSON.stringify(state.packUserData))
+      localStorage.setItem('packUserData', JSON.stringify(state.packUserData))
+    },
+    setSearchStatus(state, action: PayloadAction<{ status: searchStatusType | null }>) {
+      state.status = action.payload.status
     },
   },
 })
 export const packUserDataReducer = slice.reducer
 
-export const { setPackUserData } = slice.actions
+export const { setPackUserData, setSearchStatus } = slice.actions
 
 export type PackUserDataType = {
   packUserId: string
   packId: string
   packUserName: string
+  cardsCount: number
 }
+
+export type searchStatusType = 'Wait...' | 'No matches found...' | null

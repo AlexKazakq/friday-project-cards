@@ -35,6 +35,12 @@ export const cardsAPI = {
     // @ts-ignore
     return instance.delete<DeleteCardResponseType>('cards/card', params)
   },
+  sendGrade(data: GradeParamsType) {
+    return instance.put<GradeRequestType>('cards/grade', {
+      card_id: data.card_id,
+      grade: data.grade,
+    })
+  },
 }
 
 type getCardsResponseType = {
@@ -56,6 +62,21 @@ export type CardsParamsType = {
   sortCards?: string
   page?: number
   pageCount?: number
+}
+export type GradeParamsType = {
+  card_id: string
+  grade: number
+}
+
+type GradeRequestType = {
+  updatedGrade: {
+    _id: string
+    cardsPack_id: string
+    card_id: string
+    user_id: string
+    grade: number
+    shots: number
+  }
 }
 
 export type AddedCardParamsType = {

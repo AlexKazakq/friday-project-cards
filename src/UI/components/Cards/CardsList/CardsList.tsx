@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import EditIcon from '@mui/icons-material/Edit'
@@ -12,12 +12,21 @@ import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 
-import { cardsSelector } from '../../../../bll/selectors/selectors'
+import {
+  cardsTotalCountSelector,
+  packStatusSelector,
+  packUserDataSelector,
+  profileInfoSelector,
+} from '../../../../bll/selectors/selectors'
+import { CardsType } from '../../../../bll/store/cards-reducer'
 import { useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
+import SuperSort from '../../common/SuperSort/SuperSort'
+
+import s from './cardsList.module.css'
 
 interface Column {
-  id: 'question' | 'answer' | 'updated' | 'grade' | 'actions'
+  id: 'question' | 'answer' | 'updated' | 'grade'
   label: string
   minWidth?: number
   align?: 'right'
@@ -35,10 +44,6 @@ const columns: readonly Column[] = [
     id: 'grade',
     label: 'Grade',
   },
-  {
-    id: 'actions',
-    label: 'Actions',
-  },
 ]
 
 interface Data {
@@ -46,97 +51,105 @@ interface Data {
   answer: string
   updated: string
   grade: JSX.Element
-  actions: JSX.Element
 }
 
-export const CardsList = () => {
-  const cards = useAppSelector(cardsSelector)
-  const [page, setPage] = useState(0)
-  const [cardsPerPage, setCardsPerPage] = useState(10)
+type CardsListType = {
+  cards: CardsType[]
+  page: number
+  cardsPerPage: number
+  handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void
+  changePage: (event: unknown, newPage: number) => void
+  sort: string
+  onChangeSort: (newSort: string) => void
+}
 
-  function createData(
-    question: string,
-    answer: string,
-    updated: string,
-    grade: JSX.Element,
-    actions: JSX.Element
-  ): Data {
-    return { question, answer, updated, grade, actions }
+export const CardsList = (props: CardsListType) => {
+  const packUserData = useAppSelector(packUserDataSelector)
+  const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
+  const profileInfo = useAppSelector(profileInfoSelector)
+  const packUserStatus = useAppSelector(packStatusSelector)
+
+  function createData(question: string, answer: string, updated: string, grade: JSX.Element): Data {
+    return { question, answer, updated, grade }
   }
 
-  const rows: Data[] = cards.map(card => {
-    const grade = (
-      <div>
-        <Rating name="disabled" value={card.grade} disabled />
-      </div>
-    )
-    const actions = (
-      <div>
-        <EditIcon />
+  const rows: Data[] = props.cards.map(card => {
+    let grade
 
-        <DeleteForeverIcon />
-      </div>
-    )
+    profileInfo._id === card.user_id
+      ? (grade = (
+          <div>
+            <Rating name="disabled" value={card.grade} disabled />
+            <button className={s.button}>
+              <EditIcon />
+            </button>
+            <button className={s.button}>
+              <DeleteForeverIcon />
+            </button>
+          </div>
+        ))
+      : (grade = (
+          <div>
+            <Rating name="disabled" value={card.grade} disabled />
+          </div>
+        ))
 
-    return createData(card.question, card.answer, dateFormatUtils(card.updated), grade, actions)
+    return createData(card.question, card.answer, dateFormatUtils(card.updated), grade)
   })
 
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage)
+  if (packUserData.cardsCount !== 0) {
+    return (
+      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+        <TableContainer sx={{ maxHeight: 640 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map(column => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                    <SuperSort sort={props.sort} value={column.id} onChange={props.onChangeSort} />
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map(row => {
+                return (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={row.answer}>
+                    {columns.map(column => {
+                      const value = row[column.id]
+
+                      return (
+                        <TableCell key={column.id} align={column.align}>
+                          {value}
+                        </TableCell>
+                      )
+                    })}
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {props.cards.length === 0 && <div className={s.notFound}>{packUserStatus}</div>}
+        <TablePagination
+          sx={{}}
+          rowsPerPageOptions={[4, 6, 10, 50]}
+          component="div"
+          count={cardsTotalCount}
+          rowsPerPage={props.cardsPerPage}
+          page={props.page}
+          labelRowsPerPage={'Cards per page'}
+          onPageChange={props.changePage}
+          onRowsPerPageChange={props.handleChangeRowsPerPage}
+        />
+      </Paper>
+    )
+  } else {
+    return <div className={s.empty}>This pack is empty</div>
   }
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCardsPerPage(+event.target.value)
-    setPage(0)
-  }
-
-  return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map(column => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.slice(page * cardsPerPage, page * cardsPerPage + cardsPerPage).map(row => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.answer}>
-                  {columns.map(column => {
-                    const value = row[column.id]
-
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {value}
-                      </TableCell>
-                    )
-                  })}
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        sx={{}}
-        rowsPerPageOptions={[4, 6, 10]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={cardsPerPage}
-        page={page}
-        labelRowsPerPage={'Cards per page'}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
-  )
 }
