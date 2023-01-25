@@ -28,8 +28,8 @@ export const pureChange = (sort: string, down: string, up: string) => {
 }
 
 const SuperSort: React.FC<SuperSortPropsType> = ({ sort, value, onChange, id = 'sort' }) => {
-  const up = '0' + value
-  const down = '1' + value
+  const up = '1' + value
+  const down = '0' + value
 
   const onChangeCallback = () => {
     onChange(pureChange(sort, down, up))
