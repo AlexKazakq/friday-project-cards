@@ -186,7 +186,12 @@ export const PacksList = (props: PacksListType) => {
                   style={{ minWidth: column.minWidth }}
                 >
                   {column.label}
-                  <SuperSort sort={props.sort} value={column.id} onChange={props.onChangeSort} />
+                  {(column.id === 'name' ||
+                    column.id === 'cardsCount' ||
+                    column.id === 'updated' ||
+                    column.id === 'created') && (
+                    <SuperSort sort={props.sort} value={column.id} onChange={props.onChangeSort} />
+                  )}
                 </TableCell>
               ))}
             </TableRow>
