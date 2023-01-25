@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import { useAppDispatch } from '../../../../hooks/hooks'
 import { AddPackModal } from '../../modals/AddPackModal'
@@ -8,7 +8,7 @@ import s from './packsHeader.module.css'
 
 type PacksHeaderType = {
   title: string
-  buttonName: string
+  buttonName: ReactNode
   disable?: boolean
   onClick?: () => void
   cardsPack_id?: string | undefined

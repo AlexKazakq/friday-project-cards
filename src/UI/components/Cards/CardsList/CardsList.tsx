@@ -22,6 +22,8 @@ import { CardsType } from '../../../../bll/store/cards-reducer'
 import { useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
 import SuperSort from '../../common/SuperSort/SuperSort'
+import { DeleteCardModal } from '../../modals/DeleteCardModal'
+import { UpdateCardModal } from '../../modals/UpdateCardModal'
 
 import s from './cardsList.module.css'
 
@@ -81,10 +83,14 @@ export const CardsList = (props: CardsListType) => {
           <div>
             <Rating name="disabled" value={card.grade} disabled />
             <button className={s.button}>
-              <EditIcon />
+              <UpdateCardModal
+                _id={card._id}
+                primaryQuestion={card.question}
+                primaryAnswer={card.answer}
+              />
             </button>
             <button className={s.button}>
-              <DeleteForeverIcon />
+              <DeleteCardModal id={card._id} />
             </button>
           </div>
         ))

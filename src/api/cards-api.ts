@@ -33,7 +33,10 @@ export const cardsAPI = {
   },
   deleteCard(params: DeleteCardParamsType) {
     // @ts-ignore
-    return instance.delete<DeleteCardResponseType>('cards/card', params)
+    return instance.delete<DeleteCardResponseType>(`/cards/card?id=${params.id}`, params)
+  },
+  updateCard(params: UpdatedCardParamsType) {
+    return instance.put<updatedCardsResponseType>('cards/card', params)
   },
   sendGrade(data: GradeParamsType) {
     return instance.put<GradeRequestType>('cards/grade', {
@@ -99,4 +102,16 @@ export type DeleteCardResponseType = {
 
 export type DeleteCardParamsType = {
   id: string
+}
+
+export type UpdatedCardParamsType = {
+  card: {
+    _id: string
+    question?: string
+    answer?: string
+  }
+}
+
+export type updatedCardsResponseType = {
+  newCard: {}
 }

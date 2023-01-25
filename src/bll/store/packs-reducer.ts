@@ -11,6 +11,7 @@ import {
 
 import { setAppError, setAppStatus } from './app-reducer'
 import { setSearchStatus } from './packUserData-reducer'
+import { AppDispatch } from './store'
 
 const initialState = {
   cardPacks: [] as CardPacksType[],
@@ -47,7 +48,6 @@ export const packsReducer = slice.reducer
 
 export const { setAddPack, setPacks, setMaxPacksCount, setMinPacksCount, setCardPacksTotalCount } =
   slice.actions
-
 
 export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch: AppDispatch) => {
   dispatch(setPacks({ packs: [] as CardPacksType[] }))

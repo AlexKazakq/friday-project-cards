@@ -6,11 +6,12 @@ import {
   cardsAPI,
   CardsParamsType,
   DeleteCardParamsType,
+  UpdatedCardParamsType,
 } from '../../api/cards-api'
 
 import { setAppError, setAppStatus } from './app-reducer'
-import { AppDispatch } from './store'
 import { setSearchStatus } from './packUserData-reducer'
+import { AppDispatch } from './store'
 
 const initialState = {
   cards: [] as CardsType[],
@@ -92,6 +93,25 @@ export const addNewCardTC = (params: AddedCardParamsType) => async (dispatch: Ap
   dispatch(setAppStatus({ status: 'loading' }))
   try {
     const res = await cardsAPI.addNewCard(params)
+
+    dispatch(setAppStatus({ status: 'succeeded' }))
+  } catch (e) {
+    const err = e as Error | AxiosError<{ error: string }>
+
+    if (axios.isAxiosError(err)) {
+      const error = err.response?.data ? err.response.data.error : err.message
+
+      dispatch(setAppStatus({ status: 'failed' }))
+      dispatch(setAppError({ error: error }))
+    }
+  }
+}
+
+export const updateCardTC = (params: UpdatedCardParamsType) => async (dispatch: AppDispatch) => {
+  dispatch(setCards({ cards: [] as CardsType[] }))
+  dispatch(setAppStatus({ status: 'loading' }))
+  try {
+    const res = await cardsAPI.updateCard(params)
 
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {

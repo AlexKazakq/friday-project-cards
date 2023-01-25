@@ -4,7 +4,7 @@ import { FC } from 'react'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import Typography from '@mui/material/Typography'
 
-import { deletePackTC } from '../../../bll/store/packs-reducer'
+import { deleteCardTC } from '../../../bll/store/cards-reducer'
 import { useAppDispatch } from '../../../hooks/hooks'
 
 import { BasicModal } from './BasicModal'
@@ -22,25 +22,24 @@ const style = {
 }
 
 type PropsType = {
-  packId: string
+  id: string
 }
 
-export const DeletePackModal: FC<PropsType> = ({ packId }) => {
+export const DeleteCardModal: FC<PropsType> = ({ id }) => {
   const dispatch = useAppDispatch()
-  const [open, setOpen] = React.useState(true)
 
   const onButtonClickHandler = () => {
-    dispatch(deletePackTC({ id: packId }))
+    dispatch(deleteCardTC({ id }))
   }
 
   return (
     <BasicModal
       name={<DeleteForeverIcon />}
-      confirmButtonName={'Delete pack'}
+      confirmButtonName={'Delete card'}
       onClickConfirmHandler={onButtonClickHandler}
     >
       <Typography id="modal-modal-title" variant="h6" component="h2">
-        Do you really want to remove Pack Name? All cards will be deleted.
+        Do you really want to remove Card? All cards will be deleted?
       </Typography>
       <Typography id="modal-modal-description" sx={{ mt: 2 }}></Typography>
     </BasicModal>

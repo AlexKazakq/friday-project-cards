@@ -16,11 +16,14 @@ import { useDebounce } from '../../../hooks/useDebounce'
 import tableStyle from '../../styles/table.module.css'
 import { SearchInput } from '../common/SearchInput/SearchInput'
 import { TableHeader } from '../common/TableHeader/TableHeader'
+import { AddCardModal } from '../modals/AddCardModal'
 
 import s from './cards.module.css'
 import { CardsList } from './CardsList/CardsList'
 
 export const Cards = () => {
+  const cards = useAppSelector(cardsSelector)
+  const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
   const profile = useAppSelector(profileInfoSelector)
   const packUserData = useAppSelector(packUserDataSelector)
   const [params, setParams] = useState<CardsParamsType>({ cardsPack_id: packUserData.packId })
@@ -43,11 +46,15 @@ export const Cards = () => {
 
   const title =
     profile._id === packUserData.packUserId ? 'My Pack' : `${packUserData.packUserName}'s Pack`
-  const buttonTitle = profile._id === packUserData.packUserId ? 'Add new pack' : 'Learn to pack'
+  // @ts-ignore
+  const buttonTitle =
+    profile._id === packUserData.packUserId ? (
+      <AddCardModal cardsPack_id={packUserData.packId} />
+    ) : (
+      'Learn to pack'
+    )
   const onClickHandler = () => {
-    if (profile._id === packUserData.packUserId) {
-      alert('add card')
-    } else {
+    if (profile._id !== packUserData.packUserId) {
       navigate('/learn')
     }
   }

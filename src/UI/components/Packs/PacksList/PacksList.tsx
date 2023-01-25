@@ -14,20 +14,19 @@ import TableRow from '@mui/material/TableRow'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import { PATH } from '../../../../assets/Routes/path'
-import { cardPacksSelector, profileInfoSelector } from '../../../../bll/selectors/selectors'
-import { deletePackTC, updatePackTC } from '../../../../bll/store/packs-reducer'
 import {
   cardPacksSelector,
   cardPacksTotalCountSelector,
   packStatusSelector,
   profileInfoSelector,
 } from '../../../../bll/selectors/selectors'
+import { deletePackTC, updatePackTC } from '../../../../bll/store/packs-reducer'
 import { PackUserDataType, setPackUserData } from '../../../../bll/store/packUserData-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
+import SuperSort from '../../common/SuperSort/SuperSort'
 import { DeletePackModal } from '../../modals/DeletePackModal'
 import { UpdatePackModal } from '../../modals/UpdatePackModal'
-import SuperSort from '../../common/SuperSort/SuperSort'
 
 import s from './packList.module.css'
 
@@ -121,11 +120,10 @@ export const PacksList = (props: PacksListType) => {
             <SchoolIcon />
           </button>
           <button className={s.button}>
-              <UpdatePackModal packId={pack._id} />
-
+            <UpdatePackModal packId={pack._id} />
           </button>
           <button className={s.button}>
-              <DeletePackModal packId={pack._id} />
+            <DeletePackModal packId={pack._id} />
           </button>
         </div>
       ) : (
