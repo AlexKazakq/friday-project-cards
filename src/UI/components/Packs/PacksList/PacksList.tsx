@@ -28,7 +28,7 @@ import SuperSort from '../../common/SuperSort/SuperSort'
 import s from './packList.module.css'
 
 interface Column {
-  id: 'name' | 'cards' | 'updated' | 'created' | 'actions'
+  id: 'name' | 'cardsCount' | 'updated' | 'created' | 'actions'
   label: string
   minWidth?: number
   align?: 'right'
@@ -37,7 +37,7 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: 'name', label: 'Name' },
-  { id: 'cards', label: 'Cards' },
+  { id: 'cardsCount', label: 'Cards' },
   {
     id: 'updated',
     label: 'Last Updated',
@@ -54,7 +54,7 @@ const columns: readonly Column[] = [
 
 interface Data {
   name: JSX.Element
-  cards: number
+  cardsCount: number
   updated: string
   created: string
   actions: JSX.Element
@@ -89,13 +89,13 @@ export const PacksList = (props: PacksListType) => {
 
   function createData(
     name: JSX.Element,
-    cards: number,
+    cardsCount: number,
     updated: string,
     created: string,
     actions: JSX.Element,
     id: string
   ): Data {
-    return { name, cards, updated, created, actions, id }
+    return { name, cardsCount, updated, created, actions, id }
   }
 
   const rows: Data[] = cardPacks.map(pack => {
