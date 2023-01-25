@@ -18,7 +18,7 @@ export const TableHeader = ({ title, buttonName, disable, onClick }: PacksHeader
     <div className={s.wrapper}>
       <span className={s.title}>{title}</span>
       <SuperButton onClick={onClick} className={s.button} disabled={disable}>
-        <AddPackModal />
+        {buttonName}
       </SuperButton>
     </div>
   )

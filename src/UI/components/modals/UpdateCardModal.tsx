@@ -33,7 +33,7 @@ type PropsType = {
 
 export const UpdateCardModal: FC<PropsType> = ({ _id, primaryQuestion, primaryAnswer }) => {
   const dispatch = useAppDispatch()
-  const [question, setQuestion] = useState('')
+  const [question, setQuestion] = useState(primaryQuestion)
   const [answer, setAnswer] = useState('')
 
   const onInputQuestionHandler = (e: FormEvent<HTMLInputElement>) => {
@@ -57,7 +57,7 @@ export const UpdateCardModal: FC<PropsType> = ({ _id, primaryQuestion, primaryAn
       </Typography>
       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
         Question
-        <SuperInputText placeholder={primaryQuestion} onInput={onInputQuestionHandler} />
+        <SuperInputText value={question} onInput={onInputQuestionHandler} />
         Answer
         <div>
           <SuperInputText placeholder={primaryAnswer} onInput={onInputAnswerHandler} />

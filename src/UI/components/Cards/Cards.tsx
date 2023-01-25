@@ -103,7 +103,7 @@ export const Cards = () => {
       </div>
       <TableHeader
         title={title}
-        buttonName={buttonTitle}
+        buttonName={<AddCardModal cardsPack_id={packUserData.packId} />}
         disable={cards.length === 0 && profile._id !== packUserData.packUserId}
         onClick={onClickHandler}
       />

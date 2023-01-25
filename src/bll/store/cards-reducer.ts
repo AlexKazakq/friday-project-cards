@@ -10,7 +10,7 @@ import {
 } from '../../api/cards-api'
 
 import { setAppError, setAppStatus } from './app-reducer'
-import { setSearchStatus } from './packUserData-reducer'
+import { setPackUserData, setSearchStatus } from './packUserData-reducer'
 import { AppDispatch } from './store'
 
 const initialState = {
