@@ -14,11 +14,15 @@ import {
   cardsTotalCountSelector,
   packStatusSelector,
   packUserDataSelector,
+  pageCardSelector,
+  pageCountCardSelector,
   profileInfoSelector,
 } from '../../../../bll/selectors/selectors'
-import { CardsType } from '../../../../bll/store/cards-reducer'
-import { useAppSelector } from '../../../../hooks/hooks'
+import { CardsType, setPageCard, setPageCountCard } from '../../../../bll/store/cards-reducer'
+import { setPageCountPack, setPagePack } from '../../../../bll/store/packs-reducer'
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
+import { PaginationComponent } from '../../common/Pagination/PaginationComponent'
 import SuperSort from '../../common/SuperSort/SuperSort'
 import { DeleteCardModal } from '../../modals/DeleteCardModal'
 import { UpdateCardModal } from '../../modals/UpdateCardModal'
@@ -55,10 +59,6 @@ interface Data {
 
 type CardsListType = {
   cards: CardsType[]
-  page: number
-  cardsPerPage: number
-  handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void
-  changePage: (event: unknown, newPage: number) => void
   sort: string
   onChangeSort: (newSort: string) => void
 }
@@ -68,6 +68,14 @@ export const CardsList = (props: CardsListType) => {
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
   const profileInfo = useAppSelector(profileInfoSelector)
   const packUserStatus = useAppSelector(packStatusSelector)
+  const pageCard = useAppSelector(pageCardSelector)
+  const pageCountCard = useAppSelector(pageCountCardSelector)
+  const dispatch = useAppDispatch()
+
+  const onChangePageHandler = (page: number, pageCount: number) => {
+    dispatch(setPageCard({ page: page }))
+    dispatch(setPageCountCard({ pageCount: pageCount }))
+  }
 
   function createData(question: string, answer: string, updated: string, grade: JSX.Element): Data {
     return { question, answer, updated, grade }
@@ -115,7 +123,15 @@ export const CardsList = (props: CardsListType) => {
                     style={{ minWidth: column.minWidth }}
                   >
                     {column.label}
-                    <SuperSort sort={props.sort} value={column.id} onChange={props.onChangeSort} />
+                    {(column.id === 'question' ||
+                      column.id === 'answer' ||
+                      column.id === 'updated') && (
+                      <SuperSort
+                        sort={props.sort}
+                        value={column.id}
+                        onChange={props.onChangeSort}
+                      />
+                    )}
                   </TableCell>
                 ))}
               </TableRow>
@@ -140,16 +156,12 @@ export const CardsList = (props: CardsListType) => {
           </Table>
         </TableContainer>
         {props.cards.length === 0 && <div className={s.notFound}>{packUserStatus}</div>}
-        <TablePagination
-          sx={{}}
-          rowsPerPageOptions={[4, 6, 10, 50]}
-          component="div"
-          count={cardsTotalCount}
-          rowsPerPage={props.cardsPerPage}
-          page={props.page}
-          labelRowsPerPage={'Cards per page'}
-          onPageChange={props.changePage}
-          onRowsPerPageChange={props.handleChangeRowsPerPage}
+        <PaginationComponent
+          totalCount={cardsTotalCount ? cardsTotalCount : 0}
+          currentPage={pageCard ?? 1}
+          pageCount={pageCountCard}
+          onPageChanged={onChangePageHandler}
+          labelRowsPerPage={'Cards per Page'}
         />
       </Paper>
     )

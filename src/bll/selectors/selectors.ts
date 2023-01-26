@@ -49,6 +49,9 @@ export const searchCardsByQuestionSelector = createSelector(
   state,
   state => state.cards.searchByQuestion
 )
+export const sortCardsSelector = createSelector(state, state => state.cards.sort)
+export const pageCardSelector = createSelector(state, state => state.cards.page)
+export const pageCountCardSelector = createSelector(state, state => state.cards.pageCount)
 
 export const packUserDataSelector = createSelector(state, state => state.packUserData.packUserData)
 
