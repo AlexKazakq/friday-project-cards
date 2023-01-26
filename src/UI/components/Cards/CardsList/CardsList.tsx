@@ -1,7 +1,5 @@
 import React from 'react'
 
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import EditIcon from '@mui/icons-material/Edit'
 import Paper from '@mui/material/Paper'
 import Rating from '@mui/material/Rating'
 import Table from '@mui/material/Table'

@@ -26,13 +26,29 @@ export const isEmailSendSelector = createSelector(
 export const cardPacksSelector = createSelector(state, state => state.packs.cardPacks)
 export const cardPacksMaxCountSelector = createSelector(state, state => state.packs.maxCardsCount)
 export const cardPacksMinCountSelector = createSelector(state, state => state.packs.minCardsCount)
+export const cardPacksCountSelector = createSelector(state, state => state.packs.cardsCount)
+
+export const getMyIdSelector = createSelector(state, state => state.packs.myId)
+export const searchPackSelector = createSelector(state, state => state.packs.searchPackName)
 export const cardPacksTotalCountSelector = createSelector(
   state,
   state => state.packs.cardPacksTotalCount
 )
 
+export const sortPacksSelector = createSelector(state, state => state.packs.sort)
+export const pagePackSelector = createSelector(state, state => state.packs.page)
+export const pageCountPackSelector = createSelector(state, state => state.packs.pageCount)
 export const cardsSelector = createSelector(state, state => state.cards.cards)
 export const cardsTotalCountSelector = createSelector(state, state => state.cards.cardsTotalCount)
+export const searchCardsByAnswerSelector = createSelector(
+  state,
+  state => state.cards.searchByAnswer
+)
+
+export const searchCardsByQuestionSelector = createSelector(
+  state,
+  state => state.cards.searchByQuestion
+)
 
 export const packUserDataSelector = createSelector(state, state => state.packUserData.packUserData)
 

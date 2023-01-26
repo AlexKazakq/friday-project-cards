@@ -1,5 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { combineReducers } from 'redux'
+import { combineReducers, configureStore, ThunkAction, AnyAction } from '@reduxjs/toolkit'
 import thunkMiddleware from 'redux-thunk'
 
 import { appReducer } from './app-reducer'
@@ -31,6 +30,7 @@ export const store = configureStore({
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
 export type AppDispatch = typeof store.dispatch
+export type TypedThunk = ThunkAction<void, AppRootStateType, unknown, AnyAction>
 
 // @ts-ignore
 window.store = store

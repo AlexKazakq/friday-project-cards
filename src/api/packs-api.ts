@@ -1,5 +1,3 @@
-import { resolveObjectURL } from 'buffer'
-
 import axios from 'axios'
 
 import { CardPacksType } from '../bll/store/packs-reducer'
@@ -18,26 +16,13 @@ export const instance = axios.create({
 export const packsAPI = {
   getPacksWithParams(params: PacksParamsType) {
     return instance.get<getPacksResponseType>('cards/pack', {
-      params: {
-        packName: params.packName,
-        min: params.min,
-        max: params.max,
-        sortPacks: params.sortPacks,
-        page: params.page,
-        pageCount: params.pageCount,
-        user_id: params.user_id,
-        block: params.block,
-      },
+      params: { ...params },
     })
   },
   addPack(params: AddPacksParamsType) {
     return instance.post<AddPacksResponseType>('/cards/pack', params)
   },
   deletePack(params: DeletePacksParamsType) {
-    debugger
-    console.log(params.id)
-
-    // @ts-ignore
     return instance.delete<deletePacksResponseType>(`/cards/pack?id=${params.id}`)
   },
   updatePack(params: UpdatePacksParamsType) {
@@ -45,13 +30,13 @@ export const packsAPI = {
   },
 }
 
-type getPacksResponseType = {
+export type getPacksResponseType = {
   cardPacks: CardPacksType[]
-  cardPacksTotalCount: null | number
+  cardPacksTotalCount: number
   maxCardsCount: number
-  minCardsCount: null | number
-  page: null | number
-  pageCount: null | number
+  minCardsCount: number
+  page: number
+  pageCount: number
 }
 
 export type PacksParamsType = {
