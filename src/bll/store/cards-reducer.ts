@@ -105,6 +105,8 @@ export const deleteCardTC = (params: DeleteCardParamsType) => async (dispatch: A
   try {
     const res = await cardsAPI.deleteCard(params)
 
+    //@ts-ignore
+    dispatch(setCardsTC(res.data.deletedCard.cardsPack_id))
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
@@ -124,6 +126,8 @@ export const addNewCardTC = (params: AddedCardParamsType) => async (dispatch: Ap
   try {
     const res = await cardsAPI.addNewCard(params)
 
+    //@ts-ignore
+    dispatch(setCardsTC(res.data.newCard.cardsPack_id))
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
@@ -143,6 +147,8 @@ export const updateCardTC = (params: UpdatedCardParamsType) => async (dispatch: 
   try {
     const res = await cardsAPI.updateCard(params)
 
+    //@ts-ignore
+    dispatch(setCardsTC(res.data.updatedCard.cardsPack_id))
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
