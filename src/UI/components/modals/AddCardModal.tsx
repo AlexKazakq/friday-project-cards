@@ -3,13 +3,11 @@ import { FC, FormEvent, useState } from 'react'
 
 import Typography from '@mui/material/Typography'
 
+import { cardPacksSelector } from '../../../bll/selectors/selectors'
 import { addNewCardTC } from '../../../bll/store/cards-reducer'
-import { addNewPackTC } from '../../../bll/store/packs-reducer'
-import { useAppDispatch } from '../../../hooks/hooks'
-import SuperButton from '../common/SuperButton/SuperButton'
-import { SuperCheckbox } from '../common/SuperCheckbox/SuperCheckbox'
+import { setPackUserData } from '../../../bll/store/packUserData-reducer'
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import SuperInputText from '../common/SuperInputText/SuperInputText'
-import SuperSelect from '../common/SuperSelect/SuperSelect'
 
 import { BasicModal } from './BasicModal'
 
@@ -30,6 +28,7 @@ type PropsType = {
 }
 
 export const AddCardModal: FC<PropsType> = ({ cardsPack_id }) => {
+  const cardPacks = useAppSelector(cardPacksSelector)
   const dispatch = useAppDispatch()
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
@@ -40,8 +39,22 @@ export const AddCardModal: FC<PropsType> = ({ cardsPack_id }) => {
   const onInputAnswerHandler = (e: FormEvent<HTMLInputElement>) => {
     setAnswer(e.currentTarget.value)
   }
+  const packData = cardPacks.find(pack => pack._id === cardsPack_id)
   const onButtonClickHandler = () => {
+    debugger
     dispatch(addNewCardTC({ card: { cardsPack_id, question, answer } }))
+    console.log(packData)
+    packData &&
+      dispatch(
+        setPackUserData({
+          userData: {
+            packUserId: packData.user_id,
+            packId: packData._id,
+            packUserName: packData.user_name,
+            cardsCount: packData.cardsCount,
+          },
+        })
+      )
   }
 
   return (

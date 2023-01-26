@@ -109,7 +109,7 @@ export const deletePackTC = (params: DeletePacksParamsType) => async (dispatch: 
   try {
     const res = await packsAPI.deletePack(params)
 
-    // dispatch(setPacksWithParamsTC({}))
+    dispatch(setPacksWithParamsTC({}))
 
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {

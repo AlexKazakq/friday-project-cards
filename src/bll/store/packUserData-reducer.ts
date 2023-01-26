@@ -20,6 +20,7 @@ export const slice = createSlice({
   initialState,
   reducers: {
     setPackUserData(state, action: PayloadAction<{ userData: PackUserDataType }>) {
+      debugger
       state.packUserData = action.payload.userData
       localStorage.setItem('packUserData', JSON.stringify(state.packUserData))
     },

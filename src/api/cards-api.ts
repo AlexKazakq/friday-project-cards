@@ -54,6 +54,7 @@ type getCardsResponseType = {
   page: number
   pageCount: number
   packUserId: string
+  cardsPack_id: string
 }
 
 export type CardsParamsType = {

@@ -39,6 +39,7 @@ export const cardsReducer = slice.reducer
 export const { setCards, setCardsTotalCount } = slice.actions
 
 export const setCardsWithParamsTC = (params: CardsParamsType) => async (dispatch: AppDispatch) => {
+  debugger
   dispatch(setCards({ cards: [] as CardsType[] }))
   dispatch(setAppStatus({ status: 'loading' }))
   dispatch(setSearchStatus({ status: 'Wait...' }))
@@ -70,11 +71,14 @@ export const setCardsWithParamsTC = (params: CardsParamsType) => async (dispatch
   }
 }
 
-export const deleteCardTC = (params: DeleteCardParamsType) => async (dispatch: AppDispatch) => {
+export const addNewCardTC = (params: AddedCardParamsType) => async (dispatch: AppDispatch) => {
+  dispatch(setCards({ cards: [] as CardsType[] }))
   dispatch(setAppStatus({ status: 'loading' }))
   try {
-    const res = await cardsAPI.deleteCard(params)
+    const res = await cardsAPI.addNewCard(params)
 
+    // @ts-ignore
+    dispatch(setCardsWithParamsTC({ cardsPack_id: res.data.newCard.cardsPack_id }))
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>
@@ -88,11 +92,14 @@ export const deleteCardTC = (params: DeleteCardParamsType) => async (dispatch: A
   }
 }
 
-export const addNewCardTC = (params: AddedCardParamsType) => async (dispatch: AppDispatch) => {
-  dispatch(setCards({ cards: [] as CardsType[] }))
+export const deleteCardTC = (params: DeleteCardParamsType) => async (dispatch: AppDispatch) => {
   dispatch(setAppStatus({ status: 'loading' }))
   try {
-    const res = await cardsAPI.addNewCard(params)
+    const res = await cardsAPI.deleteCard(params)
+
+    console.log(res)
+    // @ts-ignore
+    dispatch(setCardsWithParamsTC({ cardsPack_id: res.data.deletedCard.cardsPack_id }))
 
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {
@@ -113,6 +120,9 @@ export const updateCardTC = (params: UpdatedCardParamsType) => async (dispatch: 
   try {
     const res = await cardsAPI.updateCard(params)
 
+    console.log(res)
+    // @ts-ignore
+    dispatch(setCardsWithParamsTC({ cardsPack_id: res.data.updatedCard.cardsPack_id }))
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {
     const err = e as Error | AxiosError<{ error: string }>

@@ -81,6 +81,7 @@ export const PacksList = (props: PacksListType) => {
   const dispatch = useAppDispatch()
 
   const showCardByIdHandler = (userData: PackUserDataType) => {
+    debugger
     dispatch(setPackUserData({ userData }))
   }
 
