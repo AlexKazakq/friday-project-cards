@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import { useDebounce } from '../../../hooks/useDebounce'
 import s from '../../styles/table.module.css'
 import { TableHeader } from '../common/TableHeader/TableHeader'
+import { AddPackModal } from '../modals/AddPackModal'
 
 import { PacksList } from './PacksList/PacksList'
 import { PacksSetting } from './PacksSetting/PacksSetting'
@@ -106,7 +107,7 @@ export const Packs = () => {
 
   return (
     <div className={s.wrapper}>
-      <TableHeader title={'Packs list'} buttonName={'Add new pack'} />
+      <TableHeader title={'Packs list'} buttonName={<AddPackModal />} />
       <PacksSetting
         packName={packName}
         isMyPacks={isMyPacks}

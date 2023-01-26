@@ -26,17 +26,17 @@ const style = {
 
 type PropsType = {
   packId: string
+  packName: string
 }
 
-export const UpdatePackModal: FC<PropsType> = ({ packId }) => {
+export const UpdatePackModal: FC<PropsType> = ({ packId, packName }) => {
   const dispatch = useAppDispatch()
   const [open, setOpen] = React.useState(true)
-  const [name, setName] = useState('')
+  const [name, setName] = useState(packName)
   const [privacy, setPrivacy] = useState(false)
 
   const onInputHandler = (e: FormEvent<HTMLInputElement>) => {
     setName(e.currentTarget.value)
-    console.log(name)
   }
   const onButtonClickHandler = () => {
     dispatch(
@@ -59,7 +59,7 @@ export const UpdatePackModal: FC<PropsType> = ({ packId }) => {
         Edit pack
       </Typography>
       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-        <SuperInputText onChange={onInputHandler} />
+        <SuperInputText value={name} onChange={onInputHandler} />
         <SuperCheckbox onChange={() => setPrivacy(!privacy)}>Private pack </SuperCheckbox>
       </Typography>
     </BasicModal>

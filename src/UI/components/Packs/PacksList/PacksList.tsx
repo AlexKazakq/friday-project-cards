@@ -120,7 +120,7 @@ export const PacksList = (props: PacksListType) => {
             <SchoolIcon />
           </button>
           <button className={s.button}>
-            <UpdatePackModal packId={pack._id} />
+            <UpdatePackModal packId={pack._id} packName={pack.name} />
           </button>
           <button className={s.button}>
             <DeletePackModal packId={pack._id} />
