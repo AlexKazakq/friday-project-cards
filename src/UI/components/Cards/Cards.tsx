@@ -9,10 +9,15 @@ import {
   cardsTotalCountSelector,
   packUserDataSelector,
   profileInfoSelector,
+  searchCardsByAnswerSelector,
+  searchCardsByQuestionSelector,
 } from '../../../bll/selectors/selectors'
-import { setCardsWithParamsTC } from '../../../bll/store/cards-reducer'
+import {
+  setCardsTC,
+  setSearchCardsByAnswer,
+  setSearchCardsByQuestion,
+} from '../../../bll/store/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
-import { useDebounce } from '../../../hooks/useDebounce'
 import tableStyle from '../../styles/table.module.css'
 import { SearchInput } from '../common/SearchInput/SearchInput'
 import { TableHeader } from '../common/TableHeader/TableHeader'
@@ -23,30 +28,29 @@ import { CardsList } from './CardsList/CardsList'
 
 export const Cards = () => {
   const cards = useAppSelector(cardsSelector)
+  const searchByAnswer = useAppSelector(searchCardsByAnswerSelector)
+  const searchByQuestion = useAppSelector(searchCardsByQuestionSelector)
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
   const profile = useAppSelector(profileInfoSelector)
   const packUserData = useAppSelector(packUserDataSelector)
   const [params, setParams] = useState<CardsParamsType>({ cardsPack_id: packUserData.packId })
-  const [cardQuestionName, setCardQuestionName] = useState<string>('')
-  const [cardAnswerName, setCardAnswerName] = useState<string>('')
   const [cardsPerPage, setCardsPerPage] = useState<number>(4)
   const [page, setPage] = useState<number>(0)
   const [sort, setSort] = useState<string>('')
 
   const navigate = useNavigate()
 
-  const debouncedValue = useDebounce<CardsParamsType>(params, 500)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (packUserData.packId) {
-      dispatch(setCardsWithParamsTC({ ...params, cardsPack_id: packUserData.packId }))
+      dispatch(setCardsTC(packUserData.packId))
     }
-  }, [debouncedValue])
+  }, [searchByAnswer, searchByQuestion])
 
   const title =
     profile._id === packUserData.packUserId ? 'My Pack' : `${packUserData.packUserName}'s Pack`
-  // @ts-ignore
+
   const buttonTitle =
     profile._id === packUserData.packUserId ? (
       <AddCardModal cardsPack_id={packUserData.packId} />
@@ -76,18 +80,6 @@ export const Cards = () => {
           : cardsTotalCount - newPage * cardsPerPage,
     })
   }
-
-  let SearchByCardQuestion = (name: string) => {
-    setPage(0)
-    setCardQuestionName(name)
-    setParams({ ...params, cardQuestion: name })
-  }
-
-  let SearchByCardAnswer = (name: string) => {
-    setCardAnswerName(name)
-    setParams({ ...params, cardAnswer: name })
-  }
-
   const onChangeSort = (newSort: string) => {
     setSort(newSort)
     changePage(null, 0)
@@ -112,15 +104,15 @@ export const Cards = () => {
           <div className={s.items}>
             <SearchInput
               inputName={'Search by Question'}
-              searchName={cardQuestionName}
-              setParamName={SearchByCardQuestion}
+              searchSelector={searchCardsByQuestionSelector}
+              setSearch={setSearchCardsByQuestion}
             />
           </div>
           <div className={s.items}>
             <SearchInput
               inputName={'Search by Answer'}
-              searchName={cardAnswerName}
-              setParamName={SearchByCardAnswer}
+              searchSelector={searchCardsByAnswerSelector}
+              setSearch={setSearchCardsByAnswer}
             />
           </div>
         </div>

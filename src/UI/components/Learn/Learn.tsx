@@ -12,7 +12,7 @@ import { NavLink } from 'react-router-dom'
 import { cardsAPI } from '../../../api/cards-api'
 import { PATH } from '../../../assets/Routes/path'
 import { cardsSelector, packUserDataSelector } from '../../../bll/selectors/selectors'
-import { setCardsWithParamsTC } from '../../../bll/store/cards-reducer'
+import { setCardsTC } from '../../../bll/store/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import { getCard } from '../../../utils/getCards/getCards'
 import tableStyle from '../../styles/table.module.css'
@@ -35,7 +35,7 @@ export const Learn = () => {
 
   useEffect(() => {
     if (packUserData.packId) {
-      dispatch(setCardsWithParamsTC({ cardsPack_id: packUserData.packId, pageCount: 100 }))
+      dispatch(setCardsTC(packUserData.packId))
     }
   }, [counter])
 

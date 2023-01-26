@@ -1,7 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import EditIcon from '@mui/icons-material/Edit'
 import SchoolIcon from '@mui/icons-material/School'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
@@ -9,7 +7,6 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
-import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import { NavLink, useNavigate } from 'react-router-dom'
 
@@ -18,12 +15,15 @@ import {
   cardPacksSelector,
   cardPacksTotalCountSelector,
   packStatusSelector,
+  pageCountPackSelector,
+  pagePackSelector,
   profileInfoSelector,
 } from '../../../../bll/selectors/selectors'
-import { deletePackTC, updatePackTC } from '../../../../bll/store/packs-reducer'
+import { setPageCountPack, setPagePack } from '../../../../bll/store/packs-reducer'
 import { PackUserDataType, setPackUserData } from '../../../../bll/store/packUserData-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
+import { PaginationComponent } from '../../common/Pagination/PaginationComponent'
 import SuperSort from '../../common/SuperSort/SuperSort'
 import { DeletePackModal } from '../../modals/DeletePackModal'
 import { UpdatePackModal } from '../../modals/UpdatePackModal'
@@ -65,18 +65,16 @@ interface Data {
 }
 
 type PacksListType = {
-  page: number
-  cardsPerPage: number
-  handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void
-  changePage: (event: unknown, newPage: number) => void
   sort: string
   onChangeSort: (newSort: string) => void
 }
 export const PacksList = (props: PacksListType) => {
   const cardPacks = useAppSelector(cardPacksSelector)
   const profileInfo = useAppSelector(profileInfoSelector)
-  const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const packUserStatus = useAppSelector(packStatusSelector)
+  const pagePack = useAppSelector(pagePackSelector)
+  const pageCountPack = useAppSelector(pageCountPackSelector)
+  const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
@@ -172,9 +170,10 @@ export const PacksList = (props: PacksListType) => {
     )
   })
 
-  // const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   props.handleChangeRowsPerPage(+event.target.value)
-  // }
+  const onChangePageHandler = (page: number, pageCount: number) => {
+    dispatch(setPagePack({ page: page }))
+    dispatch(setPageCountPack({ pageCount: pageCount }))
+  }
 
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -221,18 +220,12 @@ export const PacksList = (props: PacksListType) => {
       {(cardPacksTotalCount === 0 || packUserStatus === 'Wait...') && (
         <div className={s.notFound}>{packUserStatus}</div>
       )}
-      <TablePagination
-        sx={{}}
-        rowsPerPageOptions={[4, 6, 10]}
-        component="div"
-        count={cardPacksTotalCount}
-        rowsPerPage={props.cardsPerPage}
-        page={props.page}
-        labelRowsPerPage={'Cards per page'}
-        onPageChange={props.changePage}
-        onRowsPerPageChange={props.handleChangeRowsPerPage}
-        showFirstButton={true}
-        showLastButton={true}
+      <PaginationComponent
+        totalCount={cardPacksTotalCount ? cardPacksTotalCount : 0}
+        currentPage={pagePack ?? 1}
+        pageCount={pageCountPack}
+        onPageChanged={onChangePageHandler}
+        labelRowsPerPage={'Packs per Page'}
       />
     </Paper>
   )

@@ -1,23 +1,27 @@
-import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 
 import {
   AddPacksParamsType,
   DeletePacksParamsType,
+  getPacksResponseType,
   packsAPI,
-  PacksParamsType,
   UpdatePacksParamsType,
 } from '../../api/packs-api'
 
 import { setAppError, setAppStatus } from './app-reducer'
 import { setSearchStatus } from './packUserData-reducer'
-import { AppDispatch } from './store'
+import { AppDispatch, TypedThunk } from './store'
 
 const initialState = {
   cardPacks: [] as CardPacksType[],
   cardPacksTotalCount: 0,
   maxCardsCount: 0,
   minCardsCount: 0,
+  cardsCount: [] as number[],
+  myId: '' as string | undefined,
+  searchPackName: '' as string,
+  sort: '' as string,
   page: 0,
   pageCount: 4,
 }
@@ -26,8 +30,13 @@ export const slice = createSlice({
   name: 'packs',
   initialState,
   reducers: {
-    setPacks(state, action: PayloadAction<{ packs: CardPacksType[] }>) {
-      state.cardPacks = action.payload.packs
+    setPacks(state, action: PayloadAction<{ res: getPacksResponseType }>) {
+      state.cardPacks = action.payload.res.cardPacks
+      state.cardPacksTotalCount = action.payload.res.cardPacksTotalCount
+      state.maxCardsCount = action.payload.res.maxCardsCount
+      state.minCardsCount = action.payload.res.minCardsCount
+      state.page = action.payload.res.page
+      state.pageCount = action.payload.res.pageCount
     },
     setAddPack(state, action: PayloadAction<{ pack: CardPacksType }>) {
       state.cardPacks.unshift(action.payload.pack)
@@ -38,30 +47,67 @@ export const slice = createSlice({
     setMinPacksCount(state, action: PayloadAction<{ minCardsCount: number }>) {
       state.minCardsCount = action.payload.minCardsCount
     },
+    setCardsCount(state, action: PayloadAction<{ value: number[] }>) {
+      state.cardsCount = action.payload.value
+    },
+    setMyPacks(state, action: PayloadAction<{ myId: string | undefined }>) {
+      state.myId = action.payload.myId
+    },
+    setSearchPack(state, action: PayloadAction<{ value: string }>) {
+      state.searchPackName = action.payload.value
+    },
     setCardPacksTotalCount(state, action: PayloadAction<{ cardPacksTotalCount: number }>) {
       state.cardPacksTotalCount = action.payload.cardPacksTotalCount
+    },
+    setPagePack(state, action: PayloadAction<{ page: number }>) {
+      state.page = action.payload.page
+    },
+    setPageCountPack(state, action: PayloadAction<{ pageCount: number }>) {
+      state.pageCount = action.payload.pageCount
+    },
+    setSortPack(state, action: PayloadAction<{ sort: string }>) {
+      state.sort = action.payload.sort
     },
     deletePack(state, action: PayloadAction<{ pack: CardPacksType }>) {},
   },
 })
 export const packsReducer = slice.reducer
 
-export const { setAddPack, setPacks, setMaxPacksCount, setMinPacksCount, setCardPacksTotalCount } =
-  slice.actions
+export const {
+  setPacks,
+  setMaxPacksCount,
+  setMinPacksCount,
+  setCardPacksTotalCount,
+  setCardsCount,
+  setMyPacks,
+  setSearchPack,
+  setPagePack,
+  setPageCountPack,
+  setSortPack,
+} = slice.actions
 
-export const setPacksWithParamsTC = (params: PacksParamsType) => async (dispatch: AppDispatch) => {
-  dispatch(setPacks({ packs: [] as CardPacksType[] }))
+export const setPacksTC = (): TypedThunk => async (dispatch, getState) => {
+  const { page, pageCount, cardsCount, myId, searchPackName, sort } = getState().packs
+
+  // dispatch(setPacks({ packs: [] as CardPacksType[] }))
   dispatch(setAppStatus({ status: 'loading' }))
   dispatch(setSearchStatus({ status: 'Wait...' }))
-  try {
-    const res = await packsAPI.getPacksWithParams(params)
+  const packList = {
+    page: page,
+    pageCount: pageCount,
+    min: cardsCount[0],
+    max: cardsCount[1],
+    user_id: myId,
+    packName: searchPackName,
+    sortPacks: sort,
+  }
 
-    dispatch(setPacks({ packs: res.data.cardPacks }))
+  try {
+    const res = await packsAPI.getPacksWithParams(packList)
+
+    dispatch(setPacks({ res: res.data }))
     dispatch(setAppStatus({ status: 'succeeded' }))
-    dispatch(setMaxPacksCount({ maxCardsCount: res.data.maxCardsCount }))
-    dispatch(
-      setMinPacksCount({ minCardsCount: res.data.minCardsCount ? res.data.minCardsCount : 0 })
-    )
+
     dispatch(
       setCardPacksTotalCount({
         cardPacksTotalCount: res.data.cardPacksTotalCount ? res.data.cardPacksTotalCount : 0,
@@ -89,7 +135,7 @@ export const addNewPackTC = (params: AddPacksParamsType) => async (dispatch: App
   try {
     const res = await packsAPI.addPack(params)
 
-    dispatch(setPacksWithParamsTC({}))
+    dispatch(setPacksTC())
 
     // dispatch(setAddPack({ pack: res.data.newCardsPack }))
     dispatch(setAppStatus({ status: 'succeeded' }))
@@ -109,7 +155,7 @@ export const deletePackTC = (params: DeletePacksParamsType) => async (dispatch: 
   try {
     const res = await packsAPI.deletePack(params)
 
-    // dispatch(setPacksWithParamsTC({}))
+    dispatch(setPacksTC())
 
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {
@@ -129,7 +175,7 @@ export const updatePackTC = (params: UpdatePacksParamsType) => async (dispatch: 
   try {
     const res = await packsAPI.updatePack(params)
 
-    dispatch(setPacksWithParamsTC({}))
+    dispatch(setPacksTC())
 
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {
