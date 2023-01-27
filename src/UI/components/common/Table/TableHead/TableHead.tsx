@@ -4,8 +4,8 @@ import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
-import { ColumnCards } from '../../../Cards/CardsList/CardsList'
-import { ColumnPacks } from '../../../Packs/PacksList/PacksList'
+import { ColumnCards } from '../../../Cards/CardsList/CardsDataForTable/CardsColumns'
+import { ColumnPacks } from '../../../Packs/PacksList/PacksDataForTable/PackColumns'
 import SuperSort from '../../SuperSort/SuperSort'
 
 type TableHeadType = {

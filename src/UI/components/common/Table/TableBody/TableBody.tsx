@@ -4,8 +4,10 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 
-import { ColumnCards, DataCards } from '../../../Cards/CardsList/CardsList'
-import { ColumnPacks, DataPacks } from '../../../Packs/PacksList/PacksList'
+import { ColumnCards } from '../../../Cards/CardsList/CardsDataForTable/CardsColumns'
+import { DataCards } from '../../../Cards/CardsList/CardsDataForTable/CardsRows'
+import { ColumnPacks } from '../../../Packs/PacksList/PacksDataForTable/PackColumns'
+import { DataPacks } from '../../../Packs/PacksList/PacksDataForTable/PackRows'
 
 type TableBodyType = {
   rows: DataPacks[] | DataCards[]
