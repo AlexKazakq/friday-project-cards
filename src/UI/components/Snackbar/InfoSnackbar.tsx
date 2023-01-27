@@ -14,7 +14,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 export function InfoSnackbar() {
   const dispatch = useAppDispatch()
   const info = useAppSelector(infoSelector)
-  const error = useAppSelector(errorSelector)
+  let error = useAppSelector(errorSelector)
 
   const handleClose = (event?: React.SyntheticEvent<any> | Event, reason?: string) => {
     if (reason === 'clickaway') {
@@ -27,8 +27,10 @@ export function InfoSnackbar() {
   let text: string | null
 
   if (info) {
+    debugger
     severityType = 'success'
     text = info
+    error = ''
   } else if (error) {
     severityType = 'error'
     text = error

@@ -20,7 +20,6 @@ import { CheckEmail } from './UI/components/PasswordRecovery/CheckEmail'
 import { PasswordRecovery } from './UI/components/PasswordRecovery/PasswordRecovery'
 import { Profile } from './UI/components/Profile/Profile'
 import { Registration } from './UI/components/Registration/Registration'
-import { ErrorSnackbar } from './UI/components/Snackbar/ErrorSnackbar'
 import { InfoSnackbar } from './UI/components/Snackbar/InfoSnackbar'
 
 function App() {
@@ -71,7 +70,6 @@ function App() {
           <Route path={PATH.SET_NEW_PASSWORD} element={<NewPassword />} />
         </Route>
       </Routes>
-      {/*<ErrorSnackbar />*/}
       <InfoSnackbar />
     </div>
   )
