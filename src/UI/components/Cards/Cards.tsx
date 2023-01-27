@@ -23,7 +23,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import tableStyle from '../../styles/table.module.css'
 import { SearchInput } from '../common/SearchInput/SearchInput'
 import { TableHeader } from '../common/TableHeader/TableHeader'
-import { AddCardModal } from '../modals/AddCardModal'
+import { AddCardModal } from '../Modals/AddCardModal'
 
 import s from './cards.module.css'
 import { CardsList } from './CardsList/CardsList'

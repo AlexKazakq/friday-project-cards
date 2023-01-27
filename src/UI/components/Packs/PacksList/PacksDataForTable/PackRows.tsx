@@ -10,8 +10,8 @@ import { cardPacksSelector, profileInfoSelector } from '../../../../../bll/selec
 import { PackUserDataType, setPackUserData } from '../../../../../bll/store/packUserData-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../../utils/dateFormat/dateFormatUtils'
-import { DeletePackModal } from '../../../modals/DeletePackModal'
-import { UpdatePackModal } from '../../../modals/UpdatePackModal'
+import { DeletePackModal } from '../../../Modals/DeletePackModal'
+import { UpdatePackModal } from '../../../Modals/UpdatePackModal'
 import s from '../packList.module.css'
 
 export interface DataPacks {

@@ -5,8 +5,8 @@ import Rating from '@mui/material/Rating'
 import { cardsSelector, profileInfoSelector } from '../../../../../bll/selectors/selectors'
 import { useAppSelector } from '../../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../../utils/dateFormat/dateFormatUtils'
-import { DeleteCardModal } from '../../../modals/DeleteCardModal'
-import { UpdateCardModal } from '../../../modals/UpdateCardModal'
+import { DeleteCardModal } from '../../../Modals/DeleteCardModal'
+import { UpdateCardModal } from '../../../Modals/UpdateCardModal'
 
 import s from './../cardsList.module.css'
 
