@@ -10,3 +10,11 @@
 
 https://alexkazakq.github.io/friday-project-cards/
 
+## Stack: 
+- React
+- Redux Toolkit
+- Material UI 
+- TypeScript 
+- Axios
+- Yup 
+- Formik 
