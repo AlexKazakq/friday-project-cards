@@ -11,6 +11,8 @@ import { DataCards } from '../../../Cards/CardsList/CardsDataForTable/CardsRows'
 import { ColumnPacks } from '../../../Packs/PacksList/PacksDataForTable/PackColumns'
 import { DataPacks } from '../../../Packs/PacksList/PacksDataForTable/PackRows'
 
+import s from './tableBody.module.css'
+
 type TableBodyType = {
   rows: DataPacks[] | DataCards[]
   columns: ColumnPacks[] | ColumnCards[]
@@ -26,7 +28,7 @@ export const TableBodyComponent: FC<TableBodyType> = ({ rows, columns, packUserS
               const value = row[column.id as keyof typeof row]
 
               return (
-                <TableCell key={column.id} align={column.align}>
+                <TableCell key={column.id} align={column.align} className={s.tableCell}>
                   {packUserStatus === 'Wait...' ? (
                     <Skeleton width="80%" height="35px" animation={false} />
                   ) : (
