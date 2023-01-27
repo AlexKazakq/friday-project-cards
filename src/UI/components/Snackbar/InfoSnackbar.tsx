@@ -7,7 +7,6 @@ import { errorSelector, infoSelector } from '../../../bll/selectors/selectors'
 import { setAppError, setAppInfo } from '../../../bll/store/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 
-// eslint-disable-next-line import/no-named-as-default-member
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })

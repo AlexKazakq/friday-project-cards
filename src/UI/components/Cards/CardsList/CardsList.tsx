@@ -1,33 +1,27 @@
 import React from 'react'
 
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import EditIcon from '@mui/icons-material/Edit'
-import Paper from '@mui/material/Paper'
 import Rating from '@mui/material/Rating'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TablePagination from '@mui/material/TablePagination'
-import TableRow from '@mui/material/TableRow'
 
 import {
   cardsTotalCountSelector,
   packStatusSelector,
   packUserDataSelector,
+  pageCardSelector,
+  pageCountCardSelector,
   profileInfoSelector,
 } from '../../../../bll/selectors/selectors'
-import { CardsType } from '../../../../bll/store/cards-reducer'
-import { useAppSelector } from '../../../../hooks/hooks'
+import { CardsType, setPageCard, setPageCountCard } from '../../../../bll/store/cards-reducer'
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
-import SuperSort from '../../common/SuperSort/SuperSort'
+import { TableBodyComponent } from '../../common/Table/TableBody/TableBody'
+import { TableComponent } from '../../common/Table/TableComponent'
+import { TableHeadComponent } from '../../common/Table/TableHead/TableHead'
 import { DeleteCardModal } from '../../modals/DeleteCardModal'
 import { UpdateCardModal } from '../../modals/UpdateCardModal'
 
 import s from './cardsList.module.css'
 
-interface Column {
+export interface ColumnCards {
   id: 'question' | 'answer' | 'updated' | 'grade'
   label: string
   minWidth?: number
@@ -35,7 +29,7 @@ interface Column {
   format?: (value: number) => string
 }
 
-const columns: readonly Column[] = [
+const columns: ColumnCards[] = [
   { id: 'question', label: 'Question' },
   { id: 'answer', label: 'Answer' },
   {
@@ -48,19 +42,16 @@ const columns: readonly Column[] = [
   },
 ]
 
-interface Data {
+export interface DataCards {
   question: string
   answer: string
   updated: string
   grade: JSX.Element
+  id: string
 }
 
 type CardsListType = {
   cards: CardsType[]
-  page: number
-  cardsPerPage: number
-  handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void
-  changePage: (event: unknown, newPage: number) => void
   sort: string
   onChangeSort: (newSort: string) => void
 }
@@ -70,12 +61,26 @@ export const CardsList = (props: CardsListType) => {
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
   const profileInfo = useAppSelector(profileInfoSelector)
   const packUserStatus = useAppSelector(packStatusSelector)
+  const pageCard = useAppSelector(pageCardSelector)
+  const pageCountCard = useAppSelector(pageCountCardSelector)
+  const dispatch = useAppDispatch()
 
-  function createData(question: string, answer: string, updated: string, grade: JSX.Element): Data {
-    return { question, answer, updated, grade }
+  const onChangePageHandler = (page: number, pageCount: number) => {
+    dispatch(setPageCard({ page: page }))
+    dispatch(setPageCountCard({ pageCount: pageCount }))
   }
 
-  const rows: Data[] = props.cards.map(card => {
+  function createData(
+    question: string,
+    answer: string,
+    updated: string,
+    grade: JSX.Element,
+    id: string
+  ): DataCards {
+    return { question, answer, updated, grade, id }
+  }
+
+  const rows: DataCards[] = props.cards.map(card => {
     let grade
 
     profileInfo._id === card.user_id
@@ -100,60 +105,29 @@ export const CardsList = (props: CardsListType) => {
           </div>
         ))
 
-    return createData(card.question, card.answer, dateFormatUtils(card.updated), grade)
+    return createData(card.question, card.answer, dateFormatUtils(card.updated), grade, card._id)
   })
 
   if (packUserData.cardsCount !== 0) {
-    return (
-      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-        <TableContainer sx={{ maxHeight: 640 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {columns.map(column => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    {column.label}
-                    <SuperSort sort={props.sort} value={column.id} onChange={props.onChangeSort} />
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map(row => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.answer}>
-                    {columns.map(column => {
-                      const value = row[column.id]
+    let columnsWithSort: string[] = ['question', 'answer', 'updated']
 
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {value}
-                        </TableCell>
-                      )
-                    })}
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        {props.cards.length === 0 && <div className={s.notFound}>{packUserStatus}</div>}
-        <TablePagination
-          sx={{}}
-          rowsPerPageOptions={[4, 6, 10, 50]}
-          component="div"
-          count={cardsTotalCount}
-          rowsPerPage={props.cardsPerPage}
-          page={props.page}
-          labelRowsPerPage={'Cards per page'}
-          onPageChange={props.changePage}
-          onRowsPerPageChange={props.handleChangeRowsPerPage}
+    return (
+      <TableComponent
+        totalCount={cardsTotalCount ? cardsTotalCount : 0}
+        currentPage={pageCard ?? 1}
+        pageCount={pageCountCard}
+        onPageChanged={onChangePageHandler}
+        labelRowsPerPage={'Cards per Page'}
+        packUserStatus={packUserStatus}
+      >
+        <TableHeadComponent
+          columns={columns}
+          columnsWithSort={columnsWithSort}
+          sort={props.sort}
+          onChangeSort={props.onChangeSort}
         />
-      </Paper>
+        <TableBodyComponent rows={rows} columns={columns} />
+      </TableComponent>
     )
   } else {
     return <div className={s.empty}>This pack is empty</div>

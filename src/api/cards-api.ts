@@ -16,16 +16,7 @@ export const instance = axios.create({
 export const cardsAPI = {
   getCardsWithParams(params: CardsParamsType) {
     return instance.get<getCardsResponseType>('cards/card', {
-      params: {
-        cardAnswer: params.cardAnswer,
-        cardQuestion: params.cardQuestion,
-        cardsPack_id: params.cardsPack_id,
-        min: params.min,
-        max: params.max,
-        sortCards: params.sortCards,
-        page: params.page,
-        pageCount: params.pageCount,
-      },
+      params: { ...params },
     })
   },
   addNewCard(params: AddedCardParamsType) {
@@ -46,7 +37,7 @@ export const cardsAPI = {
   },
 }
 
-type getCardsResponseType = {
+export type getCardsResponseType = {
   cards: CardsType[]
   cardsTotalCount: number
   maxGrade: number

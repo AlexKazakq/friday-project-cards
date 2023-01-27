@@ -1,16 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import EditIcon from '@mui/icons-material/Edit'
 import SchoolIcon from '@mui/icons-material/School'
-import Paper from '@mui/material/Paper'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TablePagination from '@mui/material/TablePagination'
-import TableRow from '@mui/material/TableRow'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import { PATH } from '../../../../assets/Routes/path'
@@ -18,19 +8,23 @@ import {
   cardPacksSelector,
   cardPacksTotalCountSelector,
   packStatusSelector,
+  pageCountPackSelector,
+  pagePackSelector,
   profileInfoSelector,
 } from '../../../../bll/selectors/selectors'
-import { deletePackTC, updatePackTC } from '../../../../bll/store/packs-reducer'
+import { setPageCountPack, setPagePack } from '../../../../bll/store/packs-reducer'
 import { PackUserDataType, setPackUserData } from '../../../../bll/store/packUserData-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
-import SuperSort from '../../common/SuperSort/SuperSort'
+import { TableBodyComponent } from '../../common/Table/TableBody/TableBody'
+import { TableComponent } from '../../common/Table/TableComponent'
+import { TableHeadComponent } from '../../common/Table/TableHead/TableHead'
 import { DeletePackModal } from '../../modals/DeletePackModal'
 import { UpdatePackModal } from '../../modals/UpdatePackModal'
 
 import s from './packList.module.css'
 
-interface Column {
+export interface ColumnPacks {
   id: 'name' | 'cardsCount' | 'updated' | 'created' | 'actions'
   label: string
   minWidth?: number
@@ -38,7 +32,7 @@ interface Column {
   format?: (value: number) => string
 }
 
-const columns: readonly Column[] = [
+const columns: ColumnPacks[] = [
   { id: 'name', label: 'Name' },
   { id: 'cardsCount', label: 'Cards' },
   {
@@ -55,7 +49,7 @@ const columns: readonly Column[] = [
   },
 ]
 
-interface Data {
+export interface DataPacks {
   name: JSX.Element
   cardsCount: number
   updated: string
@@ -65,18 +59,16 @@ interface Data {
 }
 
 type PacksListType = {
-  page: number
-  cardsPerPage: number
-  handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void
-  changePage: (event: unknown, newPage: number) => void
   sort: string
   onChangeSort: (newSort: string) => void
 }
 export const PacksList = (props: PacksListType) => {
   const cardPacks = useAppSelector(cardPacksSelector)
   const profileInfo = useAppSelector(profileInfoSelector)
-  const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const packUserStatus = useAppSelector(packStatusSelector)
+  const pagePack = useAppSelector(pagePackSelector)
+  const pageCountPack = useAppSelector(pageCountPackSelector)
+  const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
@@ -98,11 +90,11 @@ export const PacksList = (props: PacksListType) => {
     created: string,
     actions: JSX.Element,
     id: string
-  ): Data {
+  ): DataPacks {
     return { name, cardsCount, updated, created, actions, id }
   }
 
-  const rows: Data[] = cardPacks.map(pack => {
+  const rows: DataPacks[] = cardPacks.map(pack => {
     const actions =
       profileInfo._id === pack.user_id ? (
         <div key={pack._id} className={s.icons}>
@@ -173,68 +165,28 @@ export const PacksList = (props: PacksListType) => {
     )
   })
 
-  // const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   props.handleChangeRowsPerPage(+event.target.value)
-  // }
+  let columnsWithSort = ['name', 'cardsCount', 'updated', 'created']
+  const onChangePageHandler = (page: number, pageCount: number) => {
+    dispatch(setPagePack({ page: page }))
+    dispatch(setPageCountPack({ pageCount: pageCount }))
+  }
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 640 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map(column => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                  {(column.id === 'name' ||
-                    column.id === 'cardsCount' ||
-                    column.id === 'updated' ||
-                    column.id === 'created') && (
-                    <SuperSort sort={props.sort} value={column.id} onChange={props.onChangeSort} />
-                  )}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map(row => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                  {columns.map(column => {
-                    const value = row[column.id]
-
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {value}
-                      </TableCell>
-                    )
-                  })}
-                </TableRow>
-              )
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {(cardPacksTotalCount === 0 || packUserStatus === 'Wait...') && (
-        <div className={s.notFound}>{packUserStatus}</div>
-      )}
-      <TablePagination
-        sx={{}}
-        rowsPerPageOptions={[4, 6, 10]}
-        component="div"
-        count={cardPacksTotalCount}
-        rowsPerPage={props.cardsPerPage}
-        page={props.page}
-        labelRowsPerPage={'Cards per page'}
-        onPageChange={props.changePage}
-        onRowsPerPageChange={props.handleChangeRowsPerPage}
-        showFirstButton={true}
-        showLastButton={true}
+    <TableComponent
+      totalCount={cardPacksTotalCount ? cardPacksTotalCount : 0}
+      currentPage={pagePack ?? 1}
+      pageCount={pageCountPack}
+      onPageChanged={onChangePageHandler}
+      labelRowsPerPage={'Packs per Page'}
+      packUserStatus={packUserStatus}
+    >
+      <TableHeadComponent
+        columns={columns}
+        columnsWithSort={columnsWithSort}
+        sort={props.sort}
+        onChangeSort={props.onChangeSort}
       />
-    </Paper>
+      <TableBodyComponent rows={rows} columns={columns} />
+    </TableComponent>
   )
 }

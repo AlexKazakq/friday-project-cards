@@ -1,0 +1,21 @@
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    margin: 20px 0;
+}
+.items {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.leftCount {
+    margin-right: 20px;
+}
+.rightCount {
+    margin-left: 20px;
+}
+.title {
+    font-weight: 600;
+}
