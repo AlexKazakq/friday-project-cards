@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/friday-project-cards/static/css/main.444bc145.css",
-    "main.js": "/friday-project-cards/static/js/main.6c07adfb.js",
+    "main.css": "/friday-project-cards/static/css/main.3c6d8262.css",
+    "main.js": "/friday-project-cards/static/js/main.76991b88.js",
     "static/js/27.4a9228e1.chunk.js": "/friday-project-cards/static/js/27.4a9228e1.chunk.js",
     "static/media/404.svg": "/friday-project-cards/static/media/404.4e46e304dcfdcae89fcfb902d8863816.svg",
     "static/media/letter.png": "/friday-project-cards/static/media/letter.cfa2f0e0a982a9c9aee5.png",
@@ -10,7 +10,7 @@
     "static/media/left-arrow.svg": "/friday-project-cards/static/media/left-arrow.d6da3c66f670d718a99d.svg"
   },
   "entrypoints": [
-    "static/css/main.444bc145.css",
-    "static/js/main.6c07adfb.js"
+    "static/css/main.3c6d8262.css",
+    "static/js/main.76991b88.js"
   ]
 }
