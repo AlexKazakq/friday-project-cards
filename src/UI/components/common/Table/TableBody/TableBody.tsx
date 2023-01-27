@@ -28,7 +28,7 @@ export const TableBodyComponent: FC<TableBodyType> = ({ rows, columns, packUserS
               return (
                 <TableCell key={column.id} align={column.align}>
                   {packUserStatus === 'Wait...' ? (
-                    <Skeleton width="100%" height="35px" animation={false} />
+                    <Skeleton width="80%" height="35px" animation={false} />
                   ) : (
                     value
                   )}
