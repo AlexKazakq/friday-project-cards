@@ -100,7 +100,7 @@ export const Cards = () => {
           </div>
         </div>
       )}
-      <CardsList sort={sort} onChangeSort={onChangeSort} cards={cards} />
+      <CardsList sort={sort} onChangeSort={onChangeSort} />
     </div>
   )
 }
