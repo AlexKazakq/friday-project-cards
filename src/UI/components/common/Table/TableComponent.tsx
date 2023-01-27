@@ -34,7 +34,7 @@ export const TableComponent: FC<TableComponentPropsType> = ({
           {children}
         </Table>
       </TableContainer>
-      {(totalCount === 0 || packUserStatus === 'Wait...') && (
+      {totalCount === 0 && packUserStatus !== 'Wait...' && (
         <div className={s.notFound}>{packUserStatus}</div>
       )}
       <PaginationComponent

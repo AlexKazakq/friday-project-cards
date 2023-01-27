@@ -54,7 +54,7 @@ export const CardsList = (props: CardsListType) => {
           sort={props.sort}
           onChangeSort={props.onChangeSort}
         />
-        <TableBodyComponent rows={rows} columns={columns} />
+        <TableBodyComponent rows={rows} columns={columns} packUserStatus={packUserStatus} />
       </TableComponent>
     )
   } else {

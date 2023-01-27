@@ -50,7 +50,7 @@ export const PacksList = (props: PacksListType) => {
         sort={props.sort}
         onChangeSort={props.onChangeSort}
       />
-      <TableBodyComponent rows={rows} columns={columns} />
+      <TableBodyComponent rows={rows} columns={columns} packUserStatus={packUserStatus} />
     </TableComponent>
   )
 }

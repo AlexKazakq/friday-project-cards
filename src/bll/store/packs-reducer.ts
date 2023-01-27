@@ -89,7 +89,6 @@ export const {
 export const setPacksTC = (): TypedThunk => async (dispatch, getState) => {
   const { page, pageCount, cardsCount, myId, searchPackName, sort } = getState().packs
 
-  // dispatch(setPacks({ packs: [] as CardPacksType[] }))
   dispatch(setAppStatus({ status: 'loading' }))
   dispatch(setSearchStatus({ status: 'Wait...' }))
   const packList = {
