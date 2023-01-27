@@ -27,10 +27,9 @@ export function InfoSnackbar() {
   let text: string | null
 
   if (info) {
-    debugger
     severityType = 'success'
     text = info
-    error = ''
+    error = null
   } else if (error) {
     severityType = 'error'
     text = error
