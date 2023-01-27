@@ -2,12 +2,9 @@ import * as React from 'react'
 import { FC } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
-
-import SuperButton from '../common/SuperButton/SuperButton'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -51,8 +48,8 @@ export const BasicModal: FC<PropsType> = ({
         <Box sx={style}>
           <CloseIcon onClick={handleOpen} />
           {children}
-          <SuperButton onClick={onClickHandler}>{confirmButtonName}</SuperButton>
-          <SuperButton onClick={handleOpen}>Cancel</SuperButton>
+          <button onClick={onClickHandler}>{confirmButtonName}</button>
+          <button onClick={handleOpen}>Cancel</button>
         </Box>
       </Modal>
     </div>

@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import { NavLink, useNavigate } from 'react-router-dom'
 
-import { CardsParamsType } from '../../../api/cards-api'
 import { PATH } from '../../../assets/Routes/path'
 import {
   cardsSelector,
-  cardsTotalCountSelector,
   packUserDataSelector,
   pageCardSelector,
   pageCountCardSelector,
@@ -78,8 +76,8 @@ export const Cards = () => {
       </div>
       <TableHeader
         title={title}
-        buttonName={<AddCardModal cardsPack_id={packUserData.packId} />}
-        disable={cards.length === 0 && profile._id !== packUserData.packUserId}
+        buttonName={buttonTitle}
+        isNotButton={cards.length === 0 && profile._id !== packUserData.packUserId}
         onClick={onClickHandler}
       />
       {packUserData.cardsCount !== 0 && (

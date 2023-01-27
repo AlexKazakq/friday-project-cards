@@ -41,9 +41,7 @@ export const AddCardModal: FC<PropsType> = ({ cardsPack_id }) => {
   }
   const packData = cardPacks.find(pack => pack._id === cardsPack_id)
   const onButtonClickHandler = () => {
-    debugger
     dispatch(addNewCardTC({ card: { cardsPack_id, question, answer } }))
-    console.log(packData)
     packData &&
       dispatch(
         setPackUserData({

@@ -5,10 +5,8 @@ import Typography from '@mui/material/Typography'
 
 import { addNewPackTC } from '../../../bll/store/packs-reducer'
 import { useAppDispatch } from '../../../hooks/hooks'
-import SuperButton from '../common/SuperButton/SuperButton'
 import { SuperCheckbox } from '../common/SuperCheckbox/SuperCheckbox'
 import SuperInputText from '../common/SuperInputText/SuperInputText'
-import SuperSelect from '../common/SuperSelect/SuperSelect'
 
 import { BasicModal } from './BasicModal'
 

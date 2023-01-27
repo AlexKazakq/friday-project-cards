@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import Button from '@mui/material/Button'
 
@@ -7,7 +7,7 @@ import { useAppSelector } from '../../../../hooks/hooks'
 import styleForm from '../../../styles/form.module.css'
 
 type ButtonFormType = {
-  buttonName: string
+  buttonName: string | ReactNode
 }
 
 export const ButtonForm = (props: ButtonFormType) => {
