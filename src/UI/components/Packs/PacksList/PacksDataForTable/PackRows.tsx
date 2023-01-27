@@ -73,7 +73,7 @@ export const PackRows = () => {
             <UpdatePackModal packId={pack._id} packName={pack.name} />
           </IconButton>
           <IconButton className={s.button}>
-            <DeletePackModal packId={pack._id} />
+            <DeletePackModal packId={pack._id} packName={pack.name} />
           </IconButton>
         </div>
       ) : (
