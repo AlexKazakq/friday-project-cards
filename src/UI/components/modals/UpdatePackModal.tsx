@@ -2,11 +2,11 @@ import * as React from 'react'
 import { FC, FormEvent, useState } from 'react'
 
 import EditIcon from '@mui/icons-material/Edit'
+import Tooltip from '@mui/material/Tooltip/Tooltip'
 import Typography from '@mui/material/Typography'
 
 import { updatePackTC } from '../../../bll/store/packs-reducer'
 import { useAppDispatch } from '../../../hooks/hooks'
-import SuperButton from '../common/SuperButton/SuperButton'
 import { SuperCheckbox } from '../common/SuperCheckbox/SuperCheckbox'
 import SuperInputText from '../common/SuperInputText/SuperInputText'
 
@@ -51,7 +51,11 @@ export const UpdatePackModal: FC<PropsType> = ({ packId, packName }) => {
 
   return (
     <BasicModal
-      name={<EditIcon />}
+      name={
+        <Tooltip title="Edit cards">
+          <EditIcon />
+        </Tooltip>
+      }
       confirmButtonName={'Save'}
       onClickConfirmHandler={onButtonClickHandler}
     >

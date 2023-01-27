@@ -2,6 +2,7 @@ import * as React from 'react'
 import { FC } from 'react'
 
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import Tooltip from '@mui/material/Tooltip/Tooltip'
 import Typography from '@mui/material/Typography'
 
 import { deletePackTC } from '../../../bll/store/packs-reducer'
@@ -35,7 +36,11 @@ export const DeletePackModal: FC<PropsType> = ({ packId }) => {
 
   return (
     <BasicModal
-      name={<DeleteForeverIcon />}
+      name={
+        <Tooltip title="Delete cards">
+          <DeleteForeverIcon />
+        </Tooltip>
+      }
       confirmButtonName={'Delete pack'}
       onClickConfirmHandler={onButtonClickHandler}
     >

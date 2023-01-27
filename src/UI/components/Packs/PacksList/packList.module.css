@@ -2,18 +2,25 @@
     display: flex;
     justify-content: space-between;
 
-    width: 60%;
+    width: 100px;
 }
+
 .button {
+    width: 40px;
+    height: 40px;
+}
+.button:hover{
     background: none;
-    border: none;
 }
+
 .navLink {
-text-decoration: none;
+    text-decoration: none;
 }
+
 .navLink:visited {
     color: black;
 }
+
 .notFound {
     margin-top: 20px;
 

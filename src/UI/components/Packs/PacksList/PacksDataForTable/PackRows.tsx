@@ -1,6 +1,8 @@
 import React from 'react'
 
 import SchoolIcon from '@mui/icons-material/School'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import { PATH } from '../../../../../assets/Routes/path'
@@ -51,7 +53,7 @@ export const PackRows = () => {
     const actions =
       profileInfo._id === pack.user_id ? (
         <div key={pack._id} className={s.icons}>
-          <button
+          <IconButton
             className={s.button}
             disabled={pack.cardsCount === 0}
             onClick={() =>
@@ -63,18 +65,20 @@ export const PackRows = () => {
               })
             }
           >
-            <SchoolIcon />
-          </button>
-          <button className={s.button}>
+            <Tooltip title="Learn cards">
+              <SchoolIcon />
+            </Tooltip>
+          </IconButton>
+          <IconButton className={s.button}>
             <UpdatePackModal packId={pack._id} packName={pack.name} />
-          </button>
-          <button className={s.button}>
+          </IconButton>
+          <IconButton className={s.button}>
             <DeletePackModal packId={pack._id} />
-          </button>
+          </IconButton>
         </div>
       ) : (
         <div key={pack._id}>
-          <button
+          <IconButton
             className={s.button}
             disabled={pack.cardsCount === 0}
             onClick={() =>
@@ -86,8 +90,10 @@ export const PackRows = () => {
               })
             }
           >
-            <SchoolIcon />
-          </button>
+            <Tooltip title="Learn cards">
+              <SchoolIcon />
+            </Tooltip>
+          </IconButton>
         </div>
       )
     const name = (
