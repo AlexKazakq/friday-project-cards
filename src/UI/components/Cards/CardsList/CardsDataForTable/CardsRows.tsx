@@ -46,7 +46,7 @@ export const CardsRows = () => {
               />
             </button>
             <button className={s.button}>
-              <DeleteCardModal id={card._id} />
+              <DeleteCardModal id={card._id} cardName={card.question} />
             </button>
           </div>
         ))
