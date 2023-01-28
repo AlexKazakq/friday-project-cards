@@ -25,6 +25,8 @@ export const Packs = () => {
   const pageCountPack = useAppSelector(pageCountPackSelector)
   const sort = useAppSelector(sortPacksSelector)
 
+  console.log(1)
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
