@@ -3,7 +3,7 @@ import React from 'react'
 import {
   cardsTotalCountSelector,
   packStatusSelector,
-  packUserDataSelector,
+  packUserCountCardsSelector,
   pageCardSelector,
   pageCountCardSelector,
 } from '../../../../bll/selectors/selectors'
@@ -23,7 +23,6 @@ type CardsListType = {
 }
 
 export const CardsList = (props: CardsListType) => {
-  const packUserData = useAppSelector(packUserDataSelector)
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
   const packUserStatus = useAppSelector(packStatusSelector)
   const pageCard = useAppSelector(pageCardSelector)
@@ -31,12 +30,13 @@ export const CardsList = (props: CardsListType) => {
   const dispatch = useAppDispatch()
   const rows = CardsRows()
   const columns = CardsColumns()
+  const packUserCardsCount = useAppSelector(packUserCountCardsSelector)
   const onChangePageHandler = (page: number, pageCount: number) => {
     dispatch(setPageCard({ page: page }))
     dispatch(setPageCountCard({ pageCount: pageCount }))
   }
 
-  if (packUserData.cardsCount !== 0) {
+  if (packUserCardsCount !== 0) {
     let columnsWithSort: string[] = ['question', 'answer', 'updated']
 
     return (

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 
-import { NavLink, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-import { PATH } from '../../../assets/Routes/path'
 import {
   cardsSelector,
+  packUserCountCardsSelector,
   packUserDataSelector,
   pageCardSelector,
   pageCountCardSelector,
@@ -21,6 +21,7 @@ import {
 } from '../../../bll/store/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import tableStyle from '../../styles/table.module.css'
+import { BackArrow } from '../common/BackArrow/BackArrow'
 import { SearchInput } from '../common/SearchInput/SearchInput'
 import { TableHeader } from '../common/TableHeader/TableHeader'
 import { AddCardModal } from '../Modals/AddCardModal'
@@ -37,6 +38,7 @@ export const Cards = () => {
   const sort = useAppSelector(sortCardsSelector)
   const pageCard = useAppSelector(pageCardSelector)
   const pageCountCard = useAppSelector(pageCountCardSelector)
+  const packUserCountCards = useAppSelector(packUserCountCardsSelector)
 
   const navigate = useNavigate()
 
@@ -69,18 +71,14 @@ export const Cards = () => {
 
   return (
     <div className={tableStyle.wrapper}>
-      <div>
-        <NavLink to={PATH.PACKS} className={s.back}>
-          Back to Packs List
-        </NavLink>
-      </div>
+      <BackArrow />
       <TableHeader
         title={title}
         buttonName={buttonTitle}
         isNotButton={cards.length === 0 && profile._id !== packUserData.packUserId}
         onClick={onClickHandler}
       />
-      {packUserData.cardsCount !== 0 && (
+      {packUserCountCards !== 0 && (
         <div className={s.filters}>
           <div className={s.items}>
             <SearchInput

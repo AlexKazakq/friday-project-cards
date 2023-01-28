@@ -10,7 +10,7 @@ import {
 } from '../../api/cards-api'
 
 import { setAppError, setAppStatus } from './app-reducer'
-import { setSearchStatus } from './packUserData-reducer'
+import { setSearchStatus, setUserCardsTotalCount } from './packUserData-reducer'
 import { AppDispatch, TypedThunk } from './store'
 
 const initialState = {
@@ -74,7 +74,8 @@ export const {
 export const setCardsTC =
   (cardsPack_id: string): TypedThunk =>
   async (dispatch, getState) => {
-    const { page, pageCount, searchByAnswer, searchByQuestion, sort } = getState().cards
+    const { page, pageCount, searchByAnswer, searchByQuestion, sort, cardsTotalCount } =
+      getState().cards
 
     const cardList = {
       cardsPack_id: cardsPack_id,
@@ -83,6 +84,7 @@ export const setCardsTC =
       sortCards: sort,
       page: page,
       pageCount: pageCount,
+      cardsTotalCount: cardsTotalCount,
     }
 
     dispatch(setCardsList({ cards: [] as CardsType[] }))
@@ -98,6 +100,9 @@ export const setCardsTC =
           cardsTotalCount: res.data.cardsTotalCount ? res.data.cardsTotalCount : 0,
         })
       )
+      searchByAnswer === '' &&
+        searchByQuestion === '' &&
+        dispatch(setUserCardsTotalCount({ cardsCount: res.data.cardsTotalCount }))
       if (initialState.cardsTotalCount === 0) {
         dispatch(setSearchStatus({ status: 'No matches found...' }))
       } else {

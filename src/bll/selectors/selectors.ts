@@ -56,3 +56,8 @@ export const pageCountCardSelector = createSelector(state, state => state.cards.
 export const packUserDataSelector = createSelector(state, state => state.packUserData.packUserData)
 
 export const packStatusSelector = createSelector(state, state => state.packUserData.status)
+
+export const packUserCountCardsSelector = createSelector(
+  state,
+  state => state.packUserData.cardsTotalCount
+)

@@ -37,7 +37,7 @@ export const AddCardModal: FC<PropsType> = ({ cardsPack_id }) => {
             packUserId: packData.user_id,
             packId: packData._id,
             packUserName: packData.user_name,
-            cardsCount: packData.cardsCount,
+            packName: packData.name,
           },
         })
       )

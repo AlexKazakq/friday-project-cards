@@ -7,7 +7,11 @@ import { NavLink, useNavigate } from 'react-router-dom'
 
 import { PATH } from '../../../../../assets/Routes/path'
 import { cardPacksSelector, profileInfoSelector } from '../../../../../bll/selectors/selectors'
-import { PackUserDataType, setPackUserData } from '../../../../../bll/store/packUserData-reducer'
+import {
+  PackUserDataType,
+  setPackUserData,
+  setUserCardsTotalCount,
+} from '../../../../../bll/store/packUserData-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../../utils/dateFormat/dateFormatUtils'
 import { DeletePackModal } from '../../../Modals/DeletePackModal'
@@ -29,11 +33,12 @@ export const PackRows = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const showCardByIdHandler = (userData: PackUserDataType) => {
+  const showCardByIdHandler = (userData: PackUserDataType, cardsCount: number) => {
     dispatch(setPackUserData({ userData }))
+    dispatch(setUserCardsTotalCount({ cardsCount: cardsCount }))
   }
-  const goToLearnHandler = (userData: PackUserDataType) => {
-    showCardByIdHandler(userData)
+  const goToLearnHandler = (userData: PackUserDataType, cardsCount: number) => {
+    showCardByIdHandler(userData, cardsCount)
 
     navigate(PATH.LEARN)
   }
@@ -57,12 +62,15 @@ export const PackRows = () => {
             className={s.button}
             disabled={pack.cardsCount === 0}
             onClick={() =>
-              goToLearnHandler({
-                packId: pack._id,
-                packUserId: pack.user_id,
-                packUserName: pack.user_name,
-                cardsCount: pack.cardsCount,
-              })
+              goToLearnHandler(
+                {
+                  packId: pack._id,
+                  packUserId: pack.user_id,
+                  packUserName: pack.user_name,
+                  packName: pack.name,
+                },
+                pack.cardsCount
+              )
             }
           >
             <Tooltip title="Learn cards">
@@ -82,12 +90,15 @@ export const PackRows = () => {
             className={s.button}
             disabled={pack.cardsCount === 0}
             onClick={() =>
-              goToLearnHandler({
-                packId: pack._id,
-                packUserId: pack.user_id,
-                packUserName: pack.user_name,
-                cardsCount: pack.cardsCount,
-              })
+              goToLearnHandler(
+                {
+                  packId: pack._id,
+                  packUserId: pack.user_id,
+                  packUserName: pack.user_name,
+                  packName: pack.name,
+                },
+                pack.cardsCount
+              )
             }
           >
             <Tooltip title="Learn cards">
@@ -100,12 +111,15 @@ export const PackRows = () => {
       <NavLink
         to={PATH.CARDS}
         onClick={() =>
-          showCardByIdHandler({
-            packId: pack._id,
-            packUserId: pack.user_id,
-            packUserName: pack.user_name,
-            cardsCount: pack.cardsCount,
-          })
+          showCardByIdHandler(
+            {
+              packId: pack._id,
+              packUserId: pack.user_id,
+              packUserName: pack.user_name,
+              packName: pack.name,
+            },
+            pack.cardsCount
+          )
         }
         className={s.navLink}
       >

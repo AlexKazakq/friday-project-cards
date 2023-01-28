@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import './App.css'
-import { CircularProgress, LinearProgress } from '@mui/material'
+import { LinearProgress } from '@mui/material'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { PATH } from './assets/Routes/path'
@@ -10,6 +10,7 @@ import { PrivateRoutesLogout } from './assets/Routes/PrivateRoutesLogout'
 import { initializeAppTC } from './bll/store/app-reducer'
 import { useAppDispatch, useAppSelector } from './hooks/hooks'
 import { Cards } from './UI/components/Cards/Cards'
+import { CircularLoader } from './UI/components/common/Loader/CircularLoader'
 import { Error404 } from './UI/components/Error404/Error404'
 import { Header } from './UI/components/Header/Header'
 import { Learn } from './UI/components/Learn/Learn'
@@ -32,18 +33,7 @@ function App() {
   }, [])
 
   if (!isInitialized) {
-    return (
-      <div
-        style={{
-          position: 'fixed',
-          top: '30%',
-          textAlign: 'center',
-          width: '100%',
-        }}
-      >
-        <CircularProgress />
-      </div>
-    )
+    return <CircularLoader />
   }
 
   return (
