@@ -3,7 +3,7 @@ import React from 'react'
 import FormControl from '@mui/material/FormControl'
 import Grid from '@mui/material/Grid'
 import { useFormik } from 'formik'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import * as Yup from 'yup'
 
 import { PATH } from '../../../assets/Routes/path'
@@ -21,15 +21,16 @@ export const NewPassword = () => {
   const NewPasswordValidationSchema = Yup.object().shape({
     password: Yup.string().min(2, 'Password should be more then 2 characters').required('Required'),
   })
-  const lengthUrl = window.location.href.split('/').length
-  const token = window.location.href.split('/')[lengthUrl - 1]
+  const { token } = useParams<{ token: string }>()
   const formik = useFormik({
     initialValues: {
       password: '',
     },
     validationSchema: NewPasswordValidationSchema,
     onSubmit: values => {
-      dispatch(sendNewPasswordTC({ password: values.password, resetPasswordToken: token }))
+      if (token) {
+        dispatch(sendNewPasswordTC({ password: values.password, resetPasswordToken: token }))
+      }
     },
   })
 

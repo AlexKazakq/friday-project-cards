@@ -18,10 +18,11 @@ const initialState = {
   cardsTotalCount: 0,
   maxGrade: null as null | number,
   minGrade: null as null | number,
-  page: null as null | number,
-  pageCount: null as null | number,
+  page: 0,
+  pageCount: 4,
   searchByAnswer: '' as string,
   searchByQuestion: '' as string,
+  sort: '' as string,
 }
 
 export const slice = createSlice({
@@ -46,6 +47,15 @@ export const slice = createSlice({
     setCardsTotalCount(state, action: PayloadAction<{ cardsTotalCount: number }>) {
       state.cardsTotalCount = action.payload.cardsTotalCount
     },
+    setSortCard(state, action: PayloadAction<{ sort: string }>) {
+      state.sort = action.payload.sort
+    },
+    setPageCard(state, action: PayloadAction<{ page: number }>) {
+      state.page = action.payload.page
+    },
+    setPageCountCard(state, action: PayloadAction<{ pageCount: number }>) {
+      state.pageCount = action.payload.pageCount
+    },
   },
 })
 export const cardsReducer = slice.reducer
@@ -56,17 +66,23 @@ export const {
   setSearchCardsByAnswer,
   setSearchCardsByQuestion,
   setCardsTotalCount,
+  setSortCard,
+  setPageCard,
+  setPageCountCard,
 } = slice.actions
 
 export const setCardsTC =
   (cardsPack_id: string): TypedThunk =>
   async (dispatch, getState) => {
-    const { searchByAnswer, searchByQuestion } = getState().cards
+    const { page, pageCount, searchByAnswer, searchByQuestion, sort } = getState().cards
 
     const cardList = {
       cardsPack_id: cardsPack_id,
       cardAnswer: searchByAnswer,
       cardQuestion: searchByQuestion,
+      sortCards: sort,
+      page: page,
+      pageCount: pageCount,
     }
 
     dispatch(setCardsList({ cards: [] as CardsType[] }))
@@ -105,7 +121,6 @@ export const deleteCardTC = (params: DeleteCardParamsType) => async (dispatch: A
   try {
     const res = await cardsAPI.deleteCard(params)
 
-    //@ts-ignore
     dispatch(setCardsTC(res.data.deletedCard.cardsPack_id))
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {
@@ -126,7 +141,6 @@ export const addNewCardTC = (params: AddedCardParamsType) => async (dispatch: Ap
   try {
     const res = await cardsAPI.addNewCard(params)
 
-    //@ts-ignore
     dispatch(setCardsTC(res.data.newCard.cardsPack_id))
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {
@@ -147,7 +161,6 @@ export const updateCardTC = (params: UpdatedCardParamsType) => async (dispatch: 
   try {
     const res = await cardsAPI.updateCard(params)
 
-    //@ts-ignore
     dispatch(setCardsTC(res.data.updatedCard.cardsPack_id))
     dispatch(setAppStatus({ status: 'succeeded' }))
   } catch (e) {
@@ -172,10 +185,4 @@ export type CardsType = {
   created: string
   updated: string
   _id: string
-}
-
-export type PackUserDataType = {
-  packUserId: string
-  packId: string
-  packUserName: string
 }

@@ -7,7 +7,6 @@ import { errorSelector, infoSelector } from '../../../bll/selectors/selectors'
 import { setAppError, setAppInfo } from '../../../bll/store/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 
-// eslint-disable-next-line import/no-named-as-default-member
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />
 })
@@ -15,7 +14,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 export function InfoSnackbar() {
   const dispatch = useAppDispatch()
   const info = useAppSelector(infoSelector)
-  const error = useAppSelector(errorSelector)
+  let error = useAppSelector(errorSelector)
 
   const handleClose = (event?: React.SyntheticEvent<any> | Event, reason?: string) => {
     if (reason === 'clickaway') {
@@ -30,6 +29,7 @@ export function InfoSnackbar() {
   if (info) {
     severityType = 'success'
     text = info
+    error = null
   } else if (error) {
     severityType = 'error'
     text = error

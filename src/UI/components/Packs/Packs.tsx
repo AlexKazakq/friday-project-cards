@@ -12,7 +12,7 @@ import { setPacksTC, setSortPack } from '../../../bll/store/packs-reducer'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import s from '../../styles/table.module.css'
 import { TableHeader } from '../common/TableHeader/TableHeader'
-import { AddPackModal } from '../modals/AddPackModal'
+import { AddPackModal } from '../Modals/AddPackModal'
 
 import { PacksList } from './PacksList/PacksList'
 import { PacksSetting } from './PacksSetting/PacksSetting'
@@ -28,6 +28,8 @@ export const Packs = () => {
   console.log(1)
 
   const dispatch = useAppDispatch()
+
+  console.log('123')
 
   useEffect(() => {
     dispatch(setPacksTC())

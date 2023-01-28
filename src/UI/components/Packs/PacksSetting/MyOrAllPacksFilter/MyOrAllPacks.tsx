@@ -16,7 +16,7 @@ export const MyOrAllPacks = () => {
   const cardPacksMaxCount = useAppSelector(cardPacksMaxCountSelector)
   const cardPacksMinCount = useAppSelector(cardPacksMinCountSelector)
   const myId = useAppSelector(getMyIdSelector)
-  const [isMyPacks, SetIsMyPacks] = useState<boolean>(false)
+  const [isMyPacks, SetIsMyPacks] = useState<boolean>(!!myId)
 
   const dispatch = useAppDispatch()
 

@@ -1,64 +1,23 @@
 import React from 'react'
 
-import Paper from '@mui/material/Paper'
-import Rating from '@mui/material/Rating'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TablePagination from '@mui/material/TablePagination'
-import TableRow from '@mui/material/TableRow'
-
 import {
   cardsTotalCountSelector,
   packStatusSelector,
   packUserDataSelector,
-  profileInfoSelector,
+  pageCardSelector,
+  pageCountCardSelector,
 } from '../../../../bll/selectors/selectors'
-import { CardsType } from '../../../../bll/store/cards-reducer'
-import { useAppSelector } from '../../../../hooks/hooks'
-import { dateFormatUtils } from '../../../../utils/dateFormat/dateFormatUtils'
-import SuperSort from '../../common/SuperSort/SuperSort'
-import { DeleteCardModal } from '../../modals/DeleteCardModal'
-import { UpdateCardModal } from '../../modals/UpdateCardModal'
+import { setPageCard, setPageCountCard } from '../../../../bll/store/cards-reducer'
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
+import { TableBodyComponent } from '../../common/Table/TableBody/TableBody'
+import { TableComponent } from '../../common/Table/TableComponent'
+import { TableHeadComponent } from '../../common/Table/TableHead/TableHead'
 
+import { CardsColumns } from './CardsDataForTable/CardsColumns'
+import { CardsRows } from './CardsDataForTable/CardsRows'
 import s from './cardsList.module.css'
 
-interface Column {
-  id: 'question' | 'answer' | 'updated' | 'grade'
-  label: string
-  minWidth?: number
-  align?: 'right'
-  format?: (value: number) => string
-}
-
-const columns: readonly Column[] = [
-  { id: 'question', label: 'Question' },
-  { id: 'answer', label: 'Answer' },
-  {
-    id: 'updated',
-    label: 'Last Updated',
-  },
-  {
-    id: 'grade',
-    label: 'Grade',
-  },
-]
-
-interface Data {
-  question: string
-  answer: string
-  updated: string
-  grade: JSX.Element
-}
-
 type CardsListType = {
-  cards: CardsType[]
-  page: number
-  cardsPerPage: number
-  handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void
-  changePage: (event: unknown, newPage: number) => void
   sort: string
   onChangeSort: (newSort: string) => void
 }
@@ -66,92 +25,37 @@ type CardsListType = {
 export const CardsList = (props: CardsListType) => {
   const packUserData = useAppSelector(packUserDataSelector)
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
-  const profileInfo = useAppSelector(profileInfoSelector)
   const packUserStatus = useAppSelector(packStatusSelector)
-
-  function createData(question: string, answer: string, updated: string, grade: JSX.Element): Data {
-    return { question, answer, updated, grade }
+  const pageCard = useAppSelector(pageCardSelector)
+  const pageCountCard = useAppSelector(pageCountCardSelector)
+  const dispatch = useAppDispatch()
+  const rows = CardsRows()
+  const columns = CardsColumns()
+  const onChangePageHandler = (page: number, pageCount: number) => {
+    dispatch(setPageCard({ page: page }))
+    dispatch(setPageCountCard({ pageCount: pageCount }))
   }
 
-  const rows: Data[] = props.cards.map(card => {
-    let grade
-
-    profileInfo._id === card.user_id
-      ? (grade = (
-          <div>
-            <Rating name="disabled" value={card.grade} disabled />
-            <button className={s.button}>
-              <UpdateCardModal
-                _id={card._id}
-                primaryQuestion={card.question}
-                primaryAnswer={card.answer}
-              />
-            </button>
-            <button className={s.button}>
-              <DeleteCardModal id={card._id} />
-            </button>
-          </div>
-        ))
-      : (grade = (
-          <div>
-            <Rating name="disabled" value={card.grade} disabled />
-          </div>
-        ))
-
-    return createData(card.question, card.answer, dateFormatUtils(card.updated), grade)
-  })
-
   if (packUserData.cardsCount !== 0) {
-    return (
-      <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-        <TableContainer sx={{ maxHeight: 640 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {columns.map(column => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    {column.label}
-                    <SuperSort sort={props.sort} value={column.id} onChange={props.onChangeSort} />
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map(row => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.answer}>
-                    {columns.map(column => {
-                      const value = row[column.id]
+    let columnsWithSort: string[] = ['question', 'answer', 'updated']
 
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {value}
-                        </TableCell>
-                      )
-                    })}
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        {props.cards.length === 0 && <div className={s.notFound}>{packUserStatus}</div>}
-        <TablePagination
-          sx={{}}
-          rowsPerPageOptions={[4, 6, 10, 50]}
-          component="div"
-          count={cardsTotalCount}
-          rowsPerPage={props.cardsPerPage}
-          page={props.page}
-          labelRowsPerPage={'Cards per page'}
-          onPageChange={props.changePage}
-          onRowsPerPageChange={props.handleChangeRowsPerPage}
+    return (
+      <TableComponent
+        totalCount={cardsTotalCount ? cardsTotalCount : 0}
+        currentPage={pageCard ?? 1}
+        pageCount={pageCountCard}
+        onPageChanged={onChangePageHandler}
+        labelRowsPerPage={'Cards per Page'}
+        packUserStatus={packUserStatus}
+      >
+        <TableHeadComponent
+          columns={columns}
+          columnsWithSort={columnsWithSort}
+          sort={props.sort}
+          onChangeSort={props.onChangeSort}
         />
-      </Paper>
+        <TableBodyComponent rows={rows} columns={columns} packUserStatus={packUserStatus} />
+      </TableComponent>
     )
   } else {
     return <div className={s.empty}>This pack is empty</div>

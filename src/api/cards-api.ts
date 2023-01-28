@@ -23,11 +23,10 @@ export const cardsAPI = {
     return instance.post<getCardsResponseType>('cards/card', params)
   },
   deleteCard(params: DeleteCardParamsType) {
-    // @ts-ignore
-    return instance.delete<DeleteCardResponseType>(`/cards/card?id=${params.id}`, params)
+    return instance.delete<DeleteCardResponseType>(`/cards/card?id=${params.id}`, { data: params })
   },
   updateCard(params: UpdatedCardParamsType) {
-    return instance.put<updatedCardsResponseType>('cards/card', params)
+    return instance.put<UpdatedCardsResponseType>('cards/card', params)
   },
   sendGrade(data: GradeParamsType) {
     return instance.put<GradeRequestType>('cards/grade', {
@@ -38,6 +37,7 @@ export const cardsAPI = {
 }
 
 export type getCardsResponseType = {
+  newCard: any
   cards: CardsType[]
   cardsTotalCount: number
   maxGrade: number
@@ -45,6 +45,7 @@ export type getCardsResponseType = {
   page: number
   pageCount: number
   packUserId: string
+  cardsPack_id: string
 }
 
 export type CardsParamsType = {
@@ -78,17 +79,19 @@ export type AddedCardParamsType = {
     cardsPack_id: string | undefined
     question?: string
     answer?: string
-    grade?: 0 // 0..5, не обязателен
+    grade?: 0
     shots?: 0
-    answerImg?: string // "url or base 64"  не обязателен
-    questionImg?: string // "url or base 64"  не обязателен
-    questionVideo?: string // "url or base 64"  не обязателен
-    answerVideo?: string // "url or base 64"  не обязателен
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
   }
 }
 
 export type DeleteCardResponseType = {
-  deletedCard?: {}
+  deletedCard: {
+    cardsPack_id: string
+  }
 }
 
 export type DeleteCardParamsType = {
@@ -103,6 +106,8 @@ export type UpdatedCardParamsType = {
   }
 }
 
-export type updatedCardsResponseType = {
-  newCard: {}
+export type UpdatedCardsResponseType = {
+  updatedCard: {
+    cardsPack_id: string
+  }
 }

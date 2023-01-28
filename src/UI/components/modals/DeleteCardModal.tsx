@@ -23,9 +23,10 @@ const style = {
 
 type PropsType = {
   id: string
+  cardName: string
 }
 
-export const DeleteCardModal: FC<PropsType> = ({ id }) => {
+export const DeleteCardModal: FC<PropsType> = ({ id, cardName }) => {
   const dispatch = useAppDispatch()
 
   const onButtonClickHandler = () => {
@@ -39,7 +40,7 @@ export const DeleteCardModal: FC<PropsType> = ({ id }) => {
       onClickConfirmHandler={onButtonClickHandler}
     >
       <Typography id="modal-modal-title" variant="h6" component="h2">
-        Do you really want to remove Card? All cards will be deleted?
+        Do you really want to remove {cardName}? All cards will be deleted?
       </Typography>
       <Typography id="modal-modal-description" sx={{ mt: 2 }}></Typography>
     </BasicModal>
