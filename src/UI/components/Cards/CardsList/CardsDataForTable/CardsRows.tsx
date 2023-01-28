@@ -9,6 +9,7 @@ import { DeleteCardModal } from '../../../Modals/DeleteCardModal'
 import { UpdateCardModal } from '../../../Modals/UpdateCardModal'
 
 import s from './../cardsList.module.css'
+import { CardsImageSVGR } from './CardsImageSVG/CardsImageSVGR'
 
 export interface DataCards {
   question: string
@@ -16,22 +17,25 @@ export interface DataCards {
   updated: string
   grade: JSX.Element
   id: string
+  cover: JSX.Element
 }
 export const CardsRows = () => {
   const profileInfo = useAppSelector(profileInfoSelector)
   const cards = useAppSelector(cardsSelector)
 
   function createData(
+    cover: JSX.Element,
     question: string,
     answer: string,
     updated: string,
     grade: JSX.Element,
     id: string
   ): DataCards {
-    return { question, answer, updated, grade, id }
+    return { cover, question, answer, updated, grade, id }
   }
 
   const rows: DataCards[] = cards.map(card => {
+    let cover = <CardsImageSVGR />
     let grade
 
     profileInfo._id === card.user_id
@@ -56,7 +60,14 @@ export const CardsRows = () => {
           </div>
         ))
 
-    return createData(card.question, card.answer, dateFormatUtils(card.updated), grade, card._id)
+    return createData(
+      cover,
+      card.question,
+      card.answer,
+      dateFormatUtils(card.updated),
+      grade,
+      card._id
+    )
   })
 
   return rows
