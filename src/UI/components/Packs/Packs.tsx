@@ -27,6 +27,8 @@ export const Packs = () => {
 
   const dispatch = useAppDispatch()
 
+  console.log('123')
+
   useEffect(() => {
     dispatch(setPacksTC())
   }, [cardsCount, myId, searchValue, pagePack, pageCountPack, sort])
