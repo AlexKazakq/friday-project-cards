@@ -12,18 +12,6 @@ import SuperInputText from '../common/SuperInputText/SuperInputText'
 
 import { BasicModal } from './BasicModal'
 
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-}
-
 type PropsType = {
   packId: string
   packName: string
@@ -31,7 +19,6 @@ type PropsType = {
 
 export const UpdatePackModal: FC<PropsType> = ({ packId, packName }) => {
   const dispatch = useAppDispatch()
-  const [open, setOpen] = React.useState(true)
   const [name, setName] = useState(packName)
   const [privacy, setPrivacy] = useState(false)
 

@@ -4,26 +4,11 @@ import { FC, FormEvent, useState } from 'react'
 import EditIcon from '@mui/icons-material/Edit'
 import Typography from '@mui/material/Typography'
 
-import { addNewCardTC, updateCardTC } from '../../../bll/store/cards-reducer'
-import { updatePackTC } from '../../../bll/store/packs-reducer'
+import { updateCardTC } from '../../../bll/store/cards-reducer'
 import { useAppDispatch } from '../../../hooks/hooks'
-import SuperButton from '../common/SuperButton/SuperButton'
-import { SuperCheckbox } from '../common/SuperCheckbox/SuperCheckbox'
 import SuperInputText from '../common/SuperInputText/SuperInputText'
 
 import { BasicModal } from './BasicModal'
-
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-}
 
 type PropsType = {
   _id: string
