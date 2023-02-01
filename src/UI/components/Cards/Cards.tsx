@@ -24,7 +24,7 @@ import tableStyle from '../../styles/table.module.css'
 import { BackArrow } from '../common/BackArrow/BackArrow'
 import { SearchInput } from '../common/SearchInput/SearchInput'
 import { TableHeader } from '../common/TableHeader/TableHeader'
-import { AddCardModal } from '../Modals/AddCardModal'
+import { AddCardModal } from '../Modals/CardsModals/AddCardModal'
 
 import s from './cards.module.css'
 import { CardsList } from './CardsList/CardsList'

@@ -14,8 +14,8 @@ import {
 } from '../../../../../bll/store/packUserData-reducer'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks'
 import { dateFormatUtils } from '../../../../../utils/dateFormat/dateFormatUtils'
-import { DeletePackModal } from '../../../Modals/DeletePackModal'
-import { UpdatePackModal } from '../../../Modals/UpdatePackModal'
+import { DeletePackModal } from '../../../Modals/PacksModals/DeletePackModal'
+import { UpdatePackModal } from '../../../Modals/PacksModals/UpdatePackModal'
 import s from '../packList.module.css'
 
 export interface DataPacks {

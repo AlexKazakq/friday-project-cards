@@ -1,15 +1,14 @@
 import * as React from 'react'
 import { FC, FormEvent, useState } from 'react'
 
+import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
-import { cardPacksSelector } from '../../../bll/selectors/selectors'
-import { addNewCardTC } from '../../../bll/store/cards-reducer'
-import { setPackUserData } from '../../../bll/store/packUserData-reducer'
-import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
-import SuperInputText from '../common/SuperInputText/SuperInputText'
-
-import { BasicModal } from './BasicModal'
+import { cardPacksSelector } from '../../../../bll/selectors/selectors'
+import { addNewCardTC } from '../../../../bll/store/cards-reducer'
+import { setPackUserData } from '../../../../bll/store/packUserData-reducer'
+import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
+import { BasicModal } from '../BasicModal'
 
 type PropsType = {
   cardsPack_id: string
@@ -45,18 +44,23 @@ export const AddCardModal: FC<PropsType> = ({ cardsPack_id }) => {
 
   return (
     <BasicModal
+      headerText={'Add new card'}
       name={'Add new card'}
       confirmButtonName={'Add new card'}
       onClickConfirmHandler={onButtonClickHandler}
     >
-      <Typography id="modal-modal-title" variant="h6" component="h2">
-        Add new card
-      </Typography>
-      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-        Question
-        <SuperInputText onInput={onInputQuestionHandler} />
-        Answer
-        <SuperInputText onInput={onInputAnswerHandler} />
+      <Typography id="modal-modal-description" sx={{ mt: 5 }}>
+        <div>
+          <TextField
+            onInput={onInputQuestionHandler}
+            fullWidth
+            variant="standard"
+            label="Question"
+          />
+        </div>
+        <div>
+          <TextField onInput={onInputAnswerHandler} fullWidth variant="standard" label="Answer" />
+        </div>
       </Typography>
     </BasicModal>
   )

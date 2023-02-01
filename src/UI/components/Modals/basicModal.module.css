@@ -1,0 +1,16 @@
+.main{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+}
+.header{
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+.button{
+  display: flex;
+  justify-content: space-around;
+  flex-grow: 3;
+}

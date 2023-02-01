@@ -1,10 +1,13 @@
 import * as React from 'react'
-import { FC } from 'react'
+import { FC, ReactNode } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Modal from '@mui/material/Modal'
+import Typography from '@mui/material/Typography'
+
+import s from './basicModal.module.css'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -19,15 +22,16 @@ const style = {
 }
 
 type PropsType = {
+  headerText?: string
   children: any
-  // name: string | JSX.Element
-  name?: any
+  name?: ReactNode
   onClickConfirmHandler?: () => void
   onClickCancelHandler?: () => void
   confirmButtonName?: string
 }
 
 export const BasicModal: FC<PropsType> = ({
+  headerText,
   children,
   name,
   onClickConfirmHandler,
@@ -46,10 +50,19 @@ export const BasicModal: FC<PropsType> = ({
       <Button onClick={handleOpen}>{name}</Button>
       <Modal open={open} onClose={handleOpen}>
         <Box sx={style}>
-          <CloseIcon onClick={handleOpen} />
-          {children}
-          <button onClick={onClickHandler}>{confirmButtonName}</button>
-          <button onClick={handleOpen}>Cancel</button>
+          <div className={s.main}>
+            <div className={s.header}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                {headerText ? headerText : name}
+              </Typography>
+              <CloseIcon onClick={handleOpen} />
+            </div>
+            {children}
+            <div className={s.button}>
+              <Button onClick={onClickHandler}>{confirmButtonName}</Button>
+              <Button onClick={handleOpen}>Cancel</Button>
+            </div>
+          </div>
         </Box>
       </Modal>
     </div>

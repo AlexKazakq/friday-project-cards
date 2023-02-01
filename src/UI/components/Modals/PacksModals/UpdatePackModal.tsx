@@ -5,12 +5,11 @@ import EditIcon from '@mui/icons-material/Edit'
 import Tooltip from '@mui/material/Tooltip/Tooltip'
 import Typography from '@mui/material/Typography'
 
-import { updatePackTC } from '../../../bll/store/packs-reducer'
-import { useAppDispatch } from '../../../hooks/hooks'
-import { SuperCheckbox } from '../common/SuperCheckbox/SuperCheckbox'
-import SuperInputText from '../common/SuperInputText/SuperInputText'
-
-import { BasicModal } from './BasicModal'
+import { updatePackTC } from '../../../../bll/store/packs-reducer'
+import { useAppDispatch } from '../../../../hooks/hooks'
+import { SuperCheckbox } from '../../common/SuperCheckbox/SuperCheckbox'
+import SuperInputText from '../../common/SuperInputText/SuperInputText'
+import { BasicModal } from '../BasicModal'
 
 type PropsType = {
   packId: string
@@ -38,6 +37,7 @@ export const UpdatePackModal: FC<PropsType> = ({ packId, packName }) => {
 
   return (
     <BasicModal
+      headerText={'Edit packs'}
       name={
         <Tooltip title="Edit cards">
           <EditIcon />
@@ -46,9 +46,6 @@ export const UpdatePackModal: FC<PropsType> = ({ packId, packName }) => {
       confirmButtonName={'Save'}
       onClickConfirmHandler={onButtonClickHandler}
     >
-      <Typography id="modal-modal-title" variant="h6" component="h2">
-        Edit pack
-      </Typography>
       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
         <SuperInputText value={name} onChange={onInputHandler} />
         <SuperCheckbox onChange={() => setPrivacy(!privacy)}>Private pack </SuperCheckbox>

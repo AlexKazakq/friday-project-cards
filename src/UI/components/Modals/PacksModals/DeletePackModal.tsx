@@ -5,10 +5,9 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import Tooltip from '@mui/material/Tooltip/Tooltip'
 import Typography from '@mui/material/Typography'
 
-import { deletePackTC } from '../../../bll/store/packs-reducer'
-import { useAppDispatch } from '../../../hooks/hooks'
-
-import { BasicModal } from './BasicModal'
+import { deletePackTC } from '../../../../bll/store/packs-reducer'
+import { useAppDispatch } from '../../../../hooks/hooks'
+import { BasicModal } from '../BasicModal'
 
 type PropsType = {
   packId: string
@@ -24,6 +23,7 @@ export const DeletePackModal: FC<PropsType> = ({ packId, packName }) => {
 
   return (
     <BasicModal
+      headerText={'Delete Pack'}
       name={
         <Tooltip title="Delete cards">
           <DeleteForeverIcon />
