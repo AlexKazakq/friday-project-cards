@@ -26,14 +26,24 @@ export const Profile = () => {
     dispatch(updateProfileDataTC({ name: nickname }))
   }, [])
 
+  let updateAvatar = useCallback((file: string) => {
+    dispatch(updateProfileDataTC({ avatar: file }))
+  }, [])
+
   return (
     <Grid container justifyContent={'center'}>
       <Grid item justifyContent={'center'} className={styleForm.form}>
         <FormControl>
           <h3>Personal Information</h3>
           <div className={s.avatar}>
-            <BadgeAvatars name={profileInfo.name} avatar={profileInfo.avatar} />
+            <BadgeAvatars
+              name={profileInfo.name}
+              avatar={profileInfo.avatar}
+              updateAvatar={updateAvatar}
+            />
+            {/*<InputTypeFile updateAvatar={updateAvatar} />*/}
           </div>
+
           <ProfileName nickname={profileInfo.name} updateNickname={updateNickname} />
           <p>{profileInfo.email}</p>
           <div className={styleForm.buttonForm}>

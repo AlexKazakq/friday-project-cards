@@ -46,7 +46,7 @@ export function MenuHeader() {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <div>
+        <div className={s.headerInfo}>
           <div className={s.headerName}> {profileInfo.name}</div>
           <div className={s.headerAvatar}>
             <AvatarImg name={profileInfo.name} avatar={profileInfo.avatar} />
