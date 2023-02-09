@@ -12,7 +12,7 @@ import { setPacksTC, setSortPack } from '../../../bll/store/packs-reducer'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import s from '../../styles/table.module.css'
 import { TableHeader } from '../common/TableHeader/TableHeader'
-import { AddPackModal } from '../Modals/AddPackModal'
+import { AddPackModal } from '../Modals/PacksModals/AddPackModal'
 
 import { PacksList } from './PacksList/PacksList'
 import { PacksSetting } from './PacksSetting/PacksSetting'
