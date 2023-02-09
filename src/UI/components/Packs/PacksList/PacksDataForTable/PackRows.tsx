@@ -77,10 +77,10 @@ export const PackRows = () => {
               <SchoolIcon />
             </Tooltip>
           </IconButton>
-          <IconButton className={s.button}>
+          <IconButton>
             <UpdatePackModal packId={pack._id} packName={pack.name} />
           </IconButton>
-          <IconButton className={s.button}>
+          <IconButton>
             <DeletePackModal packId={pack._id} packName={pack.name} />
           </IconButton>
         </div>

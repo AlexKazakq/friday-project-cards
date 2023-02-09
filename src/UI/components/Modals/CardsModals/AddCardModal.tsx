@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { FC, FormEvent, useState } from 'react'
+import { ChangeEvent, FC, FormEvent, useState } from 'react'
 
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
@@ -20,10 +20,10 @@ export const AddCardModal: FC<PropsType> = ({ cardsPack_id }) => {
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
 
-  const onInputQuestionHandler = (e: FormEvent<HTMLInputElement>) => {
+  const onInputQuestionHandler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setQuestion(e.currentTarget.value)
   }
-  const onInputAnswerHandler = (e: FormEvent<HTMLInputElement>) => {
+  const onInputAnswerHandler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setAnswer(e.currentTarget.value)
   }
   const packData = cardPacks.find(pack => pack._id === cardsPack_id)
@@ -49,17 +49,23 @@ export const AddCardModal: FC<PropsType> = ({ cardsPack_id }) => {
       confirmButtonName={'Add new card'}
       onClickConfirmHandler={onButtonClickHandler}
     >
-      <Typography id="modal-modal-description" sx={{ mt: 5 }}>
+      <Typography id="modal-modal-description" sx={{ mt: 1 }}>
         <div>
           <TextField
-            onInput={onInputQuestionHandler}
+            onChange={onInputQuestionHandler}
             fullWidth
             variant="standard"
             label="Question"
           />
         </div>
         <div>
-          <TextField onInput={onInputAnswerHandler} fullWidth variant="standard" label="Answer" />
+          <TextField
+            onChange={onInputAnswerHandler}
+            fullWidth
+            variant="standard"
+            label="Answer"
+            sx={{ mt: 1 }}
+          />
         </div>
       </Typography>
     </BasicModal>

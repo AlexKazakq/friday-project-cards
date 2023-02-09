@@ -25,14 +25,14 @@ export const DeletePackModal: FC<PropsType> = ({ packId, packName }) => {
     <BasicModal
       headerText={'Delete Pack'}
       name={
-        <Tooltip title="Delete cards">
+        <Tooltip title="Delete pack">
           <DeleteForeverIcon />
         </Tooltip>
       }
       confirmButtonName={'Delete pack'}
       onClickConfirmHandler={onButtonClickHandler}
     >
-      <Typography id="modal-modal-title" variant="h6" component="h2">
+      <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ mt: 2 }}>
         Do you really want to remove {packName}? All cards will be deleted.
       </Typography>
       <Typography id="modal-modal-description" sx={{ mt: 2 }}></Typography>
