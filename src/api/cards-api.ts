@@ -19,6 +19,9 @@ export const cardsAPI = {
       params: { ...params },
     })
   },
+  addNewestCard(params: AddedCardParamsType) {
+    return instance.post<getCardsResponseType>('cards/card', params)
+  },
   addNewCard(params: AddedCardParamsType) {
     return instance.post<getCardsResponseType>('cards/card', params)
   },
